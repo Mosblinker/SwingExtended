@@ -1,0 +1,7 @@
+ColorPatternIcon fires state changed event if:
+	The set painter fires a state changed event
+	The set painter is changed
+	The state is changed when no painter is set
+	The color is changed
+	The scale is changed
+	Effectively any time the icon should be repainted

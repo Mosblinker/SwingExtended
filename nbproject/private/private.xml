@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="44">
+        <file>
+            <url>src/components/JThumbnailLabel.java</url>
+            <bookmark id="44">
+                <name/>
+                <line>141</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/graphics/ThumbnailatorGraphics2D.java</url>
+            <bookmark id="34">
+                <name/>
+                <line>39</line>
+                <key/>
+            </bookmark>
+            <bookmark id="35">
+                <name/>
+                <line>47</line>
+                <key/>
+            </bookmark>
+            <bookmark id="36">
+                <name/>
+                <line>51</line>
+                <key/>
+            </bookmark>
+            <bookmark id="37">
+                <name/>
+                <line>288</line>
+                <key/>
+            </bookmark>
+            <bookmark id="39">
+                <name/>
+                <line>292</line>
+                <key/>
+            </bookmark>
+            <bookmark id="43">
+                <name/>
+                <line>305</line>
+                <key/>
+            </bookmark>
+            <bookmark id="40">
+                <name/>
+                <line>309</line>
+                <key/>
+            </bookmark>
+            <bookmark id="41">
+                <name/>
+                <line>313</line>
+                <key/>
+            </bookmark>
+            <bookmark id="42">
+                <name/>
+                <line>317</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/components/JListManipulator.java</url>
+            <bookmark id="26">
+                <name/>
+                <line>185</line>
+                <key/>
+            </bookmark>
+            <bookmark id="27">
+                <name/>
+                <line>1784</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/components/AbstractListDataPanel.java</url>
+            <bookmark id="5">
+                <name/>
+                <line>267</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/icons/ColorPatternIcon.java</url>
+            <bookmark id="24">
+                <name/>
+                <line>59</line>
+                <key/>
+            </bookmark>
+            <bookmark id="11">
+                <name/>
+                <line>816</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/components/ArrayListModel.java</url>
+            <bookmark id="25">
+                <name/>
+                <line>411</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/test/components/progressformat/ProgressFormatter.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/icons/files/AbstractFileIcon.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/painters/ColorPatternPainter.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/test/graphics/ThumbnailGraphics2D.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/test/components/progressformat/AbstractProgressFormatRadioMenuItem.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/components/JThumbnailLabel.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/icons/DisabledIcon.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/icons/ColorPatternIcon.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/icons/files/FileIcon.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/test/components/JProgressFormatMenu.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/components/JColorSelector.java</file>
+            <file>file:/C:/Users/mstei/Documents/Programs/Java/Libraries/SwingExtended/src/icons/DebuggingIcon.java</file>
+        </group>
+    </open-files>
+</project-private>
