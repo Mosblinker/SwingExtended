@@ -1238,6 +1238,10 @@ public class ColorPatternPainter implements Painter<Color>{
     protected String paramString(){
         return "state=" + getState();
     }
+    /**
+     * This returns a string representation of this painter and its values.
+     * @return A string representation of this painter and its values.
+     */
     @Override
     public String toString(){
         return getClass().getName()+"["+paramString()+"]";
