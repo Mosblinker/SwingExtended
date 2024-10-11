@@ -120,8 +120,30 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         else
             return list.subList(fromIndex, toIndex);
     }
-    
-    protected void replaceRange(UnaryOperator<E> operator, int fromIndex, int toIndex){
+    /**
+     * This replaces each element of this list that lie within the range 
+     * specified by {@code fromIndex} and {@code toIndex}, exclusive, with the 
+     * result of applying the operator to that element. Errors or runtime 
+     * exceptions thrown by the operator will be relayed to the caller. For more 
+     * information about replacing the elements in a list using an operator, 
+     * refer to the documentation for the {@link List#replaceAll 
+     * List.replaceAll} method. For more information about sublists, refer to 
+     * the documentation for the {@link List#subList List.subList} method.
+     * @param operator The operator to apply to each element in the sublist.
+     * @param fromIndex The index to start at.
+     * @param toIndex The index to stop at, exclusive.
+     * @throws IndexOutOfBoundsException If the range is out of bounds.
+     * @throws UnsupportedOperationException If this list is unmodifiable. 
+     * Implementations may throw this exception if an element cannot be replaced 
+     * or if modifications to this list are not supported in general.
+     * @throws NullPointerException If the given operator is null or if the 
+     * operator result is a null value and this list does not permit null 
+     * elements (optional).
+     * @see List#replaceAll(UnaryOperator) 
+     * @see List#subList(int, int) 
+     */
+    protected void replaceRange(UnaryOperator<E> operator, int fromIndex, 
+            int toIndex){
             // If the starting index is the same as the ending index
         if (fromIndex == toIndex)
             return;
