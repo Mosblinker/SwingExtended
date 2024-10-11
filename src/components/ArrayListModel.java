@@ -578,8 +578,6 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         
         private final SubList<E> parent;
         
-//        private final List<E> list;
-        
         private final int offset;
         
         private int size;
@@ -587,7 +585,6 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         private SubList(ArrayListModel<E> root, int fromIndex, int toIndex){
             this.root = root;
             this.parent = null;
-//            this.list = root.list.subList(fromIndex, toIndex);
             this.offset = fromIndex;
             this.size = toIndex - fromIndex;
             this.modCount = root.modCount;
@@ -596,7 +593,6 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         private SubList(SubList<E> parent, int fromIndex, int toIndex){
             this.root = parent.root;
             this.parent = parent;
-//            this.list = parent.list.subList(fromIndex, toIndex);
             this.offset = parent.offset + fromIndex;
             this.size = toIndex - fromIndex;
             this.modCount = parent.modCount;
