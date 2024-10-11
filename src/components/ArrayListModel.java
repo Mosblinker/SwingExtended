@@ -215,6 +215,8 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
             return false;
             // Get the current size of this list
         int size = size();
+            // Check the given range to see if it is within bounds
+        checkRange(fromIndex,toIndex,size);
             // This stores the starting index for the current interval of 
         int startIndex = -1;        // removed elements
             // This stores the size of the current interval of elements that 
