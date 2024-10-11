@@ -249,8 +249,10 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
      * by the given {@link Comparator}. If the given comparator is null then all 
      * elements in this list in the given range must implement the {@link 
      * Comparable} interface and the elements' natural ordering will be used. 
-     * For more information about sorting lists, refer to the documentation of 
-     * the {@link List#sort(Comparator) List.sort} method. 
+     * For more information about sorting lists, refer to the documentation for 
+     * the {@link List#sort(Comparator) List.sort} method. For more information 
+     * about sublists, refer to the documentation for the {@link List#subList 
+     * List.subList} method.
      * @param c The {@code Comparator} to use to compare list elements, or null. 
      * A null value indicates that the natural ordering of the elements should 
      * be used.
