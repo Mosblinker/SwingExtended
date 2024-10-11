@@ -125,8 +125,15 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
             // If the starting index is the same as the ending index
         if (fromIndex == toIndex)
             return;
-        getRange(fromIndex, toIndex).replaceAll(operator);
-        fireContentsChanged(fromIndex, toIndex-1);
+            // Get the sublist to replace the elements in
+        List<E> range = getRange(fromIndex, toIndex);
+            // Get a copy of the sublist so that we can compare the two and see 
+        List<E> copy = new ArrayList<>(range);  // what is different
+            // Replace the elements in the sublist
+        range.replaceAll(operator);
+            // Check for any elements that have changed and fire content changed 
+            // events accordingly
+        fireContentsChanged(fromIndex,toIndex,range,copy);
     }
     @Override
     public void replaceAll(UnaryOperator<E> operator){
