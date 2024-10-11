@@ -957,8 +957,9 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
             checkForComodification();
                 // Get the current size of the root list
             int temp = root.size();
-                // Remove the elements from the root list that match the given 
-                // filter and that are in the range covered by this sublist
+                // Remove the elements from the root list that either match or 
+                // don't match any elements in the given collection and that are 
+                // in the range covered by this sublist
             boolean modified = root.batchRemove(c, retain, offset, offset+size);
                 // Update the size and modification count for this sublist to 
             updateSizeAndModCount(temp - root.size());  // reflect the changes
@@ -972,6 +973,16 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         @Override
         public boolean retainAll(Collection<?> c){
             return batchRemove(c,true);
+        }
+        @Override
+        public void sort(Comparator<? super E> c){
+                // Check for any concurrent modifications
+            checkForComodification();
+                // Sort the elements in the root list that are in the range 
+                // covered by this sublist 
+            root.sort(c, offset, offset+size);
+                // Update the modification count for this sublist to reflect the 
+            updateSizeAndModCount(0);   // changes
         }
         @Override
         public Iterator<E> iterator(){
