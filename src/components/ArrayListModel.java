@@ -123,7 +123,7 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     /**
      * This replaces each element of this list that lie within the range 
      * specified by {@code fromIndex} and {@code toIndex}, exclusive, with the 
-     * result of applying the operator to that element. Errors or runtime 
+     * result of applying the operator to that element. Any errors or runtime 
      * exceptions thrown by the operator will be relayed to the caller. For more 
      * information about replacing the elements in a list using an operator, 
      * refer to the documentation for the {@link List#replaceAll 
@@ -140,14 +140,15 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
      * operator result is a null value and this list does not permit null 
      * elements (optional).
      * @see List#replaceAll(UnaryOperator) 
+     * @see #replaceAll(UnaryOperator) 
      * @see List#subList(int, int) 
      */
     protected void replaceRange(UnaryOperator<E> operator, int fromIndex, 
             int toIndex){
             // Require the operator to be non-null
         Objects.requireNonNull(operator);
-            // If the starting index is the same as the ending index
-        if (fromIndex == toIndex)
+            // If the starting index is the same as the ending index or if this 
+        if (fromIndex == toIndex || isEmpty())  // list is empty
             return;
             // Get the sublist to replace the elements in
         List<E> range = getRange(fromIndex, toIndex);
@@ -174,8 +175,8 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     }
     @Override
     protected void removeRange(int fromIndex, int toIndex){
-            // If the starting index is the same as the ending index
-        if (fromIndex == toIndex)
+            // If the starting index is the same as the ending index or if this 
+        if (fromIndex == toIndex || isEmpty())  // list is empty
             return;
             // Get the sublist over the elements to remove and clear it
         getRange(fromIndex, toIndex).clear();
@@ -206,12 +207,12 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     
     private boolean batchRemove(Predicate<? super E> filter, Collection<?> c, 
             boolean retain, int fromIndex, int toIndex){
-            // If the starting index is the same as the ending index
-        if (fromIndex == toIndex)
-            return false;
             // If both the filter and the collection are null (at least one must 
         if (filter == null && c == null)    // not be null)
             throw new NullPointerException();
+            // If the starting index is the same as the ending index or if this 
+        if (fromIndex == toIndex || isEmpty())  // list is empty
+            return false;
             // Get the current size of this list
         int size = size();
             // This stores the starting index for the current interval of 
@@ -351,11 +352,12 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
      * @throws ClassCastException If this list contains elements that are not 
      * mutually comparable using the given comparator.
      * @see List#sort(Comparator) 
+     * @see #sort(Comparator) 
      * @see List#subList(int, int) 
      */
     protected void sort(Comparator<? super E> c, int fromIndex, int toIndex){
-            // If the starting index is the same as the ending index
-        if (fromIndex == toIndex)
+            // If the starting index is the same as the ending index or if this 
+        if (fromIndex == toIndex || isEmpty())  // list is empty
             return;
             // Get the sublist to sort
         List<E> range = getRange(fromIndex, toIndex);
