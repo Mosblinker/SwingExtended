@@ -153,11 +153,14 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         List<E> range = getRange(fromIndex, toIndex);
             // Get a copy of the sublist so that we can compare the two and see 
         List<E> copy = new ArrayList<>(range);  // what is different
+            // Try-Catch-Finally to catch any errors that occur, forward the 
+            // errors to the caller, and finish processing the changes made to 
+            // the list
         try{    // Try to replace the elements in the sublist
             range.replaceAll(operator);
-            // Catch any exceptions that were thrown
+            // Catch any errors that were thrown
         } catch (Throwable ex){
-                // Forward those exceptions to the caller
+                // Forward those errors to the caller
             throw ex;
         } finally {
                 // Check for any elements that have changed and fire content 
