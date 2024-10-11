@@ -747,11 +747,10 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
             throw new IndexOutOfBoundsException("From Index > To Index: "+
                     fromIndex+" > "+toIndex);
     }
-    
-    // TODO: Custom subList which overrides the removeIf, removeAll, replaceAll, 
-    // retainAll, and sort methods of the subList to fire ListDataEvents over 
-    // intervals instead of individual indexes
-    
+    /**
+     * This is a list that represents a sublist view of am ArrayListModel. 
+     * @param <E> The type of elements stored by the parent list.
+     */
     private static class SubList<E> extends AbstractList<E>{
         /**
          * The root ArrayListModel for this branch of SubLists. This is the 
