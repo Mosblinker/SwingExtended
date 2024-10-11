@@ -286,8 +286,33 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         }
         return size != size();
     }
-    
-    protected boolean removeIf(Predicate<? super E> filter, int fromIndex, int toIndex){
+    /**
+     * This removes all of the elements in this list that lie within the range 
+     * specified by {@code fromIndex} and {@code toIndex}, exclusive, that 
+     * satisfy the given predicate. Any errors or runtime exceptions thrown 
+     * during iteration over the list or by the predicate will be relayed to the 
+     * caller. For more information about removing elements from a list using a 
+     * predicate to remove elements in a list, refer to the documentation for 
+     * the {@link List#removeIf(Predicate) List.removeIf} method. For more 
+     * information about sublists, refer to the documentation for the {@link 
+     * List#subList List.subList} method.
+     * @param filter The predicate which returns {@code true} for the elements 
+     * to be removed.
+     * @param fromIndex The index to start at.
+     * @param toIndex The index to stop at, exclusive.
+     * @return Whether any elements were removed from the list.
+     * @throws IndexOutOfBoundsException If the range is out of bounds.
+     * @throws UnsupportedOperationException If elements cannot be removed from 
+     * this list. Implementations may throw this exception if a matching element 
+     * cannot be removed or if removal from this list is not supported in 
+     * general.
+     * @throws NullPointerException If the given filter is null.
+     * @see List#removeIf(Predicate) 
+     * @see #removeIf(Predicate) 
+     * @see List#subList(int, int) 
+     */
+    protected boolean removeIf(Predicate<? super E> filter, int fromIndex, 
+            int toIndex){
             // Check if the filter is null, and use the batch remove method to 
             // remove elements that match the filter
         return batchRemove(Objects.requireNonNull(filter), null, false, 
