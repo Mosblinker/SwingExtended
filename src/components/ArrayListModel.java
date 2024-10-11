@@ -322,9 +322,51 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     public boolean removeIf(Predicate<? super E> filter){
         return removeIf(filter, 0, size());
     }
-    
-    protected boolean batchRemove(Collection<?> c, boolean retain, 
-            int fromIndex, int toIndex){
+    /**
+     * This removes all elements in this list that lie within the range 
+     * specified by {@code fromIndex} and {@code toIndex}, exclusive, depending 
+     * on whether they are contained within the given collection. Depending on 
+     * the value provided for {@code retain}, this will either retain only the 
+     * elements in the range that are contained within the given collection or 
+     * this will remove all the elements from the range that are contained 
+     * within the given collection. In other words, if {@code retain} is {@code 
+     * true}, then this will remove any elements from the range that are not in 
+     * the given collection, and if {@code retain} is {@code false}, then this 
+     * will remove any elements from the range that are in the given collection. 
+     * This is used for both the {@code removeAll} and {@code retainAll} methods 
+     * in order to share code between the two methods. For more information 
+     * about removing elements from a list depending on whether they appear in a 
+     * given collection, refer to the documentation for the {@link 
+     * List#removeAll List.removeAll} and {@link List#retainAll List.retainAll} 
+     * methods. For more information about sublists, refer to the documentation 
+     * for the {@link List#subList List.subList} method.
+     * @param c The collection containing the elements to be compared with this 
+     * list (the elements to be either removed or retained in this list).
+     * @param retain Whether the elements in the given collection should be 
+     * retained or removed from this list ({@code true} if the elements in 
+     * {@code c} should be retained in this list, {@code false} if the elements 
+     * in {@code c} should be removed from this list). 
+     * @param fromIndex The index to start at.
+     * @param toIndex The index to stop at, exclusive.
+     * @return Whether any elements were removed from the list.
+     * @throws IndexOutOfBoundsException If the range is out of bounds.
+     * @throws UnsupportedOperationException If elements cannot be removed from 
+     * this list. Implementations may throw this exception if an element cannot 
+     * be removed depending on whether it's in the given collection or if 
+     * removal from this list is not supported in general.
+     * @throws NullPointerException If this list contains a null element located 
+     * in the given range and the given collection does not permit null elements 
+     * (optional), or if the given collection is null.
+     * @see List#removeAll(Collection) 
+     * @see #removeAll(Collection) 
+     * @see List#retainAll(Collection) 
+     * @see #retainAll(Collection) 
+     * @see #remove(Object) 
+     * @see #contains(Object) 
+     * @see List#subList(int, int) 
+     */
+    protected boolean batchRemove(Collection<?> c,boolean retain,int fromIndex, 
+            int toIndex){
             // Check if the collection is null
         Objects.requireNonNull(c);
             // If the collection is this list or the internal list
