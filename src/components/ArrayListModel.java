@@ -206,36 +206,72 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     
     private boolean batchRemove(Predicate<? super E> filter, Collection<?> c, 
             boolean retain, int fromIndex, int toIndex){
+            // If the starting index is the same as the ending index
         if (fromIndex == toIndex)
             return false;
-        if (filter == null && c == null)
+            // If both the filter and the collection are null (at least one must 
+        if (filter == null && c == null)    // not be null)
             throw new NullPointerException();
+            // Get the current size of this list
         int size = size();
-        int startIndex = -1;
-        int intervalSize = 0;
+            // This stores the starting index for the current interval of 
+        int startIndex = -1;        // removed elements
+            // This stores the size of the current interval of elements that 
+        int intervalSize = 0;       // have been removed from the list
+            // Get a list iterator to go through the internal list
         ListIterator<E> itr = list.listIterator(fromIndex);
-        try{
+            // Try-Catch-Finally to catch any errors that occur, forward the 
+            // errors to the caller, and finish processing the changes made to 
+            // the list
+        try{    // Go through the elements in the range to be removed from, 
+                // starting from the first element in the iterator, and ending 
+                // at the end of the range or at the end of the iterator
             for (int i = 0; i < toIndex - fromIndex && itr.hasNext(); i++){
-                boolean match;
+                    // This gets if the current element is a match for either 
+                boolean match;  // the filter or an element in the collection
+                    // If a filter was given
                 if (filter != null)
+                        // Test to see if the current element matches the filter
                     match = filter.test(itr.next());
-                else
+                else    // Test to see if the current element is in the given 
+                        // collection
                     match = c.contains(itr.next());
+                    // If either the element is a match for the 
+                    // filter/collection and matching elements should be removed 
+                    // or if the element is not a match and only matching 
+                    // elements should be retained
                 if (match != retain){
+                        // If the interval size is currently zero (there is 
+                        // currently no interval)
                     if (intervalSize == 0)
+                            // This is the start of the interval, so set the 
+                            // starting index to the index of the element that 
+                            // was just checked
                         startIndex = itr.previousIndex();
+                        // Increment the interval size
                     intervalSize++;
+                        // Remove the element from the list
                     itr.remove();
+                    // If the element is not to be removed and there was an 
+                    // interval of removed elements in progress (this marks the 
+                    // end of the interval)
                 } else if (intervalSize > 0){
+                        // Indicate that the interval has been removed
                     fireIntervalRemoved(startIndex,startIndex+intervalSize-1);
+                        // Reset the interval size to zero
                     intervalSize = 0;
                 }
             }
+            // Catch any errors that were thrown
         } catch (Throwable ex){
+                // Forward those errors to the caller
             throw ex;
         } finally {
+                // Add any elements that were removed to the modification count
             modCount += size - size();
-            if (intervalSize > 0)
+                // If there is an interval that was removed that the listeners 
+            if (intervalSize > 0)   // have yet to be notified of
+                    // Indicate that an interval of elements has been removed
                 fireIntervalRemoved(startIndex,startIndex+intervalSize-1);
         }
         return size != size();
@@ -541,6 +577,7 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
                     // all elements between the start index and the previous 
                     // index have changed
                 fireContentsChanged(fromIndex+start, fromIndex+i-1);
+                    // Reset the starting index to -1
                 start = -1;
             }
         }   // If the starting index for the range that changed is not negative 
