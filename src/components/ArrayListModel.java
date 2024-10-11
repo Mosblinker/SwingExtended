@@ -648,7 +648,16 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
          * The size of this SubList.
          */
         private int size;
-        
+        /**
+         * This constructs a SubList that is a sublist of the given 
+         * ArrayListModel that covers the elements in the ArrayListModel between 
+         * {@code fromIndex} and {@code toIndex}, exclusive.
+         * @param root The parent ArrayListModel for this SubList.
+         * @param fromIndex The starting index for this SubList in the 
+         * ArrayListModel.
+         * @param toIndex The ending index for this SubList in the 
+         * ArrayListModel, exclusive.
+         */
         private SubList(ArrayListModel<E> root, int fromIndex, int toIndex){
             this.root = root;
             this.parent = null;
@@ -656,7 +665,16 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
             this.size = toIndex - fromIndex;
             this.modCount = root.modCount;
         }
-        
+        /**
+         * This constructs a SubList that is a sublist of the given parent 
+         * SubList that covers the elements in the parent SubList between 
+         * {@code fromIndex} and {@code toIndex}, exclusive.
+         * @param pareht The parent SubList for this SubList.
+         * @param fromIndex The starting index for this SubList in the parent 
+         * SubList.
+         * @param toIndex The ending index for this SubList in the parent 
+         * SubList, exclusive.
+         */
         private SubList(SubList<E> parent, int fromIndex, int toIndex){
             this.root = parent.root;
             this.parent = parent;
