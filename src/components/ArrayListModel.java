@@ -278,7 +278,10 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     }
     
     protected boolean removeIf(Predicate<? super E> filter, int fromIndex, int toIndex){
-        return batchRemove(Objects.requireNonNull(filter), null, false, fromIndex, toIndex);
+            // Check if the filter is null, and use the batch remove method to 
+            // remove elements that match the filter
+        return batchRemove(Objects.requireNonNull(filter), null, false, 
+                fromIndex, toIndex);
     }
     @Override
     public boolean removeIf(Predicate<? super E> filter){
@@ -287,13 +290,17 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     
     protected boolean batchRemove(Collection<?> c, boolean retain, 
             int fromIndex, int toIndex){
+            // Check if the collection is null
         Objects.requireNonNull(c);
+            // If the collection is this list or the internal list
         if (c == this || c == list){
-            if (isEmpty() || retain)
+                // If the list is empty or this is to retain the elements in the 
+            if (isEmpty() || retain)    // list (i.e. no change should occur)
                 return false;
+                // Remove all the elements from this list
             clear();
             return true;
-        }
+        }   // Batch remove the elements from this list using the collection
         return batchRemove(null,c,retain,fromIndex,toIndex);
     }
     @Override
