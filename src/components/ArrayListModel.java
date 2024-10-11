@@ -171,24 +171,32 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     }
     @Override
     protected void removeRange(int fromIndex, int toIndex){
+            // If the starting index is the same as the ending index
         if (fromIndex == toIndex)
             return;
+            // Get the sublist over the elements to remove and clear it
         getRange(fromIndex, toIndex).clear();
         modCount++;     // Increment the modification count
+            // Indicate that the elements in the given range have been removed
         fireIntervalRemoved(fromIndex,toIndex-1);
     }
     @Override
     public E remove(int index){
+            // Remove the element at the given index
         E value = list.remove(index);
         modCount++;     // Increment the modification count
+            // Indicate that the element at the given index has been removed
         fireIntervalRemoved(index,index);
         return value;
     }
     @Override
     public boolean remove(Object o){
+            // Get the first index of the element to be removed
         int index = indexOf(o);
+            // If the element was not found in this list (the index is negative)
         if (index < 0)
             return false;
+            // Remove the first instance of the given element
         remove(index);
         return true;
     }
