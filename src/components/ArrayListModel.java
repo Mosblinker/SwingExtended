@@ -479,6 +479,16 @@ public class ArrayListModel<E> extends AbstractListModelList<E>{
     public Iterator<E> iterator(){
         return listIterator();
     }
+    /**
+     * {@inheritDoc }
+     * 
+     * @todo Should the lists returned by this method be functional ListModels?
+     * 
+     * @param fromIndex {@inheritDoc }
+     * @param toIndex {@inheritDoc }
+     * @return {@inheritDoc }
+     * @throws IndexOutOfBoundsException {@inheritDoc }
+     */
     @Override
     public List<E> subList(int fromIndex, int toIndex){
             // Check the given range to see if it is within bounds
@@ -545,7 +555,10 @@ public class ArrayListModel<E> extends AbstractListModelList<E>{
         return modified;
     }
     /**
-     * This is a list that represents a sublist view of am ArrayListModel. 
+     * This is a list that represents a sublist view of am ArrayListModel.
+     * 
+     * @todo Maybe make SubLists also ListModels?
+     * 
      * @param <E> The type of elements stored by the parent list.
      */
     private static class SubList<E> extends AbstractList<E>{
