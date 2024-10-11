@@ -528,9 +528,6 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
             if (start < 0 && !match){
                     // This is the start of the range of the changed contents
                 start = i;
-                    // If the modification count has not been incremented yet
-                if (!modified)
-                    modCount++;         // Increment the modification count
                     // The contents of the list have been modified
                 modified = true;
             }   // If we are currently in a section that has changed and a 
@@ -551,6 +548,8 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
                 // Fire a contents change event indicating that the rest of the 
                 // elements in the sublist have changed
             fireContentsChanged(fromIndex+start, toIndex-1);
+        if (modified)           // If the list was modified
+            modCount++;         // Increment the modification count
         return modified;
     }
     /**
