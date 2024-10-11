@@ -236,13 +236,40 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     public int lastIndexOf(Object o){
         return list.lastIndexOf(o);
     }
-    
+    /**
+     * This sorts the elements in this list within the range specified by {@code 
+     * fromIndex} and {@code toIndex}, exclusive, according to the order induced 
+     * by the given {@link Comparator}. If the given comparator is null then all 
+     * elements in this list in the given range must implement the {@link 
+     * Comparable} interface and the elements' natural ordering will be used. 
+     * For more information about sorting lists, refer to the documentation of 
+     * the {@link List#sort(Comparator) List.sort} method. 
+     * @param c The {@code Comparator} to use to compare list elements, or null. 
+     * A null value indicates that the natural ordering of the elements should 
+     * be used.
+     * @param fromIndex The index to start at.
+     * @param toIndex The index to stop at, exclusive.
+     * @throws IndexOutOfBoundsException If the range is out of bounds.
+     * @throws IllegalArgumentException If the given comparator is found to 
+     * violate the Comparator contract (optional).
+     * @throws ClassCastException If this list contains elements that are not 
+     * mutually comparable using the given comparator.
+     * @see List#sort(Comparator) 
+     * @see List#subList(int, int) 
+     */
     protected void sort(Comparator<? super E> c, int fromIndex, int toIndex){
             // If the starting index is the same as the ending index
         if (fromIndex == toIndex)
             return;
-        getRange(fromIndex, toIndex).sort(c);
-        fireContentsChanged(fromIndex, toIndex-1);
+            // Get the sublist to sort
+        List<E> range = getRange(fromIndex, toIndex);
+            // Get a copy of the sublist so that we can compare the two and see 
+        List<E> copy = new ArrayList<>(range);  // what is different
+            // Sort the sublist
+        range.sort(c);
+            // Check for any elements that have changed and fire content changed 
+            // events accordingly
+        fireContentsChanged(fromIndex,toIndex,range,copy);
     }
     @Override
     public void sort(Comparator<? super E> c){
