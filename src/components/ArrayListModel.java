@@ -545,28 +545,6 @@ public class ArrayListModel<E> extends AbstractListModelList<E>{
         return modified;
     }
     /**
-     * This checks to see if the {@code fromIndex} and {@code toIndex} are 
-     * within range. The indexes are in range if they are within bounds and the 
-     * {@code fromIndex} is less than or equal to the {@code toIndex}. If the 
-     * range is out of bounds, then this will throw an 
-     * IndexOutOfBoundsException.
-     * @param fromIndex The index to start at.
-     * @param toIndex The index to stop at, exclusive.
-     * @throws IndexOutOfBoundsException If the range is out of bounds.
-     */
-    private static void checkRange(int fromIndex, int toIndex, int size){
-        if (fromIndex < 0)          // If the start index is negative
-            throw new IndexOutOfBoundsException("From Index out of bounds: " + 
-                    fromIndex + " < 0");
-        else if (toIndex > size)    // If the end index is greater than the size
-            throw new IndexOutOfBoundsException("To Index out of bounds: " + 
-                    toIndex + " > " + size);
-            // If the start index is greater than the stop index
-        else if (fromIndex > toIndex)   
-            throw new IndexOutOfBoundsException("From Index > To Index: "+
-                    fromIndex+" > "+toIndex);
-    }
-    /**
      * This is a list that represents a sublist view of am ArrayListModel. 
      * @param <E> The type of elements stored by the parent list.
      */
