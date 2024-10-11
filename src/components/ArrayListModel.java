@@ -513,7 +513,7 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     public List<E> subList(int fromIndex, int toIndex){
             // Check the given range to see if it is within bounds
         checkRange(fromIndex,toIndex,list.size());
-            // Return a sublist of this list over the given range
+            // Create and return a sublist of this list over the given range
         return new SubList<>(this,fromIndex,toIndex);
     }
     /**
@@ -808,44 +808,66 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         }
         @Override
         public E get(int index) {
+                // Check the index to see if it lies within this sublist
             Objects.checkIndex(index, size);
+                // Check for any concurrent modifications
             checkForComodification();
+                // Get the element in the root list
             return root.get(offset+index);
         }
         @Override
         public int size() {
+                // Check for any concurrent modifications
             checkForComodification();
             return size;
         }
         @Override
         public E set(int index, E element){
+                // Check the index to see if it lies within this sublist
             Objects.checkIndex(index, size);
+                // Check for any concurrent modifications
             checkForComodification();
+                // Set the element in the root list
             return root.set(offset+index, element);
         }
         @Override
         public void replaceAll(UnaryOperator<E> operator){
+                // Check for any concurrent modifications
             checkForComodification();
+                // Replace the elements in the root list that are in the range 
+                // of this sublist
             root.replaceRange(operator, offset, offset+size);
-            updateSizeAndModCount(0);
+                // Update the modification count for this sublist to reflect the 
+            updateSizeAndModCount(0);   // changes
         }
         @Override
         public void add(int index, E element){
-            Objects.checkIndex(index, size+1);
+                // Check the index to see if it lies within or at the end of 
+            Objects.checkIndex(index, size+1);  // this sublist
+                // Check for any concurrent modifications
             checkForComodification();
+                // Add the element into the root list
             root.add(offset+index, element);
-            updateSizeAndModCount(1);
+                // Update the size and modification count for this sublist to 
+            updateSizeAndModCount(1);   // reflect the changes
         }
         @Override
         public boolean addAll(int index, Collection<? extends E> c){
-            Objects.checkIndex(index, size+1);
+                // Check the index to see if it lies within or at the end of 
+            Objects.checkIndex(index, size+1);  // this sublist
+                // If the given collection is empty
             if (c.isEmpty())
                 return false;
+                // Get the size of the given collection
             int cSize = c.size();
+                // Check for any concurrent modifications
             checkForComodification();
+                // Add the elements from the given collection into the root list 
             boolean modified = root.addAll(offset+index, c);
-            updateSizeAndModCount(cSize);
-            return modified;
+                // Update the size and modification count for this sublist to 
+            updateSizeAndModCount(cSize);       // reflect the changes
+                // Return whether the root list was modified (it most likely 
+            return modified;    // was)
         }
         @Override
         public boolean addAll(Collection<? extends E> c){
@@ -853,40 +875,94 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         }
         @Override
         public E remove(int index){
+                // Check the index to see if it lies within this sublist
             Objects.checkIndex(index, size);
+                // Check for any concurrent modifications
             checkForComodification();
+                // Remove the element at the given index from the root list
             E value = root.remove(offset+index);
-            updateSizeAndModCount(-1);
+                // Update the size and modification count for this sublist to 
+            updateSizeAndModCount(-1);      // reflect the changes
             return value;
         }
         @Override
         public boolean remove(Object o){
+                // Get the first index of the element to be removed
             int index = indexOf(o);
-            if (index < 0)
+                // If the element was not found in this list (the index is 
+            if (index < 0)      //negative)
                 return false;
+                // Remove the first instance of the given element
             remove(index);
             return true;
         }
         @Override
         protected void removeRange(int fromIndex, int toIndex){
+                // Check for any concurrent modifications
             checkForComodification();
+                // Remove the range from the root list between the given indexes
             root.removeRange(offset+fromIndex, offset+toIndex);
-            updateSizeAndModCount(fromIndex-toIndex);
+                // Update the size and modification count for this sublist to 
+            updateSizeAndModCount(fromIndex-toIndex);   // reflect the changes
         }
         @Override
         public boolean removeIf(Predicate<? super E> filter){
+                // Check for any concurrent modifications
             checkForComodification();
+                // Get the current size of the root list
             int temp = root.size();
+                // Remove the elements from the root list that match the given 
+                // filter and that are in the range covered by this sublist
             boolean modified = root.removeIf(filter, offset, offset+size);
-            updateSizeAndModCount(temp - root.size());
+                // Update the size and modification count for this sublist to 
+            updateSizeAndModCount(temp - root.size());  // reflect the changes
+                // Return whether the root list was modified
             return modified;
         }
-        
+        /**
+         * This removes all elements in this list depending on whether they are 
+         * contained within the given collection. Depending on the value 
+         * provided for {@code retain}, this will either retain only the 
+         * elements in this list that are contained within the given collection 
+         * or this will remove all the elements from this list that are 
+         * contained within the given collection. In other words, if {@code 
+         * retain} is {@code true}, then this will remove any elements from this 
+         * list that are not in the given collection, and if {@code retain} is 
+         * {@code false}, then this will remove any elements from this list that 
+         * are in the given collection. This is used for both the {@code 
+         * removeAll} and {@code retainAll} methods in order to share code 
+         * between the two methods.
+         * @param c The collection containing the elements to be compared with 
+         * this list (the elements to be either removed or retained in this 
+         * list).
+         * @param retain Whether the elements in the given collection should be 
+         * retained or removed from this list ({@code true} if the elements in 
+         * {@code c} should be retained in this list, {@code false} if the 
+         * elements in {@code c} should be removed from this list). 
+         * @return Whether any elements were removed from the list.
+         * @throws UnsupportedOperationException If elements cannot be removed 
+         * from this list. Implementations may throw this exception if an 
+         * element cannot be removed depending on whether it's in the given 
+         * collection or if removal from this list is not supported in general.
+         * @throws NullPointerException If this list contains a null element and 
+         * the given collection does not permit null elements (optional), or if 
+         * the given collection is null.
+         * @see #removeAll(Collection) 
+         * @see #retainAll(Collection) 
+         * @see #remove(Object) 
+         * @see #contains(Object) 
+         */
         protected boolean batchRemove(Collection<?> c, boolean retain){
+                // Check for any concurrent modifications
             checkForComodification();
+                // Get the current size of the root list
             int temp = root.size();
+                // Remove the elements from the root list that match the given 
+                // filter and that are in the range covered by this sublist
             boolean modified = root.batchRemove(c, retain, offset, offset+size);
-            updateSizeAndModCount(temp - root.size());
+                // Update the size and modification count for this sublist to 
+            updateSizeAndModCount(temp - root.size());  // reflect the changes
+                // Return whether the root list was modified
             return modified;
         }
         @Override
@@ -903,19 +979,29 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         }
         @Override
         public ListIterator<E> listIterator(int index) {
+                // Check for any concurrent modifications
             checkForComodification();
-            Objects.checkIndex(index, size+1);
+                // Check the index to see if it lies within or at the end of 
+            Objects.checkIndex(index, size+1);  // this sublist
             return new ListIterator<E>() {
-                private final ListIterator<E> itr = root.listIterator(offset+index);
+                /**
+                 * This is the list iterator from the root list to be used to 
+                 * iterate through the elements in this list.
+                 */
+                private final ListIterator<E> itr = 
+                        root.listIterator(offset+index);
                 @Override
                 public boolean hasNext() {
                     return nextIndex() < size;
                 }
                 @Override
                 public E next() {
+                        // If there are no more elements in this list
                     if (!hasNext())
                         throw new NoSuchElementException();
+                        // Check for any concurrent modifications
                     checkForComodification();
+                        // Return the next element in the root list
                     return itr.next();
                 }
                 @Override
@@ -924,9 +1010,13 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
                 }
                 @Override
                 public E previous() {
+                        // If there are no elements in this list before the 
+                        // current element
                     if (!hasPrevious())
                         throw new NoSuchElementException();
+                        // Check for any concurrent modifications
                     checkForComodification();
+                        // Return the previous element in the root list
                     return itr.previous();
                 }
                 @Override
@@ -939,37 +1029,69 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
                 }
                 @Override
                 public void remove() {
+                        // Check for any concurrent modifications
                     checkForComodification();
+                        // Remove the element from the root list
                     itr.remove();
+                        // Update the size and modification count for this 
+                        // sublist to reflect the changes
                     updateSizeAndModCount(-1);
                 }
                 @Override
                 public void set(E e) {
+                        // Check for any concurrent modifications
                     checkForComodification();
+                        // Set the element in the root list
                     itr.set(e);
                 }
                 @Override
                 public void add(E e) {
+                        // Check for any concurrent modifications
                     checkForComodification();
+                        // Add the element to the root list
                     itr.add(e);
+                        // Update the size and modification count for this 
+                        // sublist to reflect the changes
                     updateSizeAndModCount(1);
                 }
             };
         }
         @Override
         public List<E> subList(int fromIndex, int toIndex){
+                // Check the range for this list
             checkRange(fromIndex,toIndex,size);
+                // Create and return a sublist of this list over the given range
             return new SubList<>(this,fromIndex,toIndex);
         }
-        
+        /**
+         * This checks for concurrent modification to this list and the root  
+         * ArrayListModel, and if so, throws a 
+         * {@code ConcurrentModificationException}. This is to prevent the two 
+         * lists from getting out of sync with one another.
+         * @throws ConcurrentModificationException If this list and the root  
+         * list have been modified concurrently.
+         */
         private void checkForComodification() {
+                // If the root list's modification count does not match this 
+                // sublist's modification count
             if (root.modCount != this.modCount)
                 throw new ConcurrentModificationException();
         }
-        
+        /**
+         * This updates the size and modification count for this sublist. This 
+         * should be called whenever the size and structure of this sublist 
+         * changes to ensure that it and its parents stay in sync with each 
+         * other and with the root ArrayListModel.
+         * @param change The amount by which the size of this list has changed.
+         */
         private void updateSizeAndModCount(int change) {
+                // Go through the heirarchy of sublists, starting with this list 
+                // and ending at the sublist before the root
             for(SubList<E> temp = this; temp != null; temp = temp.parent){
+                    // Add the size change
                 temp.size += change;
+                    // Update the list's modification count to reflect the root 
+                    // list's modification count
                 temp.modCount = root.modCount;
             }
         }
