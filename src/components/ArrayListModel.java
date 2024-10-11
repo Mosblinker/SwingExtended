@@ -629,13 +629,24 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     // intervals instead of individual indexes
     
     private static class SubList<E> extends AbstractList<E>{
-        
+        /**
+         * The root ArrayListModel for this branch of SubLists. This is the 
+         * ArrayListModel that either this SubList or its parent were created 
+         * by.
+         */
         private final ArrayListModel<E> root;
-        
+        /**
+         * The parent SubList for this SubList, or null.
+         */
         private final SubList<E> parent;
-        
+        /**
+         * The offset into the root ArrayListModel for the first element in this 
+         * SubList.
+         */
         private final int offset;
-        
+        /**
+         * The size of this SubList.
+         */
         private int size;
         
         private SubList(ArrayListModel<E> root, int fromIndex, int toIndex){
