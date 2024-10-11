@@ -73,7 +73,7 @@ public class ArrayComboBoxModel<E> extends ArrayListModel<E> implements
     @Override
     protected boolean removeIf(Predicate<? super E> filter, int fromIndex, int toIndex){
         boolean modified = super.removeIf(filter, fromIndex, toIndex);
-        if (modified && selected != null && contains(selected))
+        if (modified && selected != null && !contains(selected))
             setSelectedItem(null);
         return modified;
     }
