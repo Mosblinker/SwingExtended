@@ -234,10 +234,17 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
                 if (filter != null)
                         // Test to see if the current element matches the filter
                     match = filter.test(itr.next());
-                else    // Test to see if the current element is in the given 
+                else{
+                    try{    // Test to see if the current element is in the 
+                            // given collection
+                        match = c.contains(itr.next());
+                        // Catch any NullPointerExceptions thrown by the given 
                         // collection
-                    match = c.contains(itr.next());
-                    // If either the element is a match for the 
+                    } catch (NullPointerException ex){
+                            // The collection clearly does not contain the 
+                        match = false;  // element
+                    }
+                }   // If either the element is a match for the 
                     // filter/collection and matching elements should be removed 
                     // or if the element is not a match and only matching 
                     // elements should be retained
