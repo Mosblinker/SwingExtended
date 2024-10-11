@@ -419,6 +419,64 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         fireListDataEvent(ListDataEvent.CONTENTS_CHANGED,index0,index1);
     }
     /**
+     * This checks for any elements that have changed in the given sublist of 
+     * the internal list using the given unmodified copy of the sublist to 
+     * detect changes, and fires {@code ListDataEvent}s that cover the ranges of 
+     * elements that were altered.
+     * 
+     * @todo Possibly make this method also check for removed or added elements 
+     * by checking the sizes of the two lists. This may not be necessary, 
+     * though.
+     * 
+     * @param fromIndex The index that the sublist starts at.
+     * @param toIndex The index that the sublist stops at, exclusive.
+     * @param list The sublist of the internal list that was altered.
+     * @param unchanged An unchanged copy of the sublist from before any 
+     * operations were performed on it.
+     * @return Whether the given list was altered.
+     * @see #fireContentsChanged(int, int) 
+     */
+    private boolean fireContentsChanged(int fromIndex, int toIndex,
+            List<E> list, List<E> unchanged){
+            // This will get whether the contents of the list has been altered
+        boolean modified = false;
+            // This gets the starting index for the range that changed
+        int start = -1;
+            // Go through the elements that were sorted
+        for (int i = 0; i < list.size(); i++){
+                // Check if the element at the current index was changed
+            boolean match = Objects.equals(list.get(i), unchanged.get(i));
+                // If the current element has changed and the range has not 
+                // started yet
+            if (start < 0 && !match){
+                    // This is the start of the range of the changed contents
+                start = i;
+                    // If the modification count has not been incremented yet
+                if (!modified)
+                    modCount++;         // Increment the modification count
+                    // The contents of the list have been modified
+                modified = true;
+            }   // If we are currently in a section that has changed and a 
+                // matching element has been found
+            else if (start >= 0 && match){
+                    // This marks the end of the current range of changed 
+                    // contents. Fire a contents change event indicating that 
+                    // all elements between the start index and the previous 
+                    // index have changed
+                fireContentsChanged(fromIndex+start, fromIndex+i-1);
+                start = -1;
+            }
+        }   // If the starting index for the range that changed is not negative 
+            // and is within the sublist that was sorted (i.e. if everything 
+            // starting from the starting index to the end of the sublist has 
+            // changed)
+        if (start >= 0 && start < list.size())
+                // Fire a contents change event indicating that the rest of the 
+                // elements in the sublist have changed
+            fireContentsChanged(fromIndex+start, toIndex-1);
+        return modified;
+    }
+    /**
      * This checks to see if the {@code fromIndex} and {@code toIndex} are 
      * within range. The indexes are in range if they are within bounds and the 
      * {@code fromIndex} is less than or equal to the {@code toIndex}. If the 
