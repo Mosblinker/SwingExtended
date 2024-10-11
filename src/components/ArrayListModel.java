@@ -204,7 +204,55 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
         remove(index);
         return true;
     }
-    
+    /**
+     * This method handles the removal of batches of elements from the internal 
+     * {@code list} that lie within the range specified by {@code fromIndex} and 
+     * {@code toIndex}, exclusive, whether it be removing elements using a 
+     * filter or removing elements based off whether they are in a collection. 
+     * If a filter is provided, then this will use the filter to determine if an 
+     * element is to be removed. If a collection is provided, then this will use 
+     * whether an element is found within the collection to determine if an 
+     * element is to be removed. While providing both a filter and a collection 
+     * is not advised, if both are provided, only the filter will be used. If 
+     * {@code retain} is {@code true}, then elements in this that either match 
+     * the given filter or an element in the given collection will be retained, 
+     * with non-matching elements being removed. If {@code retain} is {@code 
+     * false}, then elements in this that match the filter or the collection 
+     * will be removed. This is used in the {@link #removeIf(Predicate, int, 
+     * int) removeIf} and {@link #batchRemove(Collection, boolean, int, int) 
+     * batchRemove} methods, since they are the same in almost every way except 
+     * how they determine whether an element is to be removed. Any errors or 
+     * runtime exceptions thrown during iteration over the list or by the 
+     * predicate will be relayed to the caller. 
+     * @param filter The predicate which returns {@code true} for the elements 
+     * to be removed, or null if elements should be removed whether they are in 
+     * the given collection.
+     * @param c The collection containing the elements to be compared with this 
+     * list (the elements to be either removed or retained in this list), or 
+     * null if a predicate filter is being used.
+     * @param retain Whether the elements that match the given predicate filter 
+     * or are in the given collection should be retained or removed from this 
+     * list ({@code true} if the matching elements should be retained in this 
+     * list, {@code false} if the matching elements  should be removed from this 
+     * list).
+     * @param fromIndex The index to start at.
+     * @param toIndex The index to stop at, exclusive.
+     * @return Whether any elements were removed from the list.
+     * @throws IndexOutOfBoundsException If the range is out of bounds.
+     * @throws NullPointerException If both the given predicate and collection 
+     * are null.
+     * @see #removeIf(Predicate, int, int) 
+     * @see #batchRemove(Collection, boolean, int, int) 
+     * @see List#removeIf(Predicate) 
+     * @see #removeIf(Predicate) 
+     * @see List#removeAll(Collection) 
+     * @see #removeAll(Collection) 
+     * @see List#retainAll(Collection) 
+     * @see #retainAll(Collection) 
+     * @see #remove(Object) 
+     * @see #contains(Object) 
+     * @see List#subList(int, int) 
+     */
     private boolean batchRemove(Predicate<? super E> filter, Collection<?> c, 
             boolean retain, int fromIndex, int toIndex){
             // If both the filter and the collection are null (at least one must 
