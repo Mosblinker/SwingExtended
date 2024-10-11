@@ -843,9 +843,9 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
                 return false;
             int cSize = c.size();
             checkForComodification();
-            root.addAll(offset+index, c);
+            boolean modified = root.addAll(offset+index, c);
             updateSizeAndModCount(cSize);
-            return true;
+            return modified;
         }
         @Override
         public boolean addAll(Collection<? extends E> c){
