@@ -259,6 +259,9 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
      * @param fromIndex The index to start at.
      * @param toIndex The index to stop at, exclusive.
      * @throws IndexOutOfBoundsException If the range is out of bounds.
+     * @throws UnsupportedOperationException If this list is unmodifiable. 
+     * Implementations may throw this exception if an element cannot be set or 
+     * if modifications to this list are not supported in general.
      * @throws IllegalArgumentException If the given comparator is found to 
      * violate the Comparator contract (optional).
      * @throws ClassCastException If this list contains elements that are not 
