@@ -12,7 +12,7 @@ import javax.swing.event.*;
 /**
  * 
  * @author Milo Steier
- * @param <E>
+ * @param <E> The type of elements to be stored in this list.
  */
 public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     /**
@@ -23,12 +23,18 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
      * The list of EventListeners registered to this model.
      */
     protected EventListenerList listenerList;
-    
+    /**
+     * This constructs an ArrayListModel that uses the given {@code ArrayList} 
+     * as its internal list.
+     * @param list The list to use to store the elements.
+     */
     private ArrayListModel(ArrayList<E> list){
         this.list = list;
         listenerList = new EventListenerList();
     }
-
+    /**
+     * This constructs an empty ArrayListModel.
+     */
     public ArrayListModel() {
         this(new ArrayList<>());
     }
@@ -62,15 +68,21 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     }
     @Override
     public void add(int index, E element){
+            // Add the element to the list at the given index
         list.add(index, element);
-        modCount++;     // Increment the modification count
+        modCount++;         // Increment the modification count
+            // Indicate that an element has been added to this list
         fireIntervalAdded(index,index);
     }
     @Override
     public boolean addAll(int index, Collection<? extends E> c){
+            // Add all the elements in the given collection to this list and get 
+            // if this list was modified as a result
         boolean modified = list.addAll(index, c);
+            // If this list was modified
         if (modified){
             modCount++;     // Increment the modification count
+                // Indicate that elements have been added to this list
             fireIntervalAdded(index,index+c.size()-1);
         }
         return modified;
@@ -81,19 +93,36 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     }
     @Override
     public E set(int index, E element){
+            // Set the value at the given index and get the old element
         E oldValue = list.set(index, element);
+            // Indicate that the contents of this list have changed at the given 
+            // index
         fireContentsChanged(index,index);
         return oldValue;
     }
-    
+    /**
+     * This returns a sublist of the internal {@code list} that covers the range 
+     * to be processed. If the range covers the whole of the internal list, then 
+     * the internal list will be returned. This differs from {@link subList} in 
+     * that this invokes the internal list's {@code subList} method instead of 
+     * producing a sublist of this {@code ArrayListModel}. The returned list 
+     * will not fire {@code ListDataEvent}s if altered in any way.
+     * @param fromIndex The index to start at.
+     * @param toIndex The index to stop at, exclusive.
+     * @return A sublist of the internal list to be used.
+     * @throws IndexOutOfBoundsException If the range is out of bounds.
+     * @see #subList(int, int) 
+     */
     private List<E> getRange(int fromIndex, int toIndex){
-        if (fromIndex == 0 && toIndex == size())
+            // If the range covers the entire list
+        if (fromIndex == 0 && toIndex == list.size())
             return list;
         else
             return list.subList(fromIndex, toIndex);
     }
     
     protected void replaceRange(UnaryOperator<E> operator, int fromIndex, int toIndex){
+            // If the starting index is the same as the ending index
         if (fromIndex == toIndex)
             return;
         getRange(fromIndex, toIndex).replaceAll(operator);
@@ -209,6 +238,7 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     }
     
     protected void sort(Comparator<? super E> c, int fromIndex, int toIndex){
+            // If the starting index is the same as the ending index
         if (fromIndex == toIndex)
             return;
         getRange(fromIndex, toIndex).sort(c);
@@ -232,7 +262,9 @@ public class ArrayListModel<E> extends AbstractList<E> implements ListModel<E>{
     }
     @Override
     public List<E> subList(int fromIndex, int toIndex){
+            // Check the given range to see if it is within bounds
         checkRange(fromIndex,toIndex,list.size());
+            // Return a sublist of this list over the given range
         return new SubList<>(this,fromIndex,toIndex);
     }
     /**
