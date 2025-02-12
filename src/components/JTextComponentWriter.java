@@ -5,22 +5,44 @@
 package components;
 
 import java.io.*;
-import java.util.Objects;
 import javax.swing.text.JTextComponent;
 
 /**
  * This is a character stream that collects its output in a string buffer, which 
- * can then be used to write the output to a {@code JTextComponent}.
- * @author Mosblinker
+ * can then be used to write the output to a {@code JTextComponent}. <p>
+ * 
+ * When a {@code JTextComponentWriter} is flushed, the contents of its buffer 
+ * will be appended to its text component, after which the buffer will be 
+ * cleared. <p>
+ * 
+ * Closing a {@code JTextComponentWriter} has no effect, similar to how closing 
+ * a {@code StringWriter} has no effect. The methods in this class can be called 
+ * after this stream is closed without generating an {@code IOException}.
+ * @author Milo Steier
+ * @see JTextComponent
+ * @see StringWriter
  */
 public class JTextComponentWriter extends Writer{
-    
+    /**
+     * This is the text component to write to.
+     */
     private final JTextComponent component;
-    
+    /**
+     * This is the StringWriter to use as a buffer for the output.
+     */
     private final StringWriter buffer;
-    
+    /**
+     * This constructs a {@code JTextComponentWriter} that will write its output 
+     * to the given text component.
+     * @param component The text component to write the output to (cannot be 
+     * null).
+     * @throws NullPointerException If the given text component is null.
+     */
     public JTextComponentWriter(JTextComponent component){
-        this.component = Objects.requireNonNull(component);
+            // If the given text component is null
+        if (component == null)
+            throw new NullPointerException();
+        this.component = component;
         buffer = new StringWriter();
     }
     
@@ -28,7 +50,7 @@ public class JTextComponentWriter extends Writer{
         return component;
     }
     
-    protected StringWriter getBuffer(){
+    public StringWriter getBuffer(){
         return buffer;
     }
     
@@ -76,7 +98,9 @@ public class JTextComponentWriter extends Writer{
     public void flush() {
             // Flush the buffer StringWriter
         buffer.flush();
+            // Append the buffer's text to the component's text
         component.setText(component.getText()+buffer.toString());
+            // Clear the buffer
         buffer.getBuffer().delete(0, buffer.getBuffer().length());
     }
     /**
