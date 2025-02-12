@@ -98,10 +98,15 @@ public class JTextComponentWriter extends Writer{
     public void flush() {
             // Flush the buffer StringWriter
         buffer.flush();
-            // Append the buffer's text to the component's text
-        component.setText(component.getText()+buffer.toString());
-            // Clear the buffer
-        buffer.getBuffer().delete(0, buffer.getBuffer().length());
+            // Get the buffer's current length
+        int length = buffer.getBuffer().length();
+            // If the buffer is not empty
+        if (length != 0){
+                // Append the text in the buffer to the component's text
+            component.setText(component.getText()+buffer.toString());
+                // Clear the buffer
+            buffer.getBuffer().delete(0, length);
+        }
     }
     /**
      * {@inheritDoc }
