@@ -45,54 +45,117 @@ public class JTextComponentWriter extends Writer{
         this.component = component;
         buffer = new StringWriter();
     }
-    
+    /**
+     * This returns the text component to which this stream writes its output 
+     * to.
+     * @return The text component that this writes its output to.
+     */
     public JTextComponent getTextComponent(){
         return component;
     }
-    
+    /**
+     * This returns the {@code StringWriter} that is used internally as a buffer 
+     * for the output of this character stream.
+     * @return The {@code StringWriter} holding the current buffer value.
+     */
     public StringWriter getBuffer(){
         return buffer;
     }
-    
+    /**
+     * This writes a single character.
+     * @param c {@inheritDoc }
+     */
     @Override
     public void write(int c){
         buffer.write(c);
     }
+    /**
+     * {@inheritDoc }
+     * @param cbuf {@inheritDoc }
+     */
     @Override
     public void write(char[] cbuf){
         try{
             buffer.write(cbuf);
         } catch (IOException ex) {}
     }
+    /**
+     * {@inheritDoc }
+     * @param cbuf {@inheritDoc }
+     * @param off {@inheritDoc }
+     * @param len {@inheritDoc }
+     * @throws IndexOutOfBoundsException If either {@code off} is negative, 
+     * {@code len} is negative, or if {@code off + len} is either negative or 
+     * greater than the length of the given array.
+     */
     @Override
     public void write(char[] cbuf, int off, int len) {
         buffer.write(cbuf, off, len);
     }
+    /**
+     * {@inheritDoc }
+     * @param str {@inheritDoc }
+     */
     @Override
     public void write(String str){
         buffer.write(str);
     }
+    /**
+     * {@inheritDoc }
+     * @param str The string to be written
+     * @param off {@inheritDoc }
+     * @param len {@inheritDoc }
+     * @throws IndexOutOfBoundsException If either {@code off} is negative, 
+     * {@code len} is negative, or if {@code off + len} is either negative or 
+     * greater than the length of the given string.
+     */
     @Override
     public void write(String str, int off, int len){
         buffer.write(str, off, len);
     }
+    /**
+     * {@inheritDoc }
+     * @param csq {@inheritDoc }
+     * @return {@inheritDoc }
+     */
     @Override
     public JTextComponentWriter append(CharSequence csq){
         buffer.append(csq);
         return this;
     }
+    /**
+     * {@inheritDoc }
+     * @param csq {@inheritDoc }
+     * @param start {@inheritDoc }
+     * @param end {@inheritDoc }
+     * @return {@inheritDoc }
+     * @throws IndexOutOfBoundsException If either {@code start} or {@code end} 
+     * are negative, {@code start} is greater than {@code end}, or if {@code 
+     * end} is greater than {@code csq.length()}.
+     */
     @Override
     public JTextComponentWriter append(CharSequence csq, int start, int end){
         buffer.append(csq, start, end);
         return this;
     }
+    /**
+     * {@inheritDoc }
+     * @param c {@inheritDoc }
+     * @return {@inheritDoc }
+     */
     @Override
     public JTextComponentWriter append(char c){
         buffer.append(c);
         return this;
     }
     /**
-     * {@inheritDoc }
+     * This flushes this stream, writing any characters in its buffer to the end 
+     * of the {@link #getTextComponent() text component}. The buffer will be 
+     * empty after this is called.
+     * @see #getTextComponent() 
+     * @see #getBuffer() 
+     * @see JTextComponent#getText() 
+     * @see JTextComponent#setText(String) 
      */
     @Override
     public void flush() {
@@ -109,8 +172,10 @@ public class JTextComponentWriter extends Writer{
         }
     }
     /**
-     * {@inheritDoc }
-     * @throws IOException {@inheritDoc }
+     * This method has no effect, as closing a {@code JTextComponentWriter} has 
+     * no effect. The methods in this class can be called after this stream has 
+     * been closed without generating an {@code IOException}.
+     * @throws IOException If an I/O error occurs. 
      */
     @Override
     public void close() throws IOException {
@@ -118,10 +183,9 @@ public class JTextComponentWriter extends Writer{
     }
     /**
      * This returns a String representation of this {@code 
-     * JTextComponentWriter}. 
-     * This method is primarily intended to be used only for debugging purposes, 
-     * and the content and format of the returned String may vary between 
-     * implementations.
+     * JTextComponentWriter}. This method is primarily intended to be used only 
+     * for debugging purposes, and the content and format of the returned String 
+     * may vary between implementations.
      * @return A String representation of this {@code JTextComponentWriter}.
      */
     protected String paramString(){
