@@ -258,10 +258,11 @@ public abstract class AbstractListModelList<E> extends AbstractList<E>
      * This checks to see if the {@code fromIndex} and {@code toIndex} are 
      * within range. The indexes are in range if they are within bounds and the 
      * {@code fromIndex} is less than or equal to the {@code toIndex}. If the 
-     * range is out of bounds, then this will throw an 
-     * IndexOutOfBoundsException.
+     * range is out of bounds, then this will throw an {@code 
+     * IndexOutOfBoundsException}.
      * @param fromIndex The index to start at.
      * @param toIndex The index to stop at, exclusive.
+     * @param size The size of the list.
      * @throws IndexOutOfBoundsException If the range is out of bounds.
      */
     protected static void checkRange(int fromIndex, int toIndex, int size){

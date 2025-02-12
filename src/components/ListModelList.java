@@ -216,7 +216,6 @@ public class ListModelList <E> extends AbstractListModelList<E>{
      * @param element The element to insert into the model.
      * @throws UnsupportedOperationException If support for adding elements to 
      * the model is unknown.
-     * @throws 
      * @see #add(int, Object) 
      * @see #extractListModel() 
      * @see DefaultListModel#add(int, Object) 

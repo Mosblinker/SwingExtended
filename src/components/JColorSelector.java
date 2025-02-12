@@ -534,7 +534,7 @@ public class JColorSelector extends AbstractConfirmDialogPanel{
      * the {@link JColorChooser#addChooserPanel(AbstractColorChooserPanel) 
      * addChooserPanel} method of the internal color chooser.
      * @param panel The AbstractColorChooserPanel to be added.
-     * @see #removeChooserPanelAbstractColorChooserPanel) 
+     * @see #removeChooserPanel(AbstractColorChooserPanel) 
      * @see #getChooserPanels() 
      * @see #setChooserPanels(AbstractColorChooserPanel[]) 
      * @see JColorChooser#addChooserPanel(AbstractColorChooserPanel) 
@@ -584,7 +584,7 @@ public class JColorSelector extends AbstractConfirmDialogPanel{
      * @see #addChooserPanel(AbstractColorChooserPanel) 
      * @see #removeChooserPanel(AbstractColorChooserPanel) 
      * @see JColorChooser#getChooserPanels() 
-     * @see #setChooserPanels(.AbstractColorChooserPanel[]) 
+     * @see #setChooserPanels(AbstractColorChooserPanel[]) 
      * @see #getColorChooser() 
      */
     public AbstractColorChooserPanel[] getChooserPanels() {
