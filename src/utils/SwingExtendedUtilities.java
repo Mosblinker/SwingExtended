@@ -8,6 +8,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Window;
+import java.util.Iterator;
+import javax.swing.*;
 
 /**
  * This is a library class with some additional utilities methods not found in 
@@ -75,5 +77,32 @@ public final class SwingExtendedUtilities {
             // If a rectangle was provided
         if (rect != null)
             setComponentBounds(comp,rect.x,rect.y,rect.width,rect.height);
+    }
+    /**
+     * 
+     * @param buttonGroup
+     * @param arr
+     * @return 
+     */
+    public static AbstractButton[] toArray(ButtonGroup buttonGroup, AbstractButton[] arr){
+            // If the array is null or too small
+        if (arr == null || arr.length < buttonGroup.getButtonCount())
+            arr = new AbstractButton[buttonGroup.getButtonCount()];
+            // The current index in the array
+        int index = 0;
+            // An iterator to go over the array
+        Iterator<AbstractButton> itr = buttonGroup.getElements().asIterator();
+            // While there are still elements in the iterator
+        while(itr.hasNext())
+            arr[index++] = itr.next();
+        return arr;
+    }
+    /**
+     * 
+     * @param buttonGroup
+     * @return 
+     */
+    public static AbstractButton[] toArray(ButtonGroup buttonGroup){
+        return toArray(buttonGroup,new AbstractButton[buttonGroup.getButtonCount()]);
     }
 }
