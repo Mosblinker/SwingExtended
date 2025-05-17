@@ -163,4 +163,49 @@ public final class SwingExtendedUtilities {
         return buttonGroup.getButtonCount() == 0 || 
                 buttonGroup.getSelection() == null;
     }
+    /**
+     * 
+     * @param buttonGroup
+     * @return 
+     */
+    public static AbstractButton getSelectedButton(ButtonGroup buttonGroup){
+            // If the button group is empty or has no selection
+        if (isSelectionEmpty(buttonGroup))
+            return null;
+            // An iterator to go through the buttons in the button group
+        Iterator<AbstractButton> itr = buttonGroup.getElements().asIterator();
+            // While there are still elements in the iterator
+        while(itr.hasNext()){
+                // Get the current button
+            AbstractButton button = itr.next();
+                // If the current button is selected
+            if (button.isSelected())
+                return button;
+        }
+        return null;
+    }
+    /**
+     * 
+     * @param buttonGroup
+     * @return 
+     */
+    public static int indexOfSelected(ButtonGroup buttonGroup){
+            // If the button group is empty or has no selection
+        if (isSelectionEmpty(buttonGroup))
+            return -1;
+            // The current index in the button group
+        int index = 0;
+            // An iterator to go through the buttons in the button group
+        Iterator<AbstractButton> itr = buttonGroup.getElements().asIterator();
+            // While there are still elements in the iterator
+        while(itr.hasNext()){
+                // Get the current button
+            AbstractButton button = itr.next();
+                // If the current button is selected
+            if (button.isSelected())
+                return index;
+            index++;
+        }
+        return -1;
+    }
 }
