@@ -129,4 +129,29 @@ public final class SwingExtendedUtilities {
         }
         return button;
     }
+    /**
+     * 
+     * @param buttonGroup
+     * @param button
+     * @return 
+     */
+    public static int indexOf(ButtonGroup buttonGroup, AbstractButton button){
+            // If there are no buttons in the group
+        if (buttonGroup.getButtonCount() == 0)
+            return -1;
+            // The current index in the button group
+        int index = 0;
+            // An iterator to go through the buttons in the button group
+        Iterator<AbstractButton> itr = buttonGroup.getElements().asIterator();
+            // While there are still elements in the iterator
+        while(itr.hasNext()){
+                // Get the current button
+            AbstractButton temp = itr.next();
+                // If the current button matches the given button
+            if (Objects.equals(temp, button))
+                return index;
+            index++;
+        }
+        return -1;
+    }
 }
