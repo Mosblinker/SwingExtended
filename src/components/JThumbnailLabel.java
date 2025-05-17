@@ -3400,6 +3400,43 @@ public class JThumbnailLabel extends JLabel{
                 convertDimensionFromImage(rect.getSize()));
     }
     /**
+     * 
+     * @param tx
+     * @return 
+     */
+    public AffineTransform applyThumbnailRegionTransform(AffineTransform tx){
+            // If no icon is set
+        if (!isIconSet())
+                // If the given transform is not null, return it unmodified. 
+                // Otherwise, return the identity tranformation
+            return (tx != null) ? tx : new AffineTransform();
+            // If the given tranform is null
+        if (tx == null)
+            return AffineTransform.getTranslateInstance(getThumbnailRegionX(), 
+                    getThumbnailRegionY());
+        tx.translate(getThumbnailRegionX(), getThumbnailRegionY());
+        return tx;
+    }
+    /**
+     * 
+     * @param tx
+     * @return 
+     */
+    public AffineTransform getThumbnailRegionTransform(AffineTransform tx){
+            // If the given transform is not null
+        if (tx != null)
+                // Reset it to the identity transformation
+            tx.setToIdentity();
+        return applyThumbnailRegionTransform(tx);
+    }
+    /**
+     * 
+     * @return 
+     */
+    public AffineTransform getThumbnailRegionTransform(){
+        return getThumbnailRegionTransform(null);
+    }
+    /**
      * This returns a Transform that maps the image or icon's coordinate space 
      * to the thumbnail region's coordinate space. That is to say, the returned 
      * Transform maps coordinates on the image or icon to the coordinates on the 
