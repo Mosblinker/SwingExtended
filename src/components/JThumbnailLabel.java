@@ -3400,12 +3400,134 @@ public class JThumbnailLabel extends JLabel{
                 convertDimensionFromImage(rect.getSize()));
     }
     /**
+     * 
+     * @param tx
+     * @return 
+     */
+    public AffineTransform applyThumbnailRegionTransform(AffineTransform tx){
+            // If no icon is set
+        if (!isIconSet())
+                // If the given transform is not null, return it unmodified. 
+                // Otherwise, return the identity tranformation
+            return (tx != null) ? tx : new AffineTransform();
+            // If the given tranform is null
+        if (tx == null)
+            return AffineTransform.getTranslateInstance(getThumbnailRegionX(), 
+                    getThumbnailRegionY());
+        tx.translate(getThumbnailRegionX(), getThumbnailRegionY());
+        return tx;
+    }
+    /**
+     * 
+     * @param tx
+     * @return 
+     */
+    public AffineTransform getThumbnailRegionTransform(AffineTransform tx){
+            // If the given transform is not null
+        if (tx != null)
+                // Reset it to the identity transformation
+            tx.setToIdentity();
+        return applyThumbnailRegionTransform(tx);
+    }
+    /**
+     * 
+     * @return 
+     */
+    public AffineTransform getThumbnailRegionTransform(){
+        return getThumbnailRegionTransform(null);
+    }
+    /**
+     * This returns a Transform that maps the image or icon's coordinate space 
+     * to the thumbnail region's coordinate space. That is to say, the returned 
+     * Transform maps coordinates on the image or icon to the coordinates on the 
+     * scaled image or icon. 
+     * @param tx An AffineTransform object to apply the transformations to.
+     * @return An AffineTransform representing the transformations applied to 
+     * the image or icon to get the thumbnail, or an unmodified transform if no 
+     * icon is set.
+     * @see #getIcon() 
+     * @see #setIcon(javax.swing.Icon) 
+     * @see #getImage() 
+     * @see #setImage(java.awt.Image) 
+     * @see #getImageWidth() 
+     * @see #getImageHeight() 
+     * @see #getImageScaleMode() 
+     * @see #setImageScaleMode(int) 
+     * @see #isAspectRatioMaintained() 
+     * @see #setAspectRatioMaintained(boolean) 
+     * @see #isImageAlwaysScaled() 
+     * @see #setImageAlwaysScaled(boolean) 
+     * @see #getThumbnailBorder() 
+     * @see #setThumbnailBorder(javax.swing.border.Border) 
+     * @see #getThumbnailX() 
+     * @see #getThumbnailY() 
+     * @see #getThumbnailWidth() 
+     * @see #getThumbnailHeight() 
+     * @see #getScaleX() 
+     * @see #getScaleY() 
+     */
+    public AffineTransform applyThumbnailTransform(AffineTransform tx){
+            // If no icon is set
+        if (!isIconSet())
+                // If the given transform is not null, return it unmodified. 
+                // Otherwise, return the identity tranformation
+            return (tx != null) ? tx : new AffineTransform();
+            // If the given tranform is null
+        if (tx == null)
+                // Get a transform that translates to the thumbnail
+            tx = AffineTransform.getTranslateInstance(getThumbnailX(), 
+                    getThumbnailY());
+        else    // Translate to the thumbnail
+            tx.translate(getThumbnailX(), getThumbnailY());
+            // Scale the transformation
+        tx.scale(getScaleX(),getScaleY());
+        return tx;
+    }
+    /**
+     * This returns a Transform that maps the image or icon's coordinate space 
+     * to the thumbnail region's coordinate space. That is to say, the returned 
+     * Transform maps coordinates on the image or icon to the coordinates on the 
+     * scaled image or icon. 
+     * @param tx An AffineTransform object to reuse.
+     * @return An AffineTransform representing the transformations applied to 
+     * the image or icon to get the thumbnail, or the identity transformation if 
+     * no icon is set.
+     * @see #getIcon() 
+     * @see #setIcon(javax.swing.Icon) 
+     * @see #getImage() 
+     * @see #setImage(java.awt.Image) 
+     * @see #getImageWidth() 
+     * @see #getImageHeight() 
+     * @see #getImageScaleMode() 
+     * @see #setImageScaleMode(int) 
+     * @see #isAspectRatioMaintained() 
+     * @see #setAspectRatioMaintained(boolean) 
+     * @see #isImageAlwaysScaled() 
+     * @see #setImageAlwaysScaled(boolean) 
+     * @see #getThumbnailBorder() 
+     * @see #setThumbnailBorder(javax.swing.border.Border) 
+     * @see #getThumbnailX() 
+     * @see #getThumbnailY() 
+     * @see #getThumbnailWidth() 
+     * @see #getThumbnailHeight() 
+     * @see #getScaleX() 
+     * @see #getScaleY() 
+     */
+    public AffineTransform getThumbnailTransform(AffineTransform tx){
+            // If the given transform is not null
+        if (tx != null)
+                // Reset it to the identity transformation
+            tx.setToIdentity();
+        return applyThumbnailTransform(tx);
+    }
+    /**
      * This returns a Transform that maps the image or icon's coordinate space 
      * to the thumbnail region's coordinate space. That is to say, the returned 
      * Transform maps coordinates on the image or icon to the coordinates on the 
      * scaled image or icon. 
      * @return An AffineTransform representing the transformations applied to 
-     * the image or icon to get the thumbnail, or null if no icon is set.
+     * the image or icon to get the thumbnail, or the identity transformation if 
+     * no icon is set.
      * @see #getIcon() 
      * @see #setIcon(javax.swing.Icon) 
      * @see #getImage() 
@@ -3428,11 +3550,7 @@ public class JThumbnailLabel extends JLabel{
      * @see #getScaleY() 
      */
     public AffineTransform getThumbnailTransform(){
-            // If this has an icon set, create an AffineTransform that 
-            // corresponds to the thumbnail image. Otherwise, return null.
-        return (isIconSet()) ? new AffineTransform(
-                getScaleX(),0,0,getScaleY(),
-                getThumbnailX(),getThumbnailY()) : null;
+        return getThumbnailTransform(null);
     }
     
     
