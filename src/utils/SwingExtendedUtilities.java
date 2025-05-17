@@ -154,4 +154,13 @@ public final class SwingExtendedUtilities {
         }
         return -1;
     }
+    /**
+     * 
+     * @param buttonGroup
+     * @return 
+     */
+    public static boolean isSelectionEmpty(ButtonGroup buttonGroup){
+        return buttonGroup.getButtonCount() == 0 || 
+                buttonGroup.getSelection() == null;
+    }
 }
