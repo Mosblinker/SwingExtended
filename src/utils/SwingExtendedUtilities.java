@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Window;
 import java.util.Iterator;
+import java.util.Objects;
 import javax.swing.*;
 
 /**
@@ -104,5 +105,28 @@ public final class SwingExtendedUtilities {
      */
     public static AbstractButton[] toArray(ButtonGroup buttonGroup){
         return toArray(buttonGroup,new AbstractButton[buttonGroup.getButtonCount()]);
+    }
+    /**
+     * 
+     * @param buttonGroup
+     * @param index
+     * @return 
+     */
+    public static AbstractButton getButton(ButtonGroup buttonGroup, int index){
+            // Check the given index
+        Objects.checkIndex(index, buttonGroup.getButtonCount());
+            // The current index in the button group
+        int i = -1;
+            // The current button from the button group
+        AbstractButton button = null;
+            // An iterator to go through the buttons in the button group
+        Iterator<AbstractButton> itr = buttonGroup.getElements().asIterator();
+            // While the iterator has elements and the index has not been 
+        while (itr.hasNext() && i < index){ // reached
+                // Get the next button
+            button = itr.next();
+            i++;
+        }
+        return button;
     }
 }
