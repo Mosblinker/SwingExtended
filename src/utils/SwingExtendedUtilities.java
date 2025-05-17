@@ -232,6 +232,14 @@ public final class SwingExtendedUtilities {
      * @param buttons
      * @return 
      */
+    public static int indexOfSelected(AbstractButton... buttons){
+        return indexOfSelected(Arrays.asList(buttons));
+    }
+    /**
+     * 
+     * @param buttons
+     * @return 
+     */
     public static int lastIndexOfSelected(List<AbstractButton> buttons){
             // If the list is empty
         if (buttons.isEmpty())
