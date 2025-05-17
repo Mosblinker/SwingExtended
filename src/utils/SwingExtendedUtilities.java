@@ -8,7 +8,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Window;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import javax.swing.*;
 
@@ -207,5 +209,47 @@ public final class SwingExtendedUtilities {
             index++;
         }
         return -1;
+    }
+    /**
+     * 
+     * @param buttons
+     * @return 
+     */
+    public static int indexOfSelected(List<AbstractButton> buttons){
+            // If the list is empty
+        if (buttons.isEmpty())
+            return -1;
+            // Go through the buttons in the list
+        for (int i = 0; i < buttons.size(); i++){
+                // If the current button is not null and isselected
+            if (buttons.get(i) != null && buttons.get(i).isSelected())
+                return i;
+        }
+        return -1;
+    }
+    /**
+     * 
+     * @param buttons
+     * @return 
+     */
+    public static int lastIndexOfSelected(List<AbstractButton> buttons){
+            // If the list is empty
+        if (buttons.isEmpty())
+            return -1;
+            // Go through the buttons in the list in reverse order
+        for (int i = buttons.size()-1; i >= 0; i--){
+                // If the current button is not null and isselected
+            if (buttons.get(i) != null && buttons.get(i).isSelected())
+                return i;
+        }
+        return -1;
+    }
+    /**
+     * 
+     * @param buttons
+     * @return 
+     */
+    public static int lastIndexOfSelected(AbstractButton... buttons){
+        return lastIndexOfSelected(Arrays.asList(buttons));
     }
 }
