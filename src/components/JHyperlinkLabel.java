@@ -36,6 +36,12 @@ public class JHyperlinkLabel extends JLabel{
     public static final String SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED = 
             "SelectedColorPropertyChanged";
     
+    protected static final int HYPERLINK_VISITED_FLAG = 0x01;
+    
+    protected static final int HYPERLINK_CLICKED_FLAG = 0x02;
+    
+    
+    
     private URI uri = null;
     
     private Color unvisitedColor = null;
@@ -43,6 +49,8 @@ public class JHyperlinkLabel extends JLabel{
     private Color visitedColor = null;
     
     private Color selectedColor = null;
+    
+    private int flags = 0;
     
     private volatile boolean isPainting = false;
     
@@ -54,6 +62,36 @@ public class JHyperlinkLabel extends JLabel{
         initialize();
     }
     
+    protected boolean getFlag(int flag){
+        return (flags & flag) == flag;
+    }
+    
+    protected boolean setFlag(int flag, boolean value){
+        int old = flags;
+        flags = (value) ? (flags | flag) : (flags & ~flag);
+        return old != flags;
+    }
+    
+    public boolean isVisited(){
+        return getFlag(HYPERLINK_VISITED_FLAG);
+    }
+    
+    public void setVisited(boolean value){
+        if (setFlag(HYPERLINK_VISITED_FLAG,value)){
+            repaint();
+        }
+    }
+    
+    protected boolean isSelected(){
+        return getFlag(HYPERLINK_CLICKED_FLAG);
+    }
+    
+    protected void setSelected(boolean value){
+        if (setFlag(HYPERLINK_CLICKED_FLAG,value)){
+            repaint();
+        }
+    }
+    
     public URI getURI(){
         return uri;
     }
@@ -62,6 +100,7 @@ public class JHyperlinkLabel extends JLabel{
         if (!Objects.equals(this.uri, uri)){
             URI old = this.uri;
             this.uri = uri;
+            setFlag(HYPERLINK_VISITED_FLAG,false);
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
             repaint();
             if (super.getToolTipText() == null){
@@ -140,6 +179,10 @@ public class JHyperlinkLabel extends JLabel{
     @Override
     public Color getForeground(){
         if (getURI() != null && isPainting){
+            if (isSelected())
+                return getSelecteddHyperlinkColor();
+            else if (isVisited())
+                return getVisitedHyperlinkColor();
             return getUnvisitedHyperlinkColor();
         }
         return super.getForeground();
