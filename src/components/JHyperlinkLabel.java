@@ -198,6 +198,7 @@ public class JHyperlinkLabel extends JLabel{
         if (getURI() != null){
             HashMap<TextAttribute, Object> map = new HashMap<>();
             map.put(TextAttribute.FOREGROUND, getHyperlinkColor());
+            map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
             g.setFont(g.getFont().deriveFont(map));
         }
         super.paintComponent(g);
