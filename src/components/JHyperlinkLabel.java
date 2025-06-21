@@ -80,6 +80,7 @@ public class JHyperlinkLabel extends JLabel{
     
     public void setVisited(boolean value){
         if (setFlag(HYPERLINK_VISITED_FLAG,value)){
+            fireStateChanged();
             repaint();
         }
     }
@@ -102,8 +103,10 @@ public class JHyperlinkLabel extends JLabel{
         if (!Objects.equals(this.uri, uri)){
             URI old = this.uri;
             this.uri = uri;
-            setFlag(HYPERLINK_VISITED_FLAG,false);
+            boolean reset = setFlag(HYPERLINK_VISITED_FLAG,false);
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
+            if (reset)
+                fireStateChanged();
             repaint();
             if (super.getToolTipText() == null){
                 ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
