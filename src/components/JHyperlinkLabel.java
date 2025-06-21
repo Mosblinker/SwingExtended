@@ -15,8 +15,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Objects;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * This is a label that acts as a hyperlink to a website or resource. The user 
@@ -41,6 +39,9 @@ public class JHyperlinkLabel extends JLabel{
     
     public static final String SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED = 
             "SelectedColorPropertyChanged";
+    
+    public static final String HYPERLINK_VISITED_PROPERTY_CHANGED = 
+            "HyperlinkVisitedPropertyChanged";
     
     protected static final int HYPERLINK_VISITED_FLAG = 0x01;
     
@@ -82,7 +83,7 @@ public class JHyperlinkLabel extends JLabel{
     
     public void setVisited(boolean value){
         if (setFlag(HYPERLINK_VISITED_FLAG,value)){
-            fireStateChanged();
+            firePropertyChange(HYPERLINK_VISITED_PROPERTY_CHANGED,!value,value);
             repaint();
         }
     }
@@ -115,11 +116,8 @@ public class JHyperlinkLabel extends JLabel{
         if (!Objects.equals(this.uri, uri)){
             URI old = this.uri;
             this.uri = uri;
-            boolean reset = setFlag(HYPERLINK_VISITED_FLAG,false);
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
-            if (reset)
-                fireStateChanged();
-            repaint();
+            setVisited(false);
             if (super.getToolTipText() == null){
                 ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
                 if (uri != null){
@@ -230,26 +228,7 @@ public class JHyperlinkLabel extends JLabel{
             ToolTipManager.sharedInstance().registerComponent(this);
     }
     
-    public void addChangeListener(ChangeListener l){
-        if (l != null)
-            listenerList.add(ChangeListener.class, l);
-    }
     
-    public void removeChangeListener(ChangeListener l){
-        listenerList.remove(ChangeListener.class, l);
-    }
-    
-    public ChangeListener[] getChangeListeners(){
-        return listenerList.getListeners(ChangeListener.class);
-    }
-    
-    protected void fireStateChanged(){
-        ChangeEvent evt = new ChangeEvent(this);
-        for (ChangeListener l : getChangeListeners()){
-            if (l != null)
-                l.stateChanged(evt);
-        }
-    }
     
     private class Handler extends MouseAdapter{
         /**
