@@ -5,6 +5,8 @@
 package components;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -57,7 +59,7 @@ public class JHyperlinkLabel extends JLabel{
     private volatile boolean isPainting = false;
     
     private void initialize(){
-        
+        addMouseListener(new Handler());
     }
     
     public JHyperlinkLabel(){
@@ -235,4 +237,37 @@ public class JHyperlinkLabel extends JLabel{
         }
     }
     
+    private class Handler extends MouseAdapter{
+        /**
+         * This is for opening the hyperlink when clicked.
+         * @param evt The mouse event to process.
+         */
+        @Override
+        public void mouseClicked(MouseEvent evt) {
+            // TODO: Implement opening the link when clicked
+                // If the label was pressed with the left mouse button
+            if (SwingUtilities.isLeftMouseButton(evt))
+                setVisited(true);
+        }
+        /**
+         * This processes the label being pressed.
+         * @param evt The mouse event to process.
+         */
+        @Override
+        public void mousePressed(MouseEvent evt){
+                // If the label was pressed with the left mouse button
+            if (SwingUtilities.isLeftMouseButton(evt))
+                setSelected(true);
+        }
+        /**
+         * This processes the label being released.
+         * @param evt The mouse event to process.
+         */
+        @Override
+        public void mouseReleased(MouseEvent evt){
+                // If the left mouse button was released
+            if (SwingUtilities.isLeftMouseButton(evt))
+                setSelected(false);
+        }
+    }
 }
