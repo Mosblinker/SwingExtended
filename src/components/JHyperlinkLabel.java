@@ -7,10 +7,12 @@ package components;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -55,8 +57,6 @@ public class JHyperlinkLabel extends JLabel{
     private Color selectedColor = null;
     
     private int flags = 0;
-    
-    private volatile boolean isPainting = false;
     
     private void initialize(){
         addMouseListener(new Handler());
@@ -167,7 +167,7 @@ public class JHyperlinkLabel extends JLabel{
         }
     }
     
-    public Color getSelecteddHyperlinkColor(){
+    public Color getSelectedHyperlinkColor(){
         if (selectedColor == null)
             return SELECTED_HYPERLINK_COLOR;
         return selectedColor;
@@ -183,24 +183,24 @@ public class JHyperlinkLabel extends JLabel{
         }
     }
     
-    @Override
-    public Color getForeground(){
-        if (getURI() != null && isPainting){
-            if (isSelected())
-                return getSelecteddHyperlinkColor();
-            else if (isVisited())
-                return getVisitedHyperlinkColor();
-            return getUnvisitedHyperlinkColor();
-        }
-        return super.getForeground();
+    protected Color getHyperlinkColor(){
+        if (getURI() == null)
+            return null;
+        if (isSelected())
+            return getSelectedHyperlinkColor();
+        if (isVisited())
+            return getVisitedHyperlinkColor();
+        return getUnvisitedHyperlinkColor();
     }
     
     @Override
     protected void paintComponent(java.awt.Graphics g){
-        boolean temp = isPainting;
-        isPainting = true;
+        if (getURI() != null){
+            HashMap<TextAttribute, Object> map = new HashMap<>();
+            map.put(TextAttribute.FOREGROUND, getHyperlinkColor());
+            g.setFont(g.getFont().deriveFont(map));
+        }
         super.paintComponent(g);
-        isPainting = temp;
     }
     
     @Override
