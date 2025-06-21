@@ -5,15 +5,19 @@
 package components;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -228,7 +232,22 @@ public class JHyperlinkLabel extends JLabel{
             ToolTipManager.sharedInstance().registerComponent(this);
     }
     
-    
+    public void openHyperlink(){
+        if (getURI() == null)
+            throw new IllegalStateException();
+        if (Desktop.isDesktopSupported()){
+            try{
+                Desktop.getDesktop().browse(getURI());
+                setVisited(true);
+            } catch (IOException ex){
+                Logger.getLogger("SwingExtended").log(Level.WARNING, 
+                        "Failed to open hyperlink", ex);
+            }
+        } else {
+            Logger.getLogger("SwingExtended").warning(
+                    "Desktop is not supported on this device.");
+        }
+    }
     
     private class Handler extends MouseAdapter{
         /**
@@ -237,10 +256,10 @@ public class JHyperlinkLabel extends JLabel{
          */
         @Override
         public void mouseClicked(MouseEvent evt) {
-            // TODO: Implement opening the link when clicked
-                // If the label was pressed with the left mouse button
-            if (SwingUtilities.isLeftMouseButton(evt))
-                setVisited(true);
+                // If there is a URI and the label was pressed with the left 
+                // mouse button
+            if (getURI() != null && SwingUtilities.isLeftMouseButton(evt))
+                openHyperlink();
         }
         /**
          * This processes the label being pressed.
