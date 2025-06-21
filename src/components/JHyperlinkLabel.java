@@ -44,6 +44,8 @@ public class JHyperlinkLabel extends JLabel{
     
     private Color selectedColor = null;
     
+    private volatile boolean isPainting = false;
+    
     private void initialize(){
         
     }
@@ -124,6 +126,22 @@ public class JHyperlinkLabel extends JLabel{
                     color);
             repaint();
         }
+    }
+    
+    @Override
+    public Color getForeground(){
+        if (getURI() != null && isPainting){
+            return getUnvisitedHyperlinkColor();
+        }
+        return super.getForeground();
+    }
+    
+    @Override
+    protected void paintComponent(java.awt.Graphics g){
+        boolean temp = isPainting;
+        isPainting = true;
+        super.paintComponent(g);
+        isPainting = temp;
     }
     
 }
