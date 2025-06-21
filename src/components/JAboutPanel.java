@@ -23,6 +23,12 @@ public class JAboutPanel extends AbstractDialogPanel{
     
     public static final String CLOSE_SELECTED = "CloseSelected";
     
+    public static final String UPDATE_CHECK_SELECTED = "CheckForUpdatesSelected";
+    
+    public static final String OPEN_WEBSITE_SELECTED = "OpenWebsiteSelected";
+    
+    public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
+    
     private void initialize(){
         
     }
