@@ -5,7 +5,13 @@
 package components;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  * This is a panel that can be used to display information about a program.
@@ -47,6 +53,30 @@ public class JAboutPanel extends AbstractDialogPanel{
                 return "CLOSE_OPTION";
             default:
                 return null;
+        }
+    }
+    
+    private class Handler implements PropertyChangeListener, DocumentListener, 
+            ActionListener{
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            
+        }
+        @Override
+        public void insertUpdate(DocumentEvent evt) {
+            
+        }
+        @Override
+        public void removeUpdate(DocumentEvent evt) {
+            
+        }
+        @Override
+        public void changedUpdate(DocumentEvent evt) {
+            
+        }
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            
         }
     }
 }
