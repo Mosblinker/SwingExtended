@@ -30,7 +30,17 @@ public class JAboutPanel extends AbstractDialogPanel{
     public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
     
     private void initialize(){
-        
+            // A handler to listen to the components
+        Handler handler = new Handler();
+            // Create the icon label
+        iconLabel = new JThumbnailLabel();
+        iconLabel.setImageAlwaysScaled(true);
+        iconLabel.setVerticalAlignment(SwingConstants.TOP);
+        iconLabel.addPropertyChangeListener("icon", handler);
+            // Put the icon label on the left side of the panel
+        add(iconLabel, BorderLayout.LINE_START);
+            // Hide the icon label for now
+        iconLabel.setVisible(false);
     }
     
     public JAboutPanel(){
