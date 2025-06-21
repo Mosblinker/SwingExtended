@@ -82,6 +82,14 @@ public class JAboutPanel extends AbstractDialogPanel{
         websiteLabel = createDetailsLabel(handler,false);
         
             // TODO: Set up website popup menu and website label clicking code
+        
+            // Create the credits panel
+        creditsPanel = new JPanel(new BorderLayout());
+        creditsPanel.setBorder(BorderFactory.createTitledBorder("Credits"));
+            // Add the credits panel to the details panel
+        detailsPanel.add(creditsPanel);
+        
+            // TODO: Set up credits panel
     }
     
     public JAboutPanel(){
