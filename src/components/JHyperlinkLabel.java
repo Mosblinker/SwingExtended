@@ -19,9 +19,30 @@ import javax.swing.*;
  */
 public class JHyperlinkLabel extends JLabel{
     
+    public static final Color UNVISITED_HYPERLINK_COLOR = new Color(0x0000EE);
+    
+    public static final Color VISITED_HYPERLINK_COLOR = new Color(0x551A8B);
+    
+    public static final Color SELECTED_HYPERLINK_COLOR = Color.RED;
+    
     public static final String URI_PROPERTY_CHANGED = "URIPropertyChanged";
     
+    public static final String UNVISITED_HYPERLINK_COLOR_PROPERTY_CHANGED = 
+            "UnvisitedColorPropertyChanged";
+    
+    public static final String VISITED_HYPERLINK_COLOR_PROPERTY_CHANGED = 
+            "VisitedColorPropertyChanged";
+    
+    public static final String SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED = 
+            "SelectedColorPropertyChanged";
+    
     private URI uri = null;
+    
+    private Color unvisitedColor = null;
+    
+    private Color visitedColor = null;
+    
+    private Color selectedColor = null;
     
     private void initialize(){
         
@@ -55,6 +76,54 @@ public class JHyperlinkLabel extends JLabel{
     
     public void setURL(String url) throws MalformedURLException, URISyntaxException{
         setURL((url!=null)?new URL(url):null);
+    }
+    
+    public Color getUnvisitedHyperlinkColor(){
+        if (unvisitedColor == null)
+            return UNVISITED_HYPERLINK_COLOR;
+        return unvisitedColor;
+    }
+    
+    public void setUnvisitedHyperlinkColor(Color color){
+        if (!Objects.equals(unvisitedColor, color)){
+            Color old = unvisitedColor;
+            unvisitedColor = color;
+            firePropertyChange(UNVISITED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
+                    color);
+            repaint();
+        }
+    }
+    
+    public Color getVisitedHyperlinkColor(){
+        if (visitedColor == null)
+            return VISITED_HYPERLINK_COLOR;
+        return visitedColor;
+    }
+    
+    public void setVisitedHyperlinkColor(Color color){
+        if (!Objects.equals(visitedColor, color)){
+            Color old = visitedColor;
+            visitedColor = color;
+            firePropertyChange(VISITED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
+                    color);
+            repaint();
+        }
+    }
+    
+    public Color getSelecteddHyperlinkColor(){
+        if (selectedColor == null)
+            return SELECTED_HYPERLINK_COLOR;
+        return selectedColor;
+    }
+    
+    public void setSelectedHyperlinkColor(Color color){
+        if (!Objects.equals(selectedColor, color)){
+            Color old = selectedColor;
+            selectedColor = color;
+            firePropertyChange(SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
+                    color);
+            repaint();
+        }
     }
     
 }
