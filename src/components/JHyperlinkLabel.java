@@ -46,7 +46,7 @@ public class JHyperlinkLabel extends JLabel{
     
     protected static final int HYPERLINK_CLICKED_FLAG = 0x02;
     
-    
+    protected static final int HYPERLINK_HOVERED_FLAG = 0x04;
     
     private URI uri = null;
     
@@ -93,6 +93,16 @@ public class JHyperlinkLabel extends JLabel{
     
     protected void setSelected(boolean value){
         if (setFlag(HYPERLINK_CLICKED_FLAG,value)){
+            repaint();
+        }
+    }
+    
+    protected boolean isHoveredOver(){
+        return getFlag(HYPERLINK_HOVERED_FLAG);
+    }
+    
+    protected void setHoveredOver(boolean value){
+        if (setFlag(HYPERLINK_HOVERED_FLAG,value)){
             repaint();
         }
     }
@@ -198,7 +208,10 @@ public class JHyperlinkLabel extends JLabel{
         if (getURI() != null){
             HashMap<TextAttribute, Object> map = new HashMap<>();
             map.put(TextAttribute.FOREGROUND, getHyperlinkColor());
-            map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+            if (isHoveredOver())
+                map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_TWO_PIXEL);
+            else
+                map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
             g.setFont(g.getFont().deriveFont(map));
         }
         super.paintComponent(g);
@@ -269,6 +282,20 @@ public class JHyperlinkLabel extends JLabel{
                 // If the left mouse button was released
             if (SwingUtilities.isLeftMouseButton(evt))
                 setSelected(false);
+        }
+        /**
+         * This is for highlighting the label when hovered over.
+         */
+        @Override
+        public void mouseEntered(MouseEvent evt) {
+            setHoveredOver(true);
+        }
+        /**
+         * This is for un-highlighting the label when not hovered over.
+         */
+        @Override
+        public void mouseExited(MouseEvent evt) {
+            setHoveredOver(false);
         }
     }
 }
