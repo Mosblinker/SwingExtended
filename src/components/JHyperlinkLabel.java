@@ -63,6 +63,15 @@ public class JHyperlinkLabel extends JLabel{
             URI old = this.uri;
             this.uri = uri;
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
+            repaint();
+            if (super.getToolTipText() == null){
+                ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
+                if (uri != null){
+                    if (old == null)
+                        toolTipManager.registerComponent(this);
+                } else
+                    toolTipManager.unregisterComponent(this);
+            }
         }
     }
     
@@ -144,4 +153,16 @@ public class JHyperlinkLabel extends JLabel{
         isPainting = temp;
     }
     
+    @Override
+    public String getToolTipText(){
+        String tooltip = super.getToolTipText();
+        return (tooltip == null && getURI() != null) ? getURI().toString() : tooltip;
+    }
+    
+    @Override
+    public void setToolTipText(String text){
+        super.setToolTipText(text);
+        if (text == null && getURI() != null)
+            ToolTipManager.sharedInstance().registerComponent(this);
+    }
 }
