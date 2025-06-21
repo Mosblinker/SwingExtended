@@ -56,6 +56,22 @@ public class JAboutPanel extends AbstractDialogPanel{
         }
     }
     
+    private String websiteURL = null;
+    private String websiteText = null;
+    protected JThumbnailLabel iconLabel;
+    protected JLabel nameLabel;
+    protected JLabel versionLabel;
+    protected JLabel copyrightLabel;
+    protected JLabel websiteLabel;
+    protected JPanel creditsPanel;
+    protected JScrollPane creditsScrollPane;
+    protected JTextPane creditsTextPane;
+    protected JButton closeButton;
+    protected JButton updateButton;
+    protected JPopupMenu websitePopup;
+    protected JMenuItem websiteOpenItem;
+    protected JMenuItem websiteCopyItem;
+    
     private class Handler implements PropertyChangeListener, DocumentListener, 
             ActionListener{
         @Override
