@@ -5,10 +5,14 @@
 package components;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -29,6 +33,26 @@ public class JAboutPanel extends AbstractDialogPanel{
     
     public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
     
+    private JLabel createDetailsLabel(Handler handler, boolean visible){
+            // Create the label to use
+        JLabel label = new JLabel();
+        label.addPropertyChangeListener("text",handler);
+        label.addComponentListener(handler);
+            // Center the label's alignment
+        label.setAlignmentX(0.5f);
+            // Add the label to the details panel
+        detailsPanel.add(label);
+            // Create a filler object to go under the label
+        Box.Filler filler = new Box.Filler(new Dimension(0, 7), 
+                new Dimension(0, 7), new Dimension(32767, 7));
+            // Add the label and filler object to the filler map
+        fillerMap.put(label, filler);
+            // Add the filler object to the details panel
+        detailsPanel.add(filler);
+        label.setVisible(visible);
+        return label;
+    }
+    
     private void initialize(){
             // A handler to listen to the components
         Handler handler = new Handler();
@@ -41,6 +65,23 @@ public class JAboutPanel extends AbstractDialogPanel{
         add(iconLabel, BorderLayout.LINE_START);
             // Hide the icon label for now
         iconLabel.setVisible(false);
+            // Create a details panel to display the labels and stuff
+        detailsPanel = new JPanel();
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
+            // Put the details panel in the center of the panel
+        add(detailsPanel, BorderLayout.CENTER);
+            // Create and add the program name label
+        nameLabel = createDetailsLabel(handler,true);
+        nameLabel.setFont(deriveFont(Font.BOLD,9));
+            // Create and add the version label
+        versionLabel = createDetailsLabel(handler,false);
+        versionLabel.setFont(deriveFont(Font.BOLD|Font.ITALIC,5));
+            // Create and add the copyright label
+        copyrightLabel = createDetailsLabel(handler,false);
+            // Create and add the website label
+        websiteLabel = createDetailsLabel(handler,false);
+        
+            // TODO: Set up website popup menu and website label clicking code
     }
     
     public JAboutPanel(){
@@ -71,10 +112,35 @@ public class JAboutPanel extends AbstractDialogPanel{
                 return null;
         }
     }
+    /**
+     * 
+     * @param relStyle
+     * @param relSize
+     * @return 
+     */
+    protected Font deriveFont(int relStyle, float relSize){
+        Font font = getFont();
+        if (font == null)
+            font = new Font(Font.SANS_SERIF,Font.PLAIN,0);
+        return font.deriveFont(font.getStyle() | relStyle, font.getSize2D() + relSize);
+    }
+    /**
+     * 
+     * @param evt 
+     */
+    protected void updateFillerVisibility(ComponentEvent evt){
+            // Get the filler next to the component
+        Component filler = fillerMap.get(evt.getComponent());
+            // If the component has a filler component next to it
+        if (filler != null)
+            filler.setVisible(evt.getComponent().isVisible());
+    }
     
     private String websiteURL = null;
     private String websiteText = null;
+    private Map<Component,Component> fillerMap = new HashMap<>();
     protected JThumbnailLabel iconLabel;
+    protected JPanel detailsPanel;
     protected JLabel nameLabel;
     protected JLabel versionLabel;
     protected JLabel copyrightLabel;
@@ -88,8 +154,8 @@ public class JAboutPanel extends AbstractDialogPanel{
     protected JMenuItem websiteOpenItem;
     protected JMenuItem websiteCopyItem;
     
-    private class Handler implements PropertyChangeListener, DocumentListener, 
-            ActionListener{
+    private class Handler extends ComponentAdapter implements 
+            PropertyChangeListener, DocumentListener, ActionListener{
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             
@@ -109,6 +175,14 @@ public class JAboutPanel extends AbstractDialogPanel{
         @Override
         public void actionPerformed(ActionEvent evt) {
             
+        }
+        @Override
+        public void componentHidden(ComponentEvent evt) {
+            updateFillerVisibility(evt);
+        }
+        @Override
+        public void componentShown(ComponentEvent evt) {
+            updateFillerVisibility(evt);
         }
     }
 }
