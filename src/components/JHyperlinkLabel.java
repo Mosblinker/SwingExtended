@@ -11,6 +11,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * This is a label that acts as a hyperlink to a website or resource. The user 
@@ -208,4 +210,26 @@ public class JHyperlinkLabel extends JLabel{
         if (text == null && getURI() != null)
             ToolTipManager.sharedInstance().registerComponent(this);
     }
+    
+    public void addChangeListener(ChangeListener l){
+        if (l != null)
+            listenerList.add(ChangeListener.class, l);
+    }
+    
+    public void removeChangeListener(ChangeListener l){
+        listenerList.remove(ChangeListener.class, l);
+    }
+    
+    public ChangeListener[] getChangeListeners(){
+        return listenerList.getListeners(ChangeListener.class);
+    }
+    
+    protected void fireStateChanged(){
+        ChangeEvent evt = new ChangeEvent(this);
+        for (ChangeListener l : getChangeListeners()){
+            if (l != null)
+                l.stateChanged(evt);
+        }
+    }
+    
 }
