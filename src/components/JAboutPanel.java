@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
@@ -142,6 +143,55 @@ public class JAboutPanel extends JPanel{
         super(new BorderLayout(18, 7));
         initialize();
     }
+    
+    public Icon getProgramIcon(){
+        return iconLabel.getIcon();
+    }
+    
+    public void setProgramIcon(Icon icon){
+        iconLabel.setIcon(icon);
+    }
+    
+    public String getProgramName(){
+        return nameLabel.getText();
+    }
+    
+    public void setProgramName(String name){
+        nameLabel.setText(name);
+    }
+    
+    public String getProgramVersion(){
+        return versionLabel.getText();
+    }
+    
+    public void setProgramVersion(String version){
+        versionLabel.setText(version);
+    }
+    
+    // TODO: Copyright label code goes here
+    
+    public String getProgramWebsiteText(){
+        return websiteLabel.getText();
+    }
+    
+    public void setProgramWebsiteText(String text){
+        websiteLabel.setText(text);
+    }
+    
+    public URI getProgramWebsiteURI(){
+        return websiteLabel.getURI();
+    }
+    
+    public void setProgramWebsiteURI(URI uri){
+        websiteLabel.setURI(uri);
+    }
+    
+    public void setProgramWebsite(String text, URI uri){
+        setProgramWebsiteText(text);
+        setProgramWebsiteURI(uri);
+    }
+    
+    // TODO: Set up credits panel
     
     @Override
     public void setFont(Font font){
