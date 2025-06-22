@@ -646,6 +646,23 @@ public class JHyperlinkLabel extends JLabel{
         copyHyperlink(getToolkit().getSystemClipboard());
     }
     /**
+     * This returns a String representation of this JHyperlinkLabel. This method 
+     * is primarily intended to be used only for debugging purposes, and the 
+     * content and format of the returned String may vary between 
+     * implementations.
+     * @return A String representation of this JHyperlinkLabel.
+     */
+    @Override
+    protected String paramString(){
+        return super.paramString()+
+                ",uri="+Objects.toString(getURI(), "")+
+                ((isVisited())?",visited":"")+
+                ",failureMessagesAreShown="+getFailureMessagesAreShown()+
+                ",unvisitedColor="+Objects.toString(unvisitedColor, "")+
+                ",visitedColor="+Objects.toString(visitedColor, "")+
+                ",selectedColor="+Objects.toString(selectedColor, "");
+    }
+    /**
      * A handler class to handle mouse events on the label.
      */
     private class Handler extends MouseAdapter{
