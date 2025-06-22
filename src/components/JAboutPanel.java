@@ -33,9 +33,8 @@ public class JAboutPanel extends AbstractDialogPanel{
     
     public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
     
-    private JLabel createDetailsLabel(Handler handler, boolean visible){
-            // Create the label to use
-        JLabel label = new JLabel();
+    private void initializeDetailsLabel(JLabel label, Handler handler, 
+            boolean visible){
         label.addPropertyChangeListener("text",handler);
         label.addComponentListener(handler);
             // Center the label's alignment
@@ -50,7 +49,6 @@ public class JAboutPanel extends AbstractDialogPanel{
             // Add the filler object to the details panel
         detailsPanel.add(filler);
         label.setVisible(visible);
-        return label;
     }
     
     private void initialize(){
@@ -71,15 +69,19 @@ public class JAboutPanel extends AbstractDialogPanel{
             // Put the details panel in the center of the panel
         add(detailsPanel, BorderLayout.CENTER);
             // Create and add the program name label
-        nameLabel = createDetailsLabel(handler,true);
+        nameLabel = new JLabel();
         nameLabel.setFont(deriveFont(Font.BOLD,9));
+        initializeDetailsLabel(nameLabel,handler,true);
             // Create and add the version label
-        versionLabel = createDetailsLabel(handler,false);
+        versionLabel = new JLabel();
         versionLabel.setFont(deriveFont(Font.BOLD|Font.ITALIC,5));
+        initializeDetailsLabel(versionLabel,handler,false);
             // Create and add the copyright label
-        copyrightLabel = createDetailsLabel(handler,false);
+        copyrightLabel = new JLabel();
+        initializeDetailsLabel(versionLabel,handler,false);
             // Create and add the website label
-        websiteLabel = createDetailsLabel(handler,false);
+        websiteLabel = new JHyperlinkLabel();
+        initializeDetailsLabel(websiteLabel,handler,false);
         
             // TODO: Set up website popup menu and website label clicking code
         
@@ -144,15 +146,13 @@ public class JAboutPanel extends AbstractDialogPanel{
             filler.setVisible(evt.getComponent().isVisible());
     }
     
-    private String websiteURL = null;
-    private String websiteText = null;
     private Map<Component,Component> fillerMap = new HashMap<>();
     protected JThumbnailLabel iconLabel;
     protected JPanel detailsPanel;
     protected JLabel nameLabel;
     protected JLabel versionLabel;
     protected JLabel copyrightLabel;
-    protected JLabel websiteLabel;
+    protected JHyperlinkLabel websiteLabel;
     protected JPanel creditsPanel;
     protected JScrollPane creditsScrollPane;
     protected JTextPane creditsTextPane;
