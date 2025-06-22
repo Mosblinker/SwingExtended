@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.datatransfer.Clipboard;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -242,7 +243,19 @@ public class JAboutPanel extends JPanel{
         setProgramWebsiteURI(uri);
     }
     
-    // TODO: Set up credits panel
+    public void openProgramWebsite(){
+        websiteLabel.openHyperlink();
+    }
+    
+    public void copyProgramWebsite(Clipboard clipboard){
+        websiteLabel.copyHyperlink(clipboard);
+    }
+    
+    public void copyProgramWebsite(){
+        websiteLabel.copyHyperlink();
+    }
+    
+    // TODO: Add credit methods
     
     @Override
     public void setEnabled(boolean enabled){
