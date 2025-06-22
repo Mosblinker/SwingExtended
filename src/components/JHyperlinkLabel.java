@@ -4,16 +4,14 @@
  */
 package components;
 
-import java.awt.Color;
-import java.awt.Desktop;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -605,6 +603,47 @@ public class JHyperlinkLabel extends JLabel{
                         "Java is not able to open hyperlinks on this device.",
                         "Failed to Open Hyperlink",JOptionPane.WARNING_MESSAGE);
         }
+    }
+    /**
+     * This copies the hyperlink to the given clipboard.
+     * @param clipboard The clipboard to copy the hyperlink to.
+     * @see #copyHyperlink() 
+     * @see #openHyperlink() 
+     * @see #getURI() 
+     * @see #setURI(java.net.URI) 
+     * @see #getURL() 
+     * @see #setURL(java.net.URL) 
+     * @see #setURL(java.lang.String) 
+     */
+    public void copyHyperlink(Clipboard clipboard){
+            // If the URI is not set
+        if (getURI() == null)
+            throw new IllegalStateException();
+            // A StringSelection to use to copy the hyperlink
+        StringSelection selection = new StringSelection(getURI().toString());
+        try{    // Put the selection onto the clipboard
+            clipboard.setContents(selection, selection);
+        } catch (IllegalStateException ex){
+            Logger.getLogger("SwingExtended").log(Level.WARNING, 
+                    "Clipboard is currently unavailable", ex);
+                // Provide error feedback to the user
+            UIManager.getLookAndFeel().provideErrorFeedback(this);
+        }
+    }
+    /**
+     * This copies the hyperlink to the system clipboard.
+     * @see #getToolkit() 
+     * @see Toolkit#getSystemClipboard() 
+     * @see #copyHyperlink(java.awt.datatransfer.Clipboard) 
+     * @see #openHyperlink() 
+     * @see #getURI() 
+     * @see #setURI(java.net.URI) 
+     * @see #getURL() 
+     * @see #setURL(java.net.URL) 
+     * @see #setURL(java.lang.String) 
+     */
+    public void copyHyperlink(){
+        copyHyperlink(getToolkit().getSystemClipboard());
     }
     /**
      * A handler class to handle mouse events on the label.
