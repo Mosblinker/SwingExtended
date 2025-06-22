@@ -33,6 +33,30 @@ public class JAboutPanel extends JPanel{
     public static final String OPEN_WEBSITE_SELECTED = "OpenWebsiteSelected";
     
     public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
+    
+    public static final String PROGRAM_ICON_PROPERTY_CHANGED = 
+            "ProgramIconPropertyChanged";
+    
+    public static final String PROGRAM_NAME_PROPERTY_CHANGED = 
+            "ProgramNamePropertyChanged";
+    
+    public static final String PROGRAM_VERSION_PROPERTY_CHANGED = 
+            "ProgramVersionPropertyChanged";
+    
+    public static final String PROGRAM_COPYRIGHT_START_YEAR_PROPERTY_CHANGED = 
+            "ProgramCopyrightStartYearPropertyChanged";
+    
+    public static final String PROGRAM_COPYRIGHT_END_YEAR_PROPERTY_CHANGED = 
+            "ProgramCopyrightEndYearPropertyChanged";
+    
+    public static final String PROGRAM_WEBSITE_URI_PROPERTY_CHANGED = 
+            "ProgramWebsitePropertyChanged";
+    
+    public static final String PROGRAM_WEBSITE_TEXT_PROPERTY_CHANGED = 
+            "ProgramWebsiteTextPropertyChanged";
+    
+    public static final String PROGRAM_WEBSITE_VISITED_PROPERTY_CHANGED = 
+            "ProgramWebsiteVisitedPropertyChanged";
     /**
      * This is the text that appears before the program version on the program 
      * version label.
@@ -43,8 +67,7 @@ public class JAboutPanel extends JPanel{
      */
     private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
     
-    private void initializeDetailsLabel(JLabel label, Handler handler, 
-            boolean visible){
+    private void initializeDetailsLabel(JLabel label, Handler handler){
         label.addPropertyChangeListener("text",handler);
         label.addComponentListener(handler);
             // Center the label's alignment
@@ -58,7 +81,6 @@ public class JAboutPanel extends JPanel{
         fillerMap.put(label, filler);
             // Add the filler object to the details panel
         detailsPanel.add(filler);
-        label.setVisible(visible);
     }
     
     private void initialize(){
@@ -70,6 +92,7 @@ public class JAboutPanel extends JPanel{
         iconLabel.setVerticalAlignment(SwingConstants.TOP);
         iconLabel.setMinimumSize(new Dimension(128,iconLabel.getMinimumSize().height));
         iconLabel.setPreferredSize(new Dimension(128,iconLabel.getPreferredSize().height));
+        propNameMap.put(iconLabel, PROGRAM_ICON_PROPERTY_CHANGED);
         iconLabel.addPropertyChangeListener("icon", handler);
             // Put the icon label on the left side of the panel
         add(iconLabel, BorderLayout.LINE_START);
@@ -83,17 +106,22 @@ public class JAboutPanel extends JPanel{
             // Create and add the program name label
         nameLabel = new JLabel();
         nameLabel.setFont(deriveFont(Font.BOLD,9));
-        initializeDetailsLabel(nameLabel,handler,true);
+        initializeDetailsLabel(nameLabel,handler);
+        propNameMap.put(nameLabel, PROGRAM_NAME_PROPERTY_CHANGED);
             // Create and add the version label
         versionLabel = new JLabel();
         versionLabel.setFont(deriveFont(Font.BOLD|Font.ITALIC,5));
-        initializeDetailsLabel(versionLabel,handler,false);
+        initializeDetailsLabel(versionLabel,handler);
+        versionLabel.setVisible(false);
             // Create and add the copyright label
         copyrightLabel = new JLabel();
-        initializeDetailsLabel(copyrightLabel,handler,false);
+        initializeDetailsLabel(copyrightLabel,handler);
+        copyrightLabel.setVisible(false);
             // Create and add the website label
         websiteLabel = new JHyperlinkLabel();
-        initializeDetailsLabel(websiteLabel,handler,false);
+        initializeDetailsLabel(websiteLabel,handler);
+        propNameMap.put(websiteLabel, PROGRAM_WEBSITE_TEXT_PROPERTY_CHANGED);
+        websiteLabel.setVisible(false);
             // Create a popup menu for the website label
         websitePopup = new JPopupMenu();
             // Create a menu item for opening the link
@@ -180,7 +208,9 @@ public class JAboutPanel extends JPanel{
     public void setProgramVersion(String version){
         if (Objects.equals(this.version, version))
             return;
+        String old = this.version;
         this.version = version;
+        firePropertyChange(PROGRAM_VERSION_PROPERTY_CHANGED,old,version);
         versionLabel.setText((version!= null)?VERSION_TEST_PREFIX+version:null);
     }
     
@@ -191,7 +221,9 @@ public class JAboutPanel extends JPanel{
     public void setCopyrightStartYear(Integer year){
         if (Objects.equals(crStartYear, year))
             return;
+        Integer old = crStartYear;
         crStartYear = year;
+        firePropertyChange(PROGRAM_COPYRIGHT_START_YEAR_PROPERTY_CHANGED,old,year);
         updateCopyrightText();
     }
     
@@ -208,12 +240,23 @@ public class JAboutPanel extends JPanel{
     public void setCopyrightEndYear(Integer year){
         if (Objects.equals(crEndYear, year))
             return;
+        Integer old = crEndYear;
         crEndYear = year;
+        firePropertyChange(PROGRAM_COPYRIGHT_END_YEAR_PROPERTY_CHANGED,old,year);
         updateCopyrightText();
     }
     
     public boolean isCopyrightEndYearSet(){
         return crEndYear != null;
+    }
+    
+    public void setCopyrightYear(Integer startYear, Integer endYear){
+        setCopyrightStartYear(startYear);
+        setCopyrightEndYear(endYear);
+    }
+    
+    public void setCopyrightYear(Integer startYear){
+        setCopyrightYear(startYear,null);
     }
     
     protected String getCopyrightText(int startYear, int endYear){
@@ -274,6 +317,8 @@ public class JAboutPanel extends JPanel{
     
     // TODO: Add credit methods
     
+    
+    
     @Override
     public void setEnabled(boolean enabled){
         super.setEnabled(enabled);
@@ -314,6 +359,11 @@ public class JAboutPanel extends JPanel{
         if (font == null)
             font = new Font(Font.SANS_SERIF,Font.PLAIN,0);
         return font.deriveFont(font.getStyle() | relStyle, font.getSize2D() + relSize);
+    }
+    
+    @Override
+    protected String paramString(){
+        return super.paramString();
     }
     /**
      * This adds the given {@code ActionListener} to this panel.
@@ -419,6 +469,7 @@ public class JAboutPanel extends JPanel{
     private Integer crEndYear = null;
     private String version = null;
     private Map<Component,Component> fillerMap = new HashMap<>();
+    private Map<Component,String> propNameMap = new HashMap<>();
     protected JThumbnailLabel iconLabel;
     protected JPanel detailsPanel;
     protected JLabel nameLabel;
@@ -443,19 +494,37 @@ public class JAboutPanel extends JPanel{
             if (evt.getPropertyName() == null || !(evt.getSource() instanceof Component))
                 return;
             Component c = (Component) evt.getSource();
+            String fwdPropEvt = propNameMap.get(c);
             switch(evt.getPropertyName()){
                 case("icon"):
                     if (c == iconLabel)
                         iconLabel.setVisible(iconLabel.getIcon() != null);
+                    if (fwdPropEvt != null)
+                        firePropertyChange(fwdPropEvt,evt.getOldValue(),evt.getNewValue());
                     break;
                 case("text"):
                     if (c instanceof JLabel && c != nameLabel){
                         String text = ((JLabel)c).getText();
                         c.setVisible(text != null && !text.isEmpty());
                     }
+                    if (fwdPropEvt != null)
+                        firePropertyChange(fwdPropEvt,evt.getOldValue(),evt.getNewValue());
                     break;
                 case(JHyperlinkLabel.URI_PROPERTY_CHANGED):
                     updateWebsiteMenuItems();
+                    firePropertyChange(PROGRAM_WEBSITE_URI_PROPERTY_CHANGED,
+                            evt.getOldValue(),evt.getNewValue());
+                    break;
+                case(JHyperlinkLabel.HYPERLINK_VISITED_PROPERTY_CHANGED):
+                    firePropertyChange(PROGRAM_WEBSITE_VISITED_PROPERTY_CHANGED,
+                            evt.getOldValue(),evt.getNewValue());
+                    break;
+                case(JHyperlinkLabel.FAILURE_MESSAGES_SHOWN_PROPERTY_CHANGED):
+                case(JHyperlinkLabel.UNVISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
+                case(JHyperlinkLabel.VISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
+                case(JHyperlinkLabel.SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED):
+                    firePropertyChange(evt.getPropertyName(),evt.getOldValue(),
+                            evt.getNewValue());
             }
         }
         @Override
