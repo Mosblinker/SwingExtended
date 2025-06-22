@@ -196,7 +196,6 @@ public class JHyperlinkLabel extends JLabel{
             URI old = this.uri;
             this.uri = uri;
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
-            setVisited(false);
             if (super.getToolTipText() == null){
                 ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
                 if (uri != null){
@@ -206,6 +205,7 @@ public class JHyperlinkLabel extends JLabel{
                     toolTipManager.unregisterComponent(this);
             }
         }
+        setVisited(false);
     }
     
     public URL getURL() throws MalformedURLException{
