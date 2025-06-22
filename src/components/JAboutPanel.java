@@ -56,6 +56,8 @@ public class JAboutPanel extends JPanel{
         iconLabel = new JThumbnailLabel();
         iconLabel.setImageAlwaysScaled(true);
         iconLabel.setVerticalAlignment(SwingConstants.TOP);
+        iconLabel.setMinimumSize(new Dimension(128,iconLabel.getMinimumSize().height));
+        iconLabel.setPreferredSize(new Dimension(128,iconLabel.getPreferredSize().height));
         iconLabel.addPropertyChangeListener("icon", handler);
             // Put the icon label on the left side of the panel
         add(iconLabel, BorderLayout.LINE_START);
