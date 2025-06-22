@@ -80,9 +80,24 @@ public class JAboutPanel extends JPanel{
             // Create and add the website label
         websiteLabel = new JHyperlinkLabel();
         initializeDetailsLabel(websiteLabel,handler,false);
-        
-            // TODO: Set up website popup menu and website label clicking code
-        
+            // Create a popup menu for the website label
+        websitePopup = new JPopupMenu();
+            // Create a menu item for opening the link
+        websiteOpenItem = new JMenuItem("Open Link");
+        websiteOpenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, 0));
+        websiteOpenItem.setActionCommand(OPEN_WEBSITE_SELECTED);
+        websiteOpenItem.addActionListener(handler);
+            // Add the open menu item to the popup menu for the website label
+        websitePopup.add(websiteOpenItem);
+            // Create a menu item for copying the link
+        websiteCopyItem = new JMenuItem("Copy Link");
+        websiteCopyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0));
+        websiteCopyItem.setActionCommand(COPY_WEBSITE_SELECTED);
+        websiteCopyItem.addActionListener(handler);
+            // Add the copy menu item to the popup menu for the website label
+        websitePopup.add(websiteCopyItem);
+            // Set the popup menu for the website label
+        websiteLabel.setComponentPopupMenu(websitePopup);
             // Create the credits panel
         creditsPanel = new JPanel(new BorderLayout());
         creditsPanel.setBorder(BorderFactory.createTitledBorder("Credits"));
