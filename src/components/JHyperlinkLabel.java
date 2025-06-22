@@ -476,6 +476,10 @@ public class JHyperlinkLabel extends JLabel{
                 // Set the URI
             this.uri = uri;
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
+                // If the old URI is null and the new URI is not null or 
+                // if the old URI is not null and the new URI is null
+            if (old == null && uri != null || old != null && uri == null)
+                repaint();
                 // If the tool tip is not set for this label
             if (!isToolTipTextSet()){
                     // Get the shared instance of the tool tip manager
