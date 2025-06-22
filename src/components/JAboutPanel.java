@@ -340,7 +340,57 @@ public class JAboutPanel extends JPanel{
     
     // TODO: Add credit methods
     
+    public JThumbnailLabel getProgramIconLabel(){
+        return iconLabel;
+    }
     
+    public JLabel getProgramNameLabel(){
+        return nameLabel;
+    }
+    
+    public JLabel getProgramVersionLabel(){
+        return versionLabel;
+    }
+    
+    public JLabel getProgramCopyrightLabel(){
+        return copyrightLabel;
+    }
+    
+    public JHyperlinkLabel getProgramWebsiteLabel(){
+        return websiteLabel;
+    }
+    
+    public JScrollPane getCreditsScrollPane(){
+        return creditsScrollPane;
+    }
+    
+    public JTextPane getCreditsTextPane(){
+        return creditsTextPane;
+    }
+    
+    protected Component getFillerComponentFor(Component c){
+        return fillerMap.get(c);
+    }
+    
+    public JButton getUpdateButton(){
+        return updateButton;
+    }
+    
+    public JButton getCloseButton(){
+        return closeButton;
+    }
+    
+    public JPopupMenu getWebsitePopup(){
+        return websitePopup;
+    }
+    
+    public JMenuItem getWebsiteOpenMenuItem(){
+        return websiteOpenItem;
+    }
+    
+    public JMenuItem getWebsiteCopyMenuItem(){
+        return websiteCopyItem;
+    }
     
     @Override
     public void setEnabled(boolean enabled){
