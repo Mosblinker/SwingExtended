@@ -77,6 +77,28 @@ public class JAboutPanel extends JPanel{
      */
     private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
     
+    private Integer crStartYear = null;
+    private Integer crEndYear = null;
+    private String version = null;
+    private Map<Component,Component> fillerMap = new HashMap<>();
+    private Map<Component,String> propNameMap = new HashMap<>();
+    protected JThumbnailLabel iconLabel;
+    protected JPanel detailsPanel;
+    protected JLabel nameLabel;
+    protected JLabel versionLabel;
+    protected JLabel copyrightLabel;
+    protected JHyperlinkLabel websiteLabel;
+    protected JPanel creditsPanel;
+    protected JScrollPane creditsScrollPane;
+    protected JTextPane creditsTextPane;
+    protected JPanel bottomPanel;
+    protected JPanel buttonPanel;
+    protected JButton closeButton;
+    protected JButton updateButton;
+    protected JPopupMenu websitePopup;
+    protected JMenuItem websiteOpenItem;
+    protected JMenuItem websiteCopyItem;
+    
     private void initializeDetailsLabel(JLabel label, Handler handler){
         label.addPropertyChangeListener(handler);
         label.addComponentListener(handler);
@@ -630,28 +652,6 @@ public class JAboutPanel extends JPanel{
         if (filler != null)
             filler.setVisible(evt.getComponent().isVisible());
     }
-    
-    private Integer crStartYear = null;
-    private Integer crEndYear = null;
-    private String version = null;
-    private Map<Component,Component> fillerMap = new HashMap<>();
-    private Map<Component,String> propNameMap = new HashMap<>();
-    protected JThumbnailLabel iconLabel;
-    protected JPanel detailsPanel;
-    protected JLabel nameLabel;
-    protected JLabel versionLabel;
-    protected JLabel copyrightLabel;
-    protected JHyperlinkLabel websiteLabel;
-    protected JPanel creditsPanel;
-    protected JScrollPane creditsScrollPane;
-    protected JTextPane creditsTextPane;
-    protected JPanel bottomPanel;
-    protected JPanel buttonPanel;
-    protected JButton closeButton;
-    protected JButton updateButton;
-    protected JPopupMenu websitePopup;
-    protected JMenuItem websiteOpenItem;
-    protected JMenuItem websiteCopyItem;
     
     private class Handler extends ComponentAdapter implements 
             PropertyChangeListener, ActionListener{
