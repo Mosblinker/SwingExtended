@@ -76,6 +76,8 @@ public class JAboutPanel extends JPanel{
     private void initializeDetailsLabel(JLabel label, Handler handler){
         label.addPropertyChangeListener(handler);
         label.addComponentListener(handler);
+        label.setForeground(null);
+        label.setBackground(null);
             // Center the label's alignment
         label.setAlignmentX(0.5f);
             // Add the label to the details panel
@@ -105,6 +107,8 @@ public class JAboutPanel extends JPanel{
         iconLabel.setVerticalAlignment(SwingConstants.TOP);
         iconLabel.setMinimumSize(new Dimension(128,iconLabel.getMinimumSize().height));
         iconLabel.setPreferredSize(new Dimension(128,iconLabel.getPreferredSize().height));
+        iconLabel.setForeground(null);
+        iconLabel.setBackground(null);
         propNameMap.put(iconLabel, PROGRAM_ICON_PROPERTY_CHANGED);
         iconLabel.addPropertyChangeListener("icon", handler);
             // Put the icon label on the left side of the panel
@@ -113,6 +117,8 @@ public class JAboutPanel extends JPanel{
         iconLabel.setVisible(false);
             // Create a details panel to display the labels and stuff
         detailsPanel = new JPanel();
+        detailsPanel.setForeground(null);
+        detailsPanel.setBackground(null);
         detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
             // Put the details panel in the center of the panel
         add(detailsPanel, BorderLayout.CENTER);
@@ -158,6 +164,8 @@ public class JAboutPanel extends JPanel{
             // Create the credits panel
         creditsPanel = new JPanel(new BorderLayout());
         creditsPanel.setBorder(getCreditBorder());
+        creditsPanel.setForeground(null);
+        creditsPanel.setBackground(null);
             // Add the credits panel to the details panel
         detailsPanel.add(creditsPanel);
         
@@ -165,18 +173,25 @@ public class JAboutPanel extends JPanel{
         creditsTextPane.setEditable(false);
         creditsTextPane.addPropertyChangeListener(handler);
         creditsScrollPane = new JScrollPane(creditsTextPane);
+        creditsScrollPane.setForeground(null);
+        creditsScrollPane.setBackground(null);
         creditsPanel.add(creditsScrollPane, BorderLayout.CENTER);
         
             // Create the bottom panel
         bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setForeground(null);
+        bottomPanel.setBackground(null);
             // Create the button panel
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setForeground(null);
+        buttonPanel.setBackground(null);
         
         updateButton = new JButton("Check For Updates");
         updateButton.setActionCommand(UPDATE_CHECK_SELECTED);
         updateButton.addActionListener(handler);
         updateButton.addComponentListener(handler);
+        updateButton.setForeground(null);
         buttonPanel.add(updateButton);
             // Create a filler object to go after the button
         Box.Filler filler = new Box.Filler(new Dimension(6, 0), 
@@ -186,6 +201,7 @@ public class JAboutPanel extends JPanel{
         closeButton = new JButton("OK");
         closeButton.setActionCommand(CLOSE_SELECTED);
         closeButton.addActionListener(handler);
+        closeButton.setForeground(null);
         buttonPanel.add(closeButton);
         
             // Add the button panel to the bottom panel
@@ -468,6 +484,24 @@ public class JAboutPanel extends JPanel{
         if (font == null)
             font = new Font(Font.SANS_SERIF,Font.PLAIN,0);
         return font.deriveFont(font.getStyle() | relStyle, font.getSize2D() + relSize);
+    }
+    @Override
+    public void setForeground(Color fg){
+        super.setForeground(fg);
+        fg = getForeground();
+        try{
+            creditsPanel.setBorder(getCreditBorder());
+            creditsTextPane.setForeground(fg);
+        } catch (NullPointerException ex){ }
+    }
+    @Override
+    public void setBackground(Color bg){
+        super.setBackground(bg);
+        bg = getBackground();
+        try{
+            closeButton.setBackground(bg);
+            updateButton.setBackground(bg);
+        } catch (NullPointerException ex){ }
     }
     
     @Override
