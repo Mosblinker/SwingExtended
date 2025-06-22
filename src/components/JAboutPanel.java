@@ -204,7 +204,21 @@ public class JAboutPanel extends JPanel{
             PropertyChangeListener, DocumentListener, ActionListener{
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            
+            if (evt.getPropertyName() == null || !(evt.getSource() instanceof Component))
+                return;
+            Component c = (Component) evt.getSource();
+            switch(evt.getPropertyName()){
+                case("icon"):
+                    if (c == iconLabel)
+                        iconLabel.setVisible(iconLabel.getIcon() != null);
+                    break;
+                case("text"):
+                    if (c instanceof JLabel && c != nameLabel){
+                        String text = ((JLabel)c).getText();
+                        c.setVisible(text != null && !text.isEmpty());
+                    }
+                    break;
+            }
         }
         @Override
         public void insertUpdate(DocumentEvent evt) {
