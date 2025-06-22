@@ -112,7 +112,20 @@ public class JAboutPanel extends JPanel{
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         
-            // TODO: Set up buttons
+        updateButton = new JButton("Check For Updates");
+        updateButton.setActionCommand(UPDATE_CHECK_SELECTED);
+        updateButton.addActionListener(handler);
+        updateButton.addComponentListener(handler);
+        buttonPanel.add(updateButton);
+            // Create a filler object to go after the button
+        Box.Filler filler = new Box.Filler(new Dimension(6, 0), 
+                new Dimension(6, 0), new Dimension(6, 32767));
+        buttonPanel.add(filler);
+        fillerMap.put(updateButton, filler);
+        closeButton = new JButton("OK");
+        closeButton.setActionCommand(CLOSE_SELECTED);
+        closeButton.addActionListener(handler);
+        buttonPanel.add(closeButton);
         
             // Add the button panel to the bottom panel
         bottomPanel.add(buttonPanel, BorderLayout.LINE_END);
