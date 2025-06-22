@@ -34,7 +34,12 @@ public class JAboutPanel extends JPanel{
     
     public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
     /**
-     * The template for the text to display for the copyright.
+     * This is the text that appears before the program version on the program 
+     * version label.
+     */
+    private static final String VERSION_TEST_PREFIX = "Version ";
+    /**
+     * This is a template for the text to display for the copyright.
      */
     private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
     
@@ -169,11 +174,14 @@ public class JAboutPanel extends JPanel{
     }
     
     public String getProgramVersion(){
-        return versionLabel.getText();
+        return version;
     }
     
     public void setProgramVersion(String version){
-        versionLabel.setText(version);
+        if (Objects.equals(this.version, version))
+            return;
+        this.version = version;
+        versionLabel.setText((version!= null)?VERSION_TEST_PREFIX+version:null);
     }
     
     public Integer getCopyrightStartYear(){
@@ -219,7 +227,8 @@ public class JAboutPanel extends JPanel{
         Integer start = getCopyrightStartYear();
         if (start != null)
             copyrightLabel.setText(getCopyrightText(start,getCopyrightEndYear()));
-        copyrightLabel.setVisible(start != null);
+        else
+            copyrightLabel.setText(null);
     }
     
     public String getProgramWebsiteText(){
@@ -408,6 +417,7 @@ public class JAboutPanel extends JPanel{
     
     private Integer crStartYear = null;
     private Integer crEndYear = null;
+    private String version = null;
     private Map<Component,Component> fillerMap = new HashMap<>();
     protected JThumbnailLabel iconLabel;
     protected JPanel detailsPanel;
@@ -439,7 +449,7 @@ public class JAboutPanel extends JPanel{
                         iconLabel.setVisible(iconLabel.getIcon() != null);
                     break;
                 case("text"):
-                    if (c instanceof JLabel && c != nameLabel && c != copyrightLabel){
+                    if (c instanceof JLabel && c != nameLabel){
                         String text = ((JLabel)c).getText();
                         c.setVisible(text != null && !text.isEmpty());
                     }
