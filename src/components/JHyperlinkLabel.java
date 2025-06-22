@@ -586,6 +586,8 @@ public class JHyperlinkLabel extends JLabel{
             } catch (IOException ex){
                 Logger.getLogger("SwingExtended").log(Level.WARNING, 
                         "Failed to open hyperlink", ex);
+                    // Provide error feedback to the user
+                UIManager.getLookAndFeel().provideErrorFeedback(this);
                     // If the program should show error messages
                 if (getFailureMessagesAreShown())
                     JOptionPane.showMessageDialog(this, 
@@ -597,6 +599,8 @@ public class JHyperlinkLabel extends JLabel{
         } else {
             Logger.getLogger("SwingExtended").warning(
                     "Desktop is not supported on this device.");
+                // Provide error feedback to the user
+            UIManager.getLookAndFeel().provideErrorFeedback(this);
                 // If the program should show error messages
             if (getFailureMessagesAreShown())
                 JOptionPane.showMessageDialog(this, 
