@@ -286,6 +286,94 @@ public class JAboutPanel extends JPanel{
         return font.deriveFont(font.getStyle() | relStyle, font.getSize2D() + relSize);
     }
     /**
+     * This adds the given {@code ActionListener} to this panel.
+     * @param l The listener to add.
+     * @see #removeActionListener(ActionListener) 
+     * @see #getActionListeners() 
+     */
+    public void addActionListener(ActionListener l){
+        if (l != null)          // If the listener is not null
+            listenerList.add(ActionListener.class, l);
+    }
+    /**
+     * This removes the given {@code ActionListener} from this panel.
+     * @param l The listener to remove.
+     * @see #addActionListener(ActionListener) 
+     * @see #getActionListeners() 
+     */
+    public void removeActionListener(ActionListener l){
+        listenerList.remove(ActionListener.class, l);
+    }
+    /**
+     * This returns an array containing all the {@code ActionListener}s that 
+     * have been added to this panel.
+     * @return An array containing the {@code ActionListener}s that have been 
+     * added, or an empty array if none have been added.
+     * @see #addActionListener(ActionListener) 
+     * @see #removeActionListener(ActionListener) 
+     */
+    public ActionListener[] getActionListeners(){
+        return listenerList.getListeners(ActionListener.class);
+    }
+    /**
+     * This notifies all the {@code ActionListener}s that have been added to 
+     * this panel if the given {@code ActionEvent} is not null. If the source 
+     * of the given {@code ActionEvent} is not this panel, then the {@code 
+     * ActionEvent} will be redirected to have this panel as its source.
+     * @param evt The {@code ActionEvent} to fire.
+     * @see #addActionListener(ActionListener) 
+     * @see #removeActionListener(ActionListener) 
+     * @see #getActionListeners() 
+     * @see #fireActionPerformed(String, long, int) 
+     * @see #fireActionPerformed(String) 
+     */
+    protected void fireActionPerformed(ActionEvent evt){
+        if (evt == null)    // If the event is null
+            return;
+            // If the event's source is not this component
+        else if (evt.getSource() != this){
+            evt = new ActionEvent(this, evt.getID(), evt.getActionCommand(),
+                    evt.getWhen(),evt.getModifiers());
+        }
+            // A for loop to go through the action listeners
+        for (ActionListener l : listenerList.getListeners(ActionListener.class)){
+            if (l != null)  // If the listener is not null
+                l.actionPerformed(evt);
+        }
+    }
+    /**
+     * This notifies all the {@code ActionListener}s that have been added to 
+     * this panel of the given action command if the action command is not null. 
+     * @param command The action command for the action event to fire.
+     * @param when The time at which the event occurred.
+     * @param modifiers The modifier keys that were down during the event. Zero 
+     * indicates that no known modifiers were passed.
+     * @see #addActionListener(ActionListener) 
+     * @see #removeActionListener(ActionListener) 
+     * @see #getActionListeners() 
+     * @see #fireActionPerformed(ActionEvent) 
+     * @see #fireActionPerformed(String) 
+     */
+    protected void fireActionPerformed(String command, long when, int modifiers){
+        if (command == null)    // If the action command is null.
+            return;
+        fireActionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,
+                command,when,modifiers));
+    }
+    /**
+     * This notifies all the {@code ActionListener}s that have been added to 
+     * this panel of the given action command if the action command is not null. 
+     * @param command The action command for the action event to fire.
+     * @see #addActionListener(ActionListener) 
+     * @see #removeActionListener(ActionListener) 
+     * @see #getActionListeners() 
+     * @see #fireActionPerformed(ActionEvent) 
+     * @see #fireActionPerformed(String, long, int) 
+     */
+    protected void fireActionPerformed(String command){
+        fireActionPerformed(command,System.currentTimeMillis(),0);
+    }
+    /**
      * 
      * @param evt 
      */
