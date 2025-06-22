@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 /**
  * This is a panel that can be used to display information about a program.
@@ -56,6 +58,9 @@ public class JAboutPanel extends JPanel{
     
     public static final String PROGRAM_WEBSITE_VISITED_PROPERTY_CHANGED = 
             "ProgramWebsiteVisitedPropertyChanged";
+    
+    public static final String CREDITS_DOCUMENT_PROPERTY_CHANGED = 
+            "CreditsDocumentPropertyChanged";
     /**
      * This is the text that appears before the program version on the program 
      * version label.
@@ -67,7 +72,7 @@ public class JAboutPanel extends JPanel{
     private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
     
     private void initializeDetailsLabel(JLabel label, Handler handler){
-        label.addPropertyChangeListener("text",handler);
+        label.addPropertyChangeListener(handler);
         label.addComponentListener(handler);
             // Center the label's alignment
         label.setAlignmentX(0.5f);
@@ -149,6 +154,7 @@ public class JAboutPanel extends JPanel{
         
         creditsTextPane = new JTextPane();
         creditsTextPane.setEditable(false);
+        creditsTextPane.addPropertyChangeListener(handler);
         creditsScrollPane = new JScrollPane(creditsTextPane);
         creditsPanel.add(creditsScrollPane, BorderLayout.CENTER);
         
@@ -336,6 +342,26 @@ public class JAboutPanel extends JPanel{
     
     public void setSelectedHyperlinkColor(Color color){
         websiteLabel.setSelectedHyperlinkColor(color);
+    }
+    
+    public String getCreditsText(int offset, int length) throws BadLocationException{
+        return creditsTextPane.getText(offset, length);
+    }
+    
+    public String getCreditsText(){
+        return creditsTextPane.getText();
+    }
+    
+    public void setCreditsText(String text){
+        creditsTextPane.setText(text);
+    }
+    
+    public StyledDocument getCreditsDocument(){
+        return creditsTextPane.getStyledDocument();
+    }
+    
+    public void setCreditsDocument(StyledDocument doc){
+        creditsTextPane.setStyledDocument(doc);
     }
     
     // TODO: Add credit methods
@@ -598,6 +624,11 @@ public class JAboutPanel extends JPanel{
                 case(JHyperlinkLabel.SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED):
                     firePropertyChange(evt.getPropertyName(),evt.getOldValue(),
                             evt.getNewValue());
+                    break;
+                case("document"):
+                    if (c == creditsTextPane)
+                        firePropertyChange(CREDITS_DOCUMENT_PROPERTY_CHANGED,
+                                evt.getOldValue(),evt.getNewValue());
             }
         }
         @Override
