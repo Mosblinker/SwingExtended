@@ -140,6 +140,22 @@ public class JAboutPanel extends JPanel{
         super(new BorderLayout(18, 7));
         initialize();
     }
+    
+    @Override
+    public void setFont(Font font){
+        super.setFont(font);
+        font = getFont();
+        try{
+            iconLabel.setFont(font);
+            nameLabel.setFont(deriveFont(Font.BOLD,9));
+            versionLabel.setFont(deriveFont(Font.BOLD|Font.ITALIC,5));
+            copyrightLabel.setFont(font);
+            websiteLabel.setFont(font);
+            creditsTextPane.setFont(font);
+            updateButton.setFont(font);
+            closeButton.setFont(font);
+        } catch (NullPointerException ex) {}
+    }
     /**
      * 
      * @param relStyle
