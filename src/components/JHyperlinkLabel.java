@@ -629,14 +629,16 @@ public class JHyperlinkLabel extends JLabel{
     }
     /**
      * This returns the foreground color for the hyperlink text.
-     * @return The color for the hyperlink color. If there is no hyperlink set, 
-     * then this will return null.
+     * @return The color for the hyperlink color. If there is no hyperlink set 
+     * or this label is disabled, then this will return null.
      * @see #getURI() 
      * @see #setURI(java.net.URI) 
      * @see #isVisited() 
      * @see #setVisited(boolean) 
      * @see #isSelected() 
      * @see #setSelected(boolean) 
+     * @see #isEnabled() 
+     * @see #setEnabled(boolean) 
      * @see #getUnvisitedHyperlinkColor() 
      * @see #setUnvisitedHyperlinkColor(java.awt.Color) 
      * @see #getVisitedHyperlinkColor() 
@@ -645,8 +647,8 @@ public class JHyperlinkLabel extends JLabel{
      * @see #setSelectedHyperlinkColor(java.awt.Color) 
      */
     protected Color getHyperlinkColor(){
-            // If the URI is not set
-        if (getURI() == null)
+            // If the URI is not set or the label is disabled
+        if (getURI() == null || !isEnabled())
             return null;
             // If the hyperlink is currently selected
         if (isSelected())
@@ -664,8 +666,9 @@ public class JHyperlinkLabel extends JLabel{
             HashMap<TextAttribute, Object> map = new HashMap<>();
                 // Set the foreground color to the color for the hyperlink
             map.put(TextAttribute.FOREGROUND, getHyperlinkColor());
-                // If the hyperlink is being hovered over
-            if (isHoveredOver())
+                // If the hyperlink is being hovered over and the label is 
+                // enabled
+            if (isHoveredOver() && isEnabled())
                     // Draw a thicker underline lower than normal
                 map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_TWO_PIXEL);
             else
@@ -845,9 +848,9 @@ public class JHyperlinkLabel extends JLabel{
          */
         @Override
         public void mouseClicked(MouseEvent evt) {
-                // If there is a URI and the label was clicked on with the left 
-                // mouse button
-            if (getURI() != null && SwingUtilities.isLeftMouseButton(evt))
+                // If there is a URI, the label is enabled, and the label was 
+                // clicked on with the left mouse button
+            if (getURI() != null && isEnabled() && SwingUtilities.isLeftMouseButton(evt))
                 openHyperlink();
         }
         /**
