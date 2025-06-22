@@ -52,8 +52,7 @@ public class JHyperlinkLabel extends JLabel{
     
     protected static final int HYPERLINK_VISITED_FLAG = 0x01;
     
-    protected static final int HYPERLINK_CLICKED_FLAG = 0x02;
-    
+    protected static final int HYPERLINK_SELECTED_FLAG = 0x02;
     protected static final int HYPERLINK_HOVERED_FLAG = 0x04;
     
     protected static final int SHOW_FAILURE_MESSAGES_FLAG = 0x08;
@@ -160,11 +159,11 @@ public class JHyperlinkLabel extends JLabel{
     }
     
     protected boolean isSelected(){
-        return getFlag(HYPERLINK_CLICKED_FLAG);
+        return getFlag(HYPERLINK_SELECTED_FLAG);
     }
     
     protected void setSelected(boolean value){
-        if (setFlag(HYPERLINK_CLICKED_FLAG,value)){
+        if (setFlag(HYPERLINK_SELECTED_FLAG,value)){
             repaint();
         }
     }
