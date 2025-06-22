@@ -255,6 +255,14 @@ public class JAboutPanel extends JPanel{
         websiteLabel.copyHyperlink();
     }
     
+    public boolean isProgramWebsiteVisited(){
+        return websiteLabel.isVisited();
+    }
+    
+    public void setProgramWebsiteVisited(boolean value){
+        websiteLabel.setVisited(value);
+    }
+    
     // TODO: Add credit methods
     
     @Override
