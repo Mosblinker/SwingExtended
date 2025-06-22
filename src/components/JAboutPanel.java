@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
@@ -87,6 +89,13 @@ public class JAboutPanel extends JPanel{
         detailsPanel.add(filler);
     }
     
+    private Border getCreditBorder(){
+        TitledBorder border = BorderFactory.createTitledBorder("Credits");
+        border.setTitleColor(getForeground());
+        border.setTitleFont(getFont());
+        return border;
+    }
+    
     private void initialize(){
             // A handler to listen to the components
         Handler handler = new Handler();
@@ -148,7 +157,7 @@ public class JAboutPanel extends JPanel{
         websiteLabel.setComponentPopupMenu(websitePopup);
             // Create the credits panel
         creditsPanel = new JPanel(new BorderLayout());
-        creditsPanel.setBorder(BorderFactory.createTitledBorder("Credits"));
+        creditsPanel.setBorder(getCreditBorder());
             // Add the credits panel to the details panel
         detailsPanel.add(creditsPanel);
         
@@ -445,6 +454,7 @@ public class JAboutPanel extends JPanel{
             creditsTextPane.setFont(font);
             updateButton.setFont(font);
             closeButton.setFont(font);
+            creditsPanel.setBorder(getCreditBorder());
         } catch (NullPointerException ex) {}
     }
     /**
