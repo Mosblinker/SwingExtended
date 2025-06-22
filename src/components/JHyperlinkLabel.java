@@ -111,6 +111,10 @@ public class JHyperlinkLabel extends JLabel{
      */
     private int flags = SHOW_FAILURE_MESSAGES_FLAG;
     /**
+     * This contains whether the label is currently being painted.
+     */
+    private volatile boolean isPainting = false;
+    /**
      * This initializes this JHyperlinkLabel.
      * @param uri The URI of the hyperlink for this label.
      */
@@ -662,10 +666,20 @@ public class JHyperlinkLabel extends JLabel{
             return getVisitedHyperlinkColor();
         return getUnvisitedHyperlinkColor();
     }
-    @Override
-    protected void paintComponent(java.awt.Graphics g){
-            // If the URI is set to a non-null value
-        if (getURI() != null){
+    /**
+     * This derives the font to use for the hyperlink from the given font.
+     * @param font The font to use to draw the label.
+     * @return The font to use for the hyperlink text.
+     * @see #getURI() 
+     * @see #getHyperlinkColor() 
+     * @see #isHoveredOver() 
+     * @see #getFont() 
+     * @see #paintComponent(java.awt.Graphics) 
+     */
+    protected Font deriveHyperlinkFont(Font font){
+            // If the URI is set to a non-null value and a non-null font has 
+            // been provided
+        if (getURI() != null && font != null){
                 // This is a map of attributes to apply to the font
             HashMap<TextAttribute, Object> map = new HashMap<>();
                 // Set the foreground color to the color for the hyperlink
@@ -678,9 +692,29 @@ public class JHyperlinkLabel extends JLabel{
             else
                 map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
                 // Derive the font with the text attributes applied to it
-            g.setFont(g.getFont().deriveFont(map));
+            return font.deriveFont(map);
         }
+        return font;
+    }
+    @Override
+    protected void paintComponent(java.awt.Graphics g){
+            // This gets whether the component was somehow already painting
+        boolean temp = isPainting;
+        isPainting = true;
+            // Derive the hyperlink font from the font
+        g.setFont(deriveHyperlinkFont(g.getFont()));
         super.paintComponent(g);
+        isPainting = temp;
+    }
+    @Override
+    public Font getFont(){
+            // Get the font for the label
+        Font font = super.getFont();
+            // If the label is currently being painted
+        if (isPainting)
+                // Derive the hyperlink font from the font
+            return deriveHyperlinkFont(font);
+        return font;
     }
     /**
      * This returns the tooltip for this label. If {@link #setToolTipText 
