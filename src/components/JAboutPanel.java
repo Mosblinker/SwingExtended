@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 /**
  * This is a panel that can be used to display information about a program.
@@ -488,7 +486,7 @@ public class JAboutPanel extends JPanel{
     protected JMenuItem websiteCopyItem;
     
     private class Handler extends ComponentAdapter implements 
-            PropertyChangeListener, DocumentListener, ActionListener{
+            PropertyChangeListener, ActionListener{
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName() == null || !(evt.getSource() instanceof Component))
@@ -526,18 +524,6 @@ public class JAboutPanel extends JPanel{
                     firePropertyChange(evt.getPropertyName(),evt.getOldValue(),
                             evt.getNewValue());
             }
-        }
-        @Override
-        public void insertUpdate(DocumentEvent evt) {
-            
-        }
-        @Override
-        public void removeUpdate(DocumentEvent evt) {
-            
-        }
-        @Override
-        public void changedUpdate(DocumentEvent evt) {
-            
         }
         @Override
         public void actionPerformed(ActionEvent evt) {
