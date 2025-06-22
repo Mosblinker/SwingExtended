@@ -95,7 +95,7 @@ public class JHyperlinkLabel extends JLabel{
     private URI uri = null;
     /**
      * This is the color to use for the foreground of a hyperlink that has not 
-     * been visited.
+     * been visited yet.
      */
     private Color unvisitedColor = null;
     /**
@@ -429,72 +429,93 @@ public class JHyperlinkLabel extends JLabel{
     }
     
     public URL getURL() throws MalformedURLException{
+            // If the URI is not null
         if (getURI() != null)
             return getURI().toURL();
         return null;
     }
     
     public void setURL(URL url) throws URISyntaxException{
+            // If the given URL is not null, convert it to a URI.
         setURI((url!=null)?url.toURI():null);
     }
     
     public void setURL(String url) throws MalformedURLException, URISyntaxException{
+            // If th given String is not null, then convert it to a URL
         setURL((url!=null)?new URL(url):null);
     }
     
     public Color getUnvisitedHyperlinkColor(){
+            // If the unvisited hyperlink color is not set
         if (unvisitedColor == null)
             return UNVISITED_HYPERLINK_COLOR;
         return unvisitedColor;
     }
     
     public void setUnvisitedHyperlinkColor(Color color){
+            // If the unvisited hyperlink color would change
         if (!Objects.equals(unvisitedColor, color)){
+                // Get the old color for unvisited hyperlinks
             Color old = unvisitedColor;
             unvisitedColor = color;
             firePropertyChange(UNVISITED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
                     color);
-            repaint();
+                // If the URI is set and the hyperlink has not been visited yet
+            if (getURI() != null && !isVisited())
+                repaint();
         }
     }
     
     public Color getVisitedHyperlinkColor(){
+            // If the visited hyperlink color is not set
         if (visitedColor == null)
             return VISITED_HYPERLINK_COLOR;
         return visitedColor;
     }
     
     public void setVisitedHyperlinkColor(Color color){
+            // If the visited hyperlink color would change
         if (!Objects.equals(visitedColor, color)){
+                // Get the old color for visited hyperlinks
             Color old = visitedColor;
             visitedColor = color;
             firePropertyChange(VISITED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
                     color);
-            repaint();
+                // If the URI is set and the hyperlink has been visited
+            if (getURI() != null && isVisited())
+                repaint();
         }
     }
     
     public Color getSelectedHyperlinkColor(){
+            // If the selected hyperlink color is not set
         if (selectedColor == null)
             return SELECTED_HYPERLINK_COLOR;
         return selectedColor;
     }
     
     public void setSelectedHyperlinkColor(Color color){
+            // If the selected hyperlink color would change
         if (!Objects.equals(selectedColor, color)){
+                // Get the old color when the hyperlink is selected
             Color old = selectedColor;
             selectedColor = color;
             firePropertyChange(SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
                     color);
-            repaint();
+                // If the URI is set and the hyperlink is currently selected
+            if (getURI() != null && isSelected())
+                repaint();
         }
     }
     
     protected Color getHyperlinkColor(){
+            // If the URI is not set
         if (getURI() == null)
             return null;
+            // If the hyperlink is currently selected
         if (isSelected())
             return getSelectedHyperlinkColor();
+            // If the hyperlink has been visited
         if (isVisited())
             return getVisitedHyperlinkColor();
         return getUnvisitedHyperlinkColor();
@@ -502,13 +523,19 @@ public class JHyperlinkLabel extends JLabel{
     
     @Override
     protected void paintComponent(java.awt.Graphics g){
+            // If the URI is set to a non-null value
         if (getURI() != null){
+                // This is a map of attributes to apply to the font
             HashMap<TextAttribute, Object> map = new HashMap<>();
+                // Set the foreground color to the color for the hyperlink
             map.put(TextAttribute.FOREGROUND, getHyperlinkColor());
+                // If the hyperlink is being hovered over
             if (isHoveredOver())
+                    // Draw a thicker underline lower than normal
                 map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_TWO_PIXEL);
             else
                 map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                // Derive the font with the text attributes applied to it
             g.setFont(g.getFont().deriveFont(map));
         }
         super.paintComponent(g);
@@ -516,15 +543,21 @@ public class JHyperlinkLabel extends JLabel{
     
     @Override
     public String getToolTipText(){
+            // If the tool tip text is set
         if (isToolTipTextSet())
             return super.getToolTipText();
+            // If there is a URI set, display it as the tool tip text.
         return (getURI() != null) ? getURI().toString() : null;
     }
     
     @Override
     public void setToolTipText(String text){
         super.setToolTipText(text);
+            // If the tool tip text was set to null but there is a URI set
         if (text == null && getURI() != null)
+                // The setToolTipText method will have unregistered this 
+                // component, but it needs to be registered to display the URI.
+                // Re-register this component with the tool tip manager
             ToolTipManager.sharedInstance().registerComponent(this);
     }
     /**
@@ -539,17 +572,23 @@ public class JHyperlinkLabel extends JLabel{
     public boolean isToolTipTextSet(){
         return super.getToolTipText() != null;
     }
-    
+    /**
+     * 
+     */
     public void openHyperlink(){
+            // If the URI is not set
         if (getURI() == null)
             throw new IllegalStateException();
+            // If the desktop is supported
         if (Desktop.isDesktopSupported()){
-            try{
+            try{    // Open the hyperlink with the user's default browser
                 Desktop.getDesktop().browse(getURI());
+                    // The hyperlink has been visited now
                 setVisited(true);
             } catch (IOException ex){
                 Logger.getLogger("SwingExtended").log(Level.WARNING, 
                         "Failed to open hyperlink", ex);
+                    // If the program should show error messages
                 if (getFailureMessagesAreShown())
                     JOptionPane.showMessageDialog(this, 
                             "Failed to open the hyperlink. This may be because "
@@ -560,6 +599,7 @@ public class JHyperlinkLabel extends JLabel{
         } else {
             Logger.getLogger("SwingExtended").warning(
                     "Desktop is not supported on this device.");
+                // If the program should show error messages
             if (getFailureMessagesAreShown())
                 JOptionPane.showMessageDialog(this, 
                         "Java is not able to open hyperlinks on this device.",
