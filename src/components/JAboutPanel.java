@@ -105,6 +105,19 @@ public class JAboutPanel extends JPanel{
         detailsPanel.add(creditsPanel);
         
             // TODO: Set up credits panel
+        
+            // Create the bottom panel
+        bottomPanel = new JPanel(new BorderLayout());
+            // Create the button panel
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        
+            // TODO: Set up buttons
+        
+            // Add the button panel to the bottom panel
+        bottomPanel.add(buttonPanel, BorderLayout.LINE_END);
+            // Add the bottom panel to this panel
+        add(bottomPanel, BorderLayout.PAGE_END);
     }
     
     public JAboutPanel(){
@@ -145,6 +158,8 @@ public class JAboutPanel extends JPanel{
     protected JPanel creditsPanel;
     protected JScrollPane creditsScrollPane;
     protected JTextPane creditsTextPane;
+    protected JPanel bottomPanel;
+    protected JPanel buttonPanel;
     protected JButton closeButton;
     protected JButton updateButton;
     protected JPopupMenu websitePopup;
