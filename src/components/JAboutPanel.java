@@ -5,6 +5,7 @@
 package components;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -311,6 +312,30 @@ public class JAboutPanel extends JPanel{
     
     public void setProgramWebsiteVisited(boolean value){
         websiteLabel.setVisited(value);
+    }
+    
+    public Color getUnvisitedHyperlinkColor(){
+        return websiteLabel.getUnvisitedHyperlinkColor();
+    }
+    
+    public void setUnvisitedHyperlinkColor(Color color){
+        websiteLabel.setUnvisitedHyperlinkColor(color);
+    }
+    
+    public Color getVisitedHyperlinkColor(){
+        return websiteLabel.getVisitedHyperlinkColor();
+    }
+    
+    public void setVisitedHyperlinkColor(Color color){
+        websiteLabel.setVisitedHyperlinkColor(color);
+    }
+    
+    public Color getSelectedHyperlinkColor(){
+        return websiteLabel.getSelectedHyperlinkColor();
+    }
+    
+    public void setSelectedHyperlinkColor(Color color){
+        websiteLabel.setSelectedHyperlinkColor(color);
     }
     
     // TODO: Add credit methods
