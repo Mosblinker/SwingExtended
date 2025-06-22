@@ -4,6 +4,11 @@
  */
 package components;
 
+import beans.BeanInfoIconFactory;
+import java.awt.Color;
+import java.awt.Font;
+import java.beans.*;
+
 /**
  * This is the beans info for JHyperlinkLabel.
  * @author Mosblinker
@@ -473,6 +478,11 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
 
     private static final int defaultPropertyIndex = -1;//GEN-BEGIN:Idx
     private static final int defaultEventIndex = -1;//GEN-END:Idx
+    /**
+     * This stores the BeanInfoIconFactory used to generate icons. This is 
+     * initialized the first time it is used.
+     */
+    private static BeanInfoIconFactory iconFactory = null;
 
 //GEN-FIRST:Superclass
     // Here you can add code for customizing the Superclass BeanInfo.
@@ -558,5 +568,209 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
     @Override
     public int getDefaultEventIndex() {
         return defaultEventIndex;
+    }
+    /**
+     * This returns the image to use to represent JHyperlinkLabels.
+     * @param iconKind The kind of icon to get.
+     * @param resourceName The name for the resource to get the image from, or 
+     * null.
+     * @return The image representing a JHyperlinkLabels, or null if no suitable 
+     * icon is available.
+     * @see #getIcon(int) 
+     * @see beans.BeanInfoIconFactory
+     * @see beans.BeanInfoIconFactory#createIconImage(int, java.lang.String, java.beans.SimpleBeanInfo) 
+     */
+    private java.awt.Image createIcon(int iconKind, String resourceName){
+        if (iconFactory == null)    // If the icon factory is not initialized yet
+            iconFactory = new JHyperlinkLabelIconFactory();
+        return iconFactory.createIconImage(iconKind, resourceName, this);
+    }
+    /**
+     * This method returns an image object that can be used to represent the
+     * bean in toolboxes, toolbars, etc. Icon images will typically be GIFs, but
+     * may in future include other formats.
+     * <p>
+     * Beans aren't required to provide icons and may return null from this
+     * method.
+     * <p>
+     * There are four possible flavors of icons (16x16 color, 32x32 color, 16x16
+     * mono, 32x32 mono). If a bean choses to only support a single icon we
+     * recommend supporting 16x16 color.
+     * <p>
+     * We recommend that icons have a "transparent" background so they can be
+     * rendered onto an existing background.
+     *
+     * @param iconKind The kind of icon requested. This should be one of the
+     * constant values ICON_COLOR_16x16, ICON_COLOR_32x32, ICON_MONO_16x16, or
+     * ICON_MONO_32x32.
+     * @return An image object representing the requested icon. May return null
+     * if no suitable icon is available.
+     */
+    @Override
+    public java.awt.Image getIcon(int iconKind) {
+        switch (iconKind) {
+            case ICON_COLOR_16x16:              // 16x16 color icon
+                if (iconColor16 == null)        // If the icon was not loaded yet
+                    iconColor16 = createIcon(iconKind, iconNameC16);
+                return iconColor16;
+            case ICON_COLOR_32x32:              // 32x32 color icon
+                if (iconColor32 == null)        // If the icon was not loaded yet
+                    iconColor32 = createIcon(iconKind, iconNameC32);
+                return iconColor32;
+            case ICON_MONO_16x16:               // 16x16 monochrome icon
+                if (iconMono16 == null)         // If the icon was not loaded yet
+                    iconMono16 = createIcon(iconKind, iconNameM16);
+                return iconMono16;
+            case ICON_MONO_32x32:               // 32x32 monochrome icon
+                if (iconMono32 == null)         // If the icon was not loaded yet
+                    iconMono32 = createIcon(iconKind, iconNameM32);
+                return iconMono32;
+            default:
+                return null;
+        }
+    }
+    /**
+     * This is the BeanInfoIconFactory used to create icons to represent 
+     * JHyperlinkLabel.
+     */
+    private static class JHyperlinkLabelIconFactory extends BeanInfoIconFactory{
+        /**
+         * This creates an array of grayscale colors from the given array of 
+         * colors, using the standard luminance equation.
+         * @param colors The colors to use.
+         * @return A grayscale version of the colors.
+         */
+        private static Color[] toGrayscale(Color[] colors){
+                // This is an array to get the grayscale colors
+            Color[] values = new Color[colors.length];
+                // Go through the colors
+            for (int i = 0; i < colors.length; i++){
+                    // Use the standard luminance equation to get the value for 
+                    // this color
+                float value = (float)(0.2126 * (colors[i].getRed()/255.0) + 
+                        0.7152 * (colors[i].getGreen()/255.0) + 
+                        0.0722 * (colors[i].getBlue()/255.0));
+                values[i] = new Color(value, value, value, colors[i].getAlpha()/255.0f);
+            }
+            return values;
+        }
+        /**
+         * This stores the colors to use for an image representing 
+         * JHyperlinkLabel with a color icon.
+         */
+        private static final Color[] ICON_COLOR_VALUES_COLOR_ONLY = {
+            JHyperlinkLabel.UNVISITED_HYPERLINK_COLOR,
+            JHyperlinkLabel.VISITED_HYPERLINK_COLOR
+        };
+        /**
+         * This stores the colors to use for an image representing 
+         * JHyperlinkLabel. The first array contains the colors to use for a 
+         * color icon and the second array contains the colors to use for a 
+         * monochrome icon.
+         */
+        public static final Color[][] ICON_COLOR_VALUES = {
+            ICON_COLOR_VALUES_COLOR_ONLY,
+            toGrayscale(ICON_COLOR_VALUES_COLOR_ONLY)
+        };
+        /**
+         * This is the text displayed by the label.
+         */
+        public static final String LABEL_TEXT = "link";
+        /**
+         * This is the font for the text to display. This is initially null and 
+         * is initialized the first time it's used.
+         */
+        private static Font font = null;
+        /**
+         * This returns a gradient to use to paint the text.
+         * @param scale The scale for the icon (1 for 16x16 icons, 2 for 32x32 
+         * icons).
+         * @param colorMode The color mode for the icon (0 for color icons, 1 
+         * for monochrome icons).
+         * @return The gradient for the text.
+         */
+        protected java.awt.Paint getGradient(int scale, int colorMode){
+            return new java.awt.GradientPaint(
+                    0,5*scale,ICON_COLOR_VALUES[colorMode][0],
+                    0,16*scale,ICON_COLOR_VALUES[colorMode][1]);
+        }
+        /**
+         * This paints the string "label" at the given position with the 
+         * given paint.
+         * @param g The graphics context to render to.
+         * @param x The x-coordinate to paint the text at.
+         * @param y The y-coordinate to paint the text at.
+         * @param paint The paint to use to paint the text
+         */
+        private void paintText(java.awt.Graphics2D g, int x, int y, java.awt.Paint paint){
+                // Set the paint to use
+            g.setPaint(paint);
+                // Draw the text one pixel before the x-coordinate to make the 
+                // text thicker
+            g.drawString(LABEL_TEXT, x-1, y);
+                // Draw the text
+            g.drawString(LABEL_TEXT, x, y);
+        }
+        /**
+         * This paints the text for the icon.
+         * @param g The graphics context to render to.
+         * @param colorMode The color mode for the icon (0 for color icons, 1 
+         * for monochrome icons).
+         */
+        private void paintText(java.awt.Graphics2D g, int colorMode){
+                // Set the antiasing to be true
+            g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, 
+                    java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                // If the font has not been initialized yet
+            if (font == null)
+                font = new Font(Font.SANS_SERIF,Font.PLAIN,16);
+                // Set the font to use
+            g.setFont(font);
+                // Draw the text shadow
+            paintText(g,5,23,BeanInfoIconFactory.SHADOW_COLOR);
+                // Draw the text
+            paintText(g,5,22,getGradient(2,colorMode));
+        }
+        /**
+         * This draws the underline for the text.
+         * @param g The graphics context to render to.
+         * @param scale The scale for the icon (1 for 16x16 icons, 2 for 32x32 
+         * icons).
+         * @param y The base y-coordinate for the line.
+         * @param w The width of the image.
+         */
+        private void paintUnderline(java.awt.Graphics2D g,int scale, int y, int w){
+            g.drawLine((int)(2.5*scale), y,  w-(2*scale)-1, y);
+        }
+        @Override
+        protected void paintImage(java.awt.Graphics2D g,int scale,int colorMode,
+                int w, int h) {
+                // If the icon is 16x16
+            if (scale == 1){
+                    // An image to draw the 32x32 version of the text to
+                java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(32,32,
+                        java.awt.image.BufferedImage.TYPE_INT_ARGB);
+                    // Get the graphics context for the image
+                java.awt.Graphics2D imgG = img.createGraphics();
+                    // Draw the text to the image
+                paintText(imgG,colorMode);
+                imgG.dispose();
+                    // Set the graphics rendering to use bicubic interpolation
+                g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, 
+                            java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                    // Scale down the text to 16x16
+                g.drawImage(img, 0, 0, w, h, null);
+                    // Set the paint to the gradient with the proper scale
+                g.setPaint(getGradient(scale,colorMode));
+            } else
+                    // Paint the text (the gradient should have been applied by 
+                    // the end of this method
+                paintText(g,colorMode);
+                // Draw the main underline
+            paintUnderline(g,scale,(int)(11.5*scale)+(scale%2),w);
+                // Draw the shadow for the underline
+            g.setColor(SHADOW_COLOR);
+            paintUnderline(g,scale,(int)(12*scale)+(scale%2),w);
+        }
     }
 }
