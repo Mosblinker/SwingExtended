@@ -426,23 +426,6 @@ public class JHyperlinkLabel extends JLabel{
         setVisited(false);
     }
     
-    public URL getURL() throws MalformedURLException{
-            // If the URI is not null
-        if (getURI() != null)
-            return getURI().toURL();
-        return null;
-    }
-    
-    public void setURL(URL url) throws URISyntaxException{
-            // If the given URL is not null, convert it to a URI.
-        setURI((url!=null)?url.toURI():null);
-    }
-    
-    public void setURL(String url) throws MalformedURLException, URISyntaxException{
-            // If th given String is not null, then convert it to a URL
-        setURL((url!=null)?new URL(url):null);
-    }
-    
     public Color getUnvisitedHyperlinkColor(){
             // If the unvisited hyperlink color is not set
         if (unvisitedColor == null)
@@ -615,9 +598,6 @@ public class JHyperlinkLabel extends JLabel{
      * @see #openHyperlink() 
      * @see #getURI() 
      * @see #setURI(java.net.URI) 
-     * @see #getURL() 
-     * @see #setURL(java.net.URL) 
-     * @see #setURL(java.lang.String) 
      */
     public void copyHyperlink(Clipboard clipboard){
             // If the URI is not set
@@ -642,9 +622,6 @@ public class JHyperlinkLabel extends JLabel{
      * @see #openHyperlink() 
      * @see #getURI() 
      * @see #setURI(java.net.URI) 
-     * @see #getURL() 
-     * @see #setURL(java.net.URL) 
-     * @see #setURL(java.lang.String) 
      */
     public void copyHyperlink(){
         copyHyperlink(getToolkit().getSystemClipboard());
