@@ -21,6 +21,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.EditorKit;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -63,6 +64,9 @@ public class JAboutPanel extends JPanel{
     
     public static final String CREDITS_DOCUMENT_PROPERTY_CHANGED = 
             "CreditsDocumentPropertyChanged";
+    
+    public static final String CREDITS_EDITOR_KIT_PROPERTY_CHANGED = 
+            "CreditsEditorKitPropertyChanged";
     /**
      * This is the text that appears before the program version on the program 
      * version label.
@@ -389,6 +393,22 @@ public class JAboutPanel extends JPanel{
         creditsTextPane.setStyledDocument(doc);
     }
     
+    public EditorKit getCreditsEditorKit(){
+        return creditsTextPane.getEditorKit();
+    }
+    
+    public EditorKit getCreditsEditorKitForContentType(String type){
+        return creditsTextPane.getEditorKitForContentType(type);
+    }
+    
+    public void setCreditsEditorKit(EditorKit kit){
+        creditsTextPane.setEditorKit(kit);
+    }
+    
+    public void setCreditsEditorKitForContentType(String type, EditorKit kit){
+        creditsTextPane.setEditorKitForContentType(type, kit);
+    }
+    
     // TODO: Add credit methods
     
     public JThumbnailLabel getProgramIconLabel(){
@@ -672,6 +692,11 @@ public class JAboutPanel extends JPanel{
                 case("document"):
                     if (c == creditsTextPane)
                         firePropertyChange(CREDITS_DOCUMENT_PROPERTY_CHANGED,
+                                evt.getOldValue(),evt.getNewValue());
+                    break;
+                case("editorKit"):
+                    if (c == creditsTextPane)
+                        firePropertyChange(CREDITS_EDITOR_KIT_PROPERTY_CHANGED,
                                 evt.getOldValue(),evt.getNewValue());
             }
         }
