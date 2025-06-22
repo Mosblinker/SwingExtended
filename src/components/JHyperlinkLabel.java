@@ -409,12 +409,19 @@ public class JHyperlinkLabel extends JLabel{
                 // Set the URI
             this.uri = uri;
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
-            if (super.getToolTipText() == null){
+                // If the tool tip is not set for this label
+            if (!isToolTipTextSet()){
+                    // Get the shared instance of the tool tip manager
                 ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
+                    // If the new URI is not null
                 if (uri != null){
+                        // If the old URI is not null
                     if (old == null)
+                            // Register this component, since the URI will be 
+                            // displayed as the tool tip
                         toolTipManager.registerComponent(this);
                 } else
+                        // Unregister this component
                     toolTipManager.unregisterComponent(this);
             }
         }
@@ -509,8 +516,9 @@ public class JHyperlinkLabel extends JLabel{
     
     @Override
     public String getToolTipText(){
-        String tooltip = super.getToolTipText();
-        return (tooltip == null && getURI() != null) ? getURI().toString() : tooltip;
+        if (isToolTipTextSet())
+            return super.getToolTipText();
+        return (getURI() != null) ? getURI().toString() : null;
     }
     
     @Override
@@ -518,6 +526,18 @@ public class JHyperlinkLabel extends JLabel{
         super.setToolTipText(text);
         if (text == null && getURI() != null)
             ToolTipManager.sharedInstance().registerComponent(this);
+    }
+    /**
+     * This returns whether {@link #setToolTipText(java.lang.String) 
+     * setToolTipText} has been called with a non-null value for the tool tip 
+     * text.
+     * @return Whether the text for the tool tip has been set.
+     * @see #setToolTipText(java.lang.String) 
+     * @see #getToolTipText() 
+     * @see #TOOL_TIP_TEXT_KEY
+     */
+    public boolean isToolTipTextSet(){
+        return super.getToolTipText() != null;
     }
     
     public void openHyperlink(){
