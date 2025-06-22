@@ -47,11 +47,16 @@ public class JHyperlinkLabel extends JLabel{
     public static final String HYPERLINK_VISITED_PROPERTY_CHANGED = 
             "HyperlinkVisitedPropertyChanged";
     
+    public static final String FAILURE_MESSAGES_SHOWN_PROPERTY_CHANGED = 
+            "FailureMessagesShownPropertyChanged";
+    
     protected static final int HYPERLINK_VISITED_FLAG = 0x01;
     
     protected static final int HYPERLINK_CLICKED_FLAG = 0x02;
     
     protected static final int HYPERLINK_HOVERED_FLAG = 0x04;
+    
+    protected static final int SHOW_FAILURE_MESSAGES_FLAG = 0x08;
     
     private URI uri = null;
     
@@ -61,7 +66,7 @@ public class JHyperlinkLabel extends JLabel{
     
     private Color selectedColor = null;
     
-    private int flags = 0;
+    private int flags = SHOW_FAILURE_MESSAGES_FLAG;
     
     private void initialize(){
         addMouseListener(new Handler());
@@ -81,13 +86,19 @@ public class JHyperlinkLabel extends JLabel{
         return old != flags;
     }
     
+    protected boolean setFlag(int flag, boolean value, String propName){
+        boolean change = setFlag(flag,value);
+        if (change)
+            firePropertyChange(propName,!value,value);
+        return change;
+    }
+    
     public boolean isVisited(){
         return getFlag(HYPERLINK_VISITED_FLAG);
     }
     
     public void setVisited(boolean value){
-        if (setFlag(HYPERLINK_VISITED_FLAG,value)){
-            firePropertyChange(HYPERLINK_VISITED_PROPERTY_CHANGED,!value,value);
+        if (setFlag(HYPERLINK_VISITED_FLAG,value,HYPERLINK_VISITED_PROPERTY_CHANGED)){
             repaint();
         }
     }
@@ -110,6 +121,15 @@ public class JHyperlinkLabel extends JLabel{
         if (setFlag(HYPERLINK_HOVERED_FLAG,value)){
             repaint();
         }
+    }
+    
+    public boolean getFailureMessagesAreShown(){
+        return getFlag(SHOW_FAILURE_MESSAGES_FLAG);
+    }
+    
+    public void setFailureMessagesAreShown(boolean value){
+        setFlag(SHOW_FAILURE_MESSAGES_FLAG,value,
+                FAILURE_MESSAGES_SHOWN_PROPERTY_CHANGED);
     }
     
     public URI getURI(){
@@ -242,10 +262,20 @@ public class JHyperlinkLabel extends JLabel{
             } catch (IOException ex){
                 Logger.getLogger("SwingExtended").log(Level.WARNING, 
                         "Failed to open hyperlink", ex);
+                if (getFailureMessagesAreShown())
+                    JOptionPane.showMessageDialog(this, 
+                            "Failed to open the hyperlink. This may be because "
+                                    + "your default browser failed to launch.", 
+                            "Failed to Open Hyperlink", 
+                            JOptionPane.WARNING_MESSAGE);
             }
         } else {
             Logger.getLogger("SwingExtended").warning(
                     "Desktop is not supported on this device.");
+            if (getFailureMessagesAreShown())
+                JOptionPane.showMessageDialog(this, 
+                        "Java is not able to open hyperlinks on this device.",
+                        "Failed to Open Hyperlink",JOptionPane.WARNING_MESSAGE);
         }
     }
     
