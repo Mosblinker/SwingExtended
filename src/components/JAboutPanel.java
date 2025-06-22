@@ -523,7 +523,10 @@ public class JAboutPanel extends JPanel{
             updateButton.setBackground(bg);
         } catch (NullPointerException ex){ }
     }
-    
+    @Override
+    public Dimension getMinimumSize(){
+        return (isMinimumSizeSet())?super.getMinimumSize():new Dimension(640,480);
+    }
     @Override
     protected String paramString(){
         return super.paramString();
