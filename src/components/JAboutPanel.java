@@ -472,7 +472,19 @@ public class JAboutPanel extends JPanel{
         }
         @Override
         public void actionPerformed(ActionEvent evt) {
-            
+            if (evt.getActionCommand() == null)
+                return;
+            switch(evt.getActionCommand()){
+                case(OPEN_WEBSITE_SELECTED):
+                    openProgramWebsite();
+                    break;
+                case(COPY_WEBSITE_SELECTED):
+                    copyProgramWebsite();
+                    break;
+                case(CLOSE_SELECTED):
+                case(UPDATE_CHECK_SELECTED):
+                    fireActionPerformed(evt);
+            }
         }
         @Override
         public void componentHidden(ComponentEvent evt) {
