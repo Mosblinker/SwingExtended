@@ -104,7 +104,10 @@ public class JAboutPanel extends JPanel{
             // Add the credits panel to the details panel
         detailsPanel.add(creditsPanel);
         
-            // TODO: Set up credits panel
+        creditsTextPane = new JTextPane();
+        creditsTextPane.setEditable(false);
+        creditsScrollPane = new JScrollPane(creditsTextPane);
+        creditsPanel.add(creditsScrollPane, BorderLayout.CENTER);
         
             // Create the bottom panel
         bottomPanel = new JPanel(new BorderLayout());
