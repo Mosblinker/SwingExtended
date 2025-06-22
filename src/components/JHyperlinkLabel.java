@@ -67,13 +67,69 @@ public class JHyperlinkLabel extends JLabel{
     private Color selectedColor = null;
     
     private int flags = SHOW_FAILURE_MESSAGES_FLAG;
-    
-    private void initialize(){
+    /**
+     * 
+     * @param uri 
+     */
+    private void initialize(URI uri){
+        setURI(uri);
         addMouseListener(new Handler());
     }
     
+    public JHyperlinkLabel(String text, Icon icon, int horizontalAlignment, 
+            URI uri){
+        super(text,icon,horizontalAlignment);
+        initialize(uri);
+    }
+    
+    public JHyperlinkLabel(String text, Icon icon, int horizontalAlignment){
+        this(text,icon,horizontalAlignment,null);
+    }
+    
+    public JHyperlinkLabel(String text, int horizontalAlignment, URI uri){
+        super(text,horizontalAlignment);
+        initialize(uri);
+    }
+    
+    public JHyperlinkLabel(String text, int horizontalAlignment){
+        this(text,horizontalAlignment,null);
+    }
+    
+    public JHyperlinkLabel(String text, URI uri){
+        super(text);
+        initialize(uri);
+    }
+    
+    public JHyperlinkLabel(String text){
+        this(text,null);
+    }
+    
+    public JHyperlinkLabel(Icon icon, int horizontalAlignment, URI uri){
+        super(icon,horizontalAlignment);
+        initialize(uri);
+    }
+    
+    public JHyperlinkLabel(Icon icon, int horizontalAlignment){
+        this(icon,horizontalAlignment,null);
+    }
+    
+    public JHyperlinkLabel(Icon icon, URI uri){
+        super(icon);
+        initialize(uri);
+    }
+    
+    public JHyperlinkLabel(Icon icon){
+        this(icon,null);
+    }
+    
+    public JHyperlinkLabel(URI uri){
+        super();
+        initialize(uri);
+    }
+    
     public JHyperlinkLabel(){
-        initialize();
+        super();
+        initialize(null);
     }
     
     protected boolean getFlag(int flag){
