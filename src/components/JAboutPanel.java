@@ -95,6 +95,7 @@ public class JAboutPanel extends JPanel{
         websiteOpenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, 0));
         websiteOpenItem.setActionCommand(OPEN_WEBSITE_SELECTED);
         websiteOpenItem.addActionListener(handler);
+        websiteOpenItem.setEnabled(false);
             // Add the open menu item to the popup menu for the website label
         websitePopup.add(websiteOpenItem);
             // Create a menu item for copying the link
@@ -102,6 +103,7 @@ public class JAboutPanel extends JPanel{
         websiteCopyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0));
         websiteCopyItem.setActionCommand(COPY_WEBSITE_SELECTED);
         websiteCopyItem.addActionListener(handler);
+        websiteCopyItem.setEnabled(false);
             // Add the copy menu item to the popup menu for the website label
         websitePopup.add(websiteCopyItem);
             // Set the popup menu for the website label
@@ -242,6 +244,10 @@ public class JAboutPanel extends JPanel{
     
     // TODO: Set up credits panel
     
+    private void updateWebsiteMenuItems(){
+        websiteOpenItem.setEnabled(isEnabled() && websiteLabel.getURI() != null);
+        websiteCopyItem.setEnabled(websiteOpenItem.isEnabled());
+    }
     @Override
     public void setFont(Font font){
         super.setFont(font);
@@ -319,6 +325,8 @@ public class JAboutPanel extends JPanel{
                         c.setVisible(text != null && !text.isEmpty());
                     }
                     break;
+                case(JHyperlinkLabel.URI_PROPERTY_CHANGED):
+                    updateWebsiteMenuItems();
             }
         }
         @Override
