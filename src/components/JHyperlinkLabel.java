@@ -115,6 +115,14 @@ public class JHyperlinkLabel extends JLabel{
      */
     private volatile boolean isPainting = false;
     /**
+     * This stores whether the cursor has actually been set for this label.
+     */
+    private boolean cursorIsSet = false;
+    /**
+     * This is the hand cursor to use for this label.
+     */
+    private Cursor handCursor = null;
+    /**
      * This initializes this JHyperlinkLabel.
      * @param uri The URI of the hyperlink for this label.
      */
@@ -482,8 +490,11 @@ public class JHyperlinkLabel extends JLabel{
             firePropertyChange(URI_PROPERTY_CHANGED,old,uri);
                 // If the old URI is null and the new URI is not null or 
                 // if the old URI is not null and the new URI is null
-            if (old == null && uri != null || old != null && uri == null)
+            if (old == null && uri != null || old != null && uri == null){
                 repaint();
+                    // Update the cursor
+                updateDefaultCursor();
+            }
                 // If the tool tip is not set for this label
             if (!isToolTipTextSet()){
                     // Get the shared instance of the tool tip manager
@@ -696,6 +707,12 @@ public class JHyperlinkLabel extends JLabel{
         }
         return font;
     }
+    /**
+     * {@inheritDoc }
+     * @param g {@inheritDoc }
+     * @see #paint(java.awt.Graphics) 
+     * @see javax.swing.plaf.ComponentUI
+     */
     @Override
     protected void paintComponent(java.awt.Graphics g){
             // This gets whether the component was somehow already painting
@@ -706,6 +723,11 @@ public class JHyperlinkLabel extends JLabel{
         super.paintComponent(g);
         isPainting = temp;
     }
+    /**
+     * {@inheritDoc }
+     * @return {@inheritDoc }
+     * @see #setFont(java.awt.Font) 
+     */
     @Override
     public Font getFont(){
             // Get the font for the label
@@ -774,6 +796,157 @@ public class JHyperlinkLabel extends JLabel{
      */
     public boolean isToolTipTextSet(){
         return super.getToolTipText() != null;
+    }
+    /**
+     * This returns the cursor to default to when no cursor is explicitly set 
+     * for this label. If this label is enabled and has a {@link #getURI() URI} 
+     * set, then this will return the {@link #getHandCursor() hand cursor}. 
+     * Otherwise, this will return null.
+     * @return The cursor to use when no cursor is explicitly set, or null to 
+     * inherit the cursor.
+     * @see #getCursor() 
+     * @see #setCursor(java.awt.Cursor) 
+     * @see #isCursorSet() 
+     * @see #getHandCursor() 
+     * @see #setHandCursor(java.awt.Cursor) 
+     * @see #isHandCursorSet() 
+     * @see #isEnabled() 
+     * @see #getURI() 
+     */
+    protected Cursor getDefaultCursor(){
+            // If the label is enabled and the URI is set
+        return (isEnabled() && getURI() != null) ? getHandCursor() : null;
+    }
+    /**
+     * This updates the cursor when using the default cursor.
+     */
+    private void updateDefaultCursor(){
+            // If the cursor is not explicitly set
+        if (!cursorIsSet)
+            super.setCursor(getDefaultCursor());
+    }
+    /**
+     * This sets the cursor image to use for the hand cursor. This is the cursor 
+     * used when no cursor has been explicitly set for this label, this label is 
+     * enabled, and has a {@link #getURI() URI} set.
+     * @param cursor The cursor image for the hand cursor.
+     * @see #isEnabled() 
+     * @see #getURI() 
+     * @see #isShowing() 
+     * @see #getHandCursor() 
+     * @see #isHandCursorSet() 
+     * @see #getCursor() 
+     * @see #setCursor(java.awt.Cursor) 
+     * @see #isCursorSet() 
+     * @see Toolkit#createCustomCursor(java.awt.Image, java.awt.Point, java.lang.String) 
+     * @see Cursor
+     * @see Cursor#getPredefinedCursor(int) 
+     * @see Cursor#HAND_CURSOR
+     */
+    public void setHandCursor(Cursor cursor){
+        handCursor = cursor;
+        updateDefaultCursor();
+    }
+    /**
+     * This gets the hand cursor set for the label. If the label does not have 
+     * a cursor set for the hand cursor, then {@code Cursor.HAND_CURSOR} is 
+     * returned.
+     * @return The hand cursor for this label.
+     * @see #setHandCursor(java.awt.Cursor) 
+     * @see #isHandCursorSet() 
+     * @see #getCursor() 
+     * @see Cursor#getPredefinedCursor(int) 
+     * @see Cursor#HAND_CURSOR
+     */
+    public Cursor getHandCursor(){
+            // If the hand cursor is not set
+        if (handCursor == null)
+                // Get the predefined hand cursor
+            return Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+        return handCursor;
+    }
+    /**
+     * This returns whether the hand cursor has been explicitly set for this 
+     * label. If this method returns {@code false}, then {@code 
+     * Cursor.HAND_CURSOR} will be used for the hand cursor.
+     * @return {@code true} if the hand cursor has been explicitly set for this 
+     * label, {@code false} otherwise.
+     * @see #isCursorSet() 
+     * @see #getHandCursor() 
+     */
+    public boolean isHandCursorSet(){
+        return handCursor != null;
+    }
+    /**
+     * {@inheritDoc }
+     * <p>
+     * When the cursor is not explicitly set for this label, this label is 
+     * enabled, and the {@link #getURI() URI} for this label is set, then the 
+     * cursor will be the {@link #getHandCursor() hand cursor} for this label.
+     * @param cursor {@inheritDoc }
+     * @see #isEnabled() 
+     * @see #getURI() 
+     * @see #isShowing() 
+     * @see #getCursor() 
+     * @see #contains(int, int) 
+     * @see Toolkit#createCustomCursor(java.awt.Image, java.awt.Point, java.lang.String) 
+     * @see Cursor
+     * @see Cursor#getPredefinedCursor(int) 
+     * @see #getHandCursor() 
+     * @see #setHandCursor(java.awt.Cursor) 
+     */
+    @Override
+    public void setCursor(Cursor cursor){
+            // Get if the cursor is not null
+        cursorIsSet = cursor != null;
+            // If the cursor is null
+        if (!cursorIsSet)
+                // Use the default cursor for this label
+            cursor = getDefaultCursor();
+        super.setCursor(cursor);
+    }
+    /**
+     * This returns the cursor set in this component. If this label does not 
+     * have a cursor set, then this will return the {@link #getHandCursor() hand 
+     * cursor} if this label is enabled and has a {@link #getURI() URI} set. If 
+     * this label does not have a cursor set and is either not enabled or does 
+     * not have a URI set, then the cursor of its parent will be returned. If no 
+     * cursor is set for the entire hierarchy, {@code Cursor.DEFAULT_CURSOR} is 
+     * returned.
+     * @return {@inheritDoc }
+     * @see #setCursor(java.awt.Cursor) 
+     * @see #getHandCursor() 
+     * @see #setHandCursor(java.awt.Cursor) 
+     * @see #isEnabled() 
+     * @see #getURI() 
+     */
+    @Override
+    public Cursor getCursor(){
+        return super.getCursor();
+    }
+    /**
+     * This returns whether the cursor has been explicitly set for this label. 
+     * If this method returns {@code false}, then this label will use the 
+     * {@link #getHandCursor() hand cursor} if the label is enabled and has a 
+     * {@link #getURI() URI} set, otherwise this label is inherit its cursor 
+     * from an ancestor.
+     * @return {@inheritDoc }
+     * @see #isHandCursorSet() 
+     */
+    @Override
+    public boolean isCursorSet() {
+        return cursorIsSet && super.isCursorSet();
+    }
+    /**
+     * {@inheritDoc }
+     * @param enabled {@inheritDoc }
+     * @see #isEnabled() 
+     * @see #isLightweight() 
+     */
+    @Override
+    public void setEnabled(boolean enabled){
+        super.setEnabled(enabled);
+        updateDefaultCursor();
     }
     /**
      * This opens the hyperlink in the user's default browser. If this fails to 
