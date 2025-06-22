@@ -244,6 +244,16 @@ public class JAboutPanel extends JPanel{
     
     // TODO: Set up credits panel
     
+    @Override
+    public void setEnabled(boolean enabled){
+        super.setEnabled(enabled);
+        try{
+//            websiteLabel.setEnabled(enabled);
+            updateWebsiteMenuItems();
+            updateButton.setEnabled(enabled);
+        } catch (NullPointerException ex){}
+    }
+    
     private void updateWebsiteMenuItems(){
         websiteOpenItem.setEnabled(isEnabled() && websiteLabel.getURI() != null);
         websiteCopyItem.setEnabled(websiteOpenItem.isEnabled());
