@@ -14,6 +14,7 @@ import java.beans.PropertyChangeListener;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -31,6 +32,10 @@ public class JAboutPanel extends JPanel{
     public static final String OPEN_WEBSITE_SELECTED = "OpenWebsiteSelected";
     
     public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
+    /**
+     * The template for the text to display for the copyright.
+     */
+    private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
     
     private void initializeDetailsLabel(JLabel label, Handler handler, 
             boolean visible){
@@ -79,7 +84,7 @@ public class JAboutPanel extends JPanel{
         initializeDetailsLabel(versionLabel,handler,false);
             // Create and add the copyright label
         copyrightLabel = new JLabel();
-        initializeDetailsLabel(versionLabel,handler,false);
+        initializeDetailsLabel(copyrightLabel,handler,false);
             // Create and add the website label
         websiteLabel = new JHyperlinkLabel();
         initializeDetailsLabel(websiteLabel,handler,false);
@@ -168,7 +173,51 @@ public class JAboutPanel extends JPanel{
         versionLabel.setText(version);
     }
     
-    // TODO: Copyright label code goes here
+    public Integer getCopyrightStartYear(){
+        return crStartYear;
+    }
+    
+    public void setCopyrightStartYear(Integer year){
+        if (Objects.equals(crStartYear, year))
+            return;
+        crStartYear = year;
+        updateCopyrightText();
+    }
+    
+    protected int getCurrentYear(){
+        return new java.util.GregorianCalendar().get(java.util.Calendar.YEAR);
+    }
+    
+    public int getCopyrightEndYear(){
+        if (crEndYear == null)
+            return getCurrentYear();
+        return crEndYear;
+    }
+    
+    public void setCopyrightEndYear(Integer year){
+        if (Objects.equals(crEndYear, year))
+            return;
+        crEndYear = year;
+        updateCopyrightText();
+    }
+    
+    public boolean isCopyrightEndYearSet(){
+        return crEndYear != null;
+    }
+    
+    protected String getCopyrightText(int startYear, int endYear){
+        String yearText = ""+startYear;
+        if (startYear != endYear)
+            yearText += "-"+endYear;
+        return String.format(COPYRIGHT_TEXT_TEMPLATE, yearText);
+    }
+    
+    protected void updateCopyrightText(){
+        Integer start = getCopyrightStartYear();
+        if (start != null)
+            copyrightLabel.setText(getCopyrightText(start,getCopyrightEndYear()));
+        copyrightLabel.setVisible(start != null);
+    }
     
     public String getProgramWebsiteText(){
         return websiteLabel.getText();
@@ -232,6 +281,8 @@ public class JAboutPanel extends JPanel{
             filler.setVisible(evt.getComponent().isVisible());
     }
     
+    private Integer crStartYear = null;
+    private Integer crEndYear = null;
     private Map<Component,Component> fillerMap = new HashMap<>();
     protected JThumbnailLabel iconLabel;
     protected JPanel detailsPanel;
@@ -263,7 +314,7 @@ public class JAboutPanel extends JPanel{
                         iconLabel.setVisible(iconLabel.getIcon() != null);
                     break;
                 case("text"):
-                    if (c instanceof JLabel && c != nameLabel){
+                    if (c instanceof JLabel && c != nameLabel && c != copyrightLabel){
                         String text = ((JLabel)c).getText();
                         c.setVisible(text != null && !text.isEmpty());
                     }
