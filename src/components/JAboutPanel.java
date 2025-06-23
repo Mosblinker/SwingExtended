@@ -334,9 +334,9 @@ public class JAboutPanel extends JPanel{
     }
     
     protected String getCopyrightText(int startYear, int endYear){
-        String yearText = ""+startYear;
+        String yearText = Integer.toString(Math.min(startYear, endYear));
         if (startYear != endYear)
-            yearText += "-"+endYear;
+            yearText += "-"+Math.max(startYear, endYear);
         return String.format(COPYRIGHT_TEXT_TEMPLATE, yearText);
     }
     
