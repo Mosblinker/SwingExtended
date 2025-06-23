@@ -231,6 +231,7 @@ public class JAboutPanel extends JPanel{
         updateButton.setForeground(null);
         buttonPanel.add(updateButton);
         buttonPanel.add(createFiller(updateButton,6,0,6,32767));
+        updateButton.setVisible(false);
         
         licenseButton = new JButton("License");
         licenseButton.setActionCommand(OPEN_LICENSE_SELECTED);
@@ -239,6 +240,7 @@ public class JAboutPanel extends JPanel{
         licenseButton.setForeground(null);
         buttonPanel.add(licenseButton);
         buttonPanel.add(createFiller(licenseButton,6,0,6,32767));
+        licenseButton.setVisible(false);
         
         closeButton = new JButton("OK");
         closeButton.setActionCommand(CLOSE_SELECTED);
