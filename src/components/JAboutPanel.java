@@ -281,6 +281,7 @@ public class JAboutPanel extends JPanel{
     }
     
     private void initialize(){
+        setBorder(BorderFactory.createEmptyBorder(11, 10, 11, 10));
             // A handler to listen to the components
         Handler handler = new Handler();
             // A handler to listen to changes to the visibility of components
