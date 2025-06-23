@@ -35,7 +35,7 @@ public class JAboutPanel extends JPanel{
     
     public static final String CLOSE_SELECTED = "CloseSelected";
     
-    public static final String UPDATE_CHECK_SELECTED = "CheckForUpdatesSelected";
+    public static final String UPDATE_SELECTED = "UpdateSelected";
     
     public static final String OPEN_LICENSE_SELECTED = "OpenLicenseSelected";
     
@@ -429,7 +429,7 @@ public class JAboutPanel extends JPanel{
         buttonPanel.setBackground(null);
             // Create a button to check for updates
         updateButton = new JButton(getUpdateButtonText());
-        updateButton.setActionCommand(UPDATE_CHECK_SELECTED);
+        updateButton.setActionCommand(UPDATE_SELECTED);
         updateButton.setToolTipText(getUpdateButtonToolTipText());
         updateButton.addActionListener(handler);
         updateButton.addComponentListener(handler);
@@ -1340,7 +1340,7 @@ public class JAboutPanel extends JPanel{
                     // If the close button, update button, or the license button 
                     // were pressed
                 case(CLOSE_SELECTED):
-                case(UPDATE_CHECK_SELECTED):
+                case(UPDATE_SELECTED):
                 case(OPEN_LICENSE_SELECTED):
                     fireActionPerformed(evt);
             }
