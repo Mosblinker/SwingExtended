@@ -226,6 +226,7 @@ public class JAboutPanel extends JPanel{
         Box.Filler filler = new Box.Filler(new Dimension(minWidth, minHeigth), 
                 new Dimension(minWidth, minHeigth), 
                 new Dimension(maxWidth, maxHeight));
+        filler.setInheritsPopupMenu(true);
             // If a component was provided
         if (comp != null)
                 // Add the component and filler object to the filler map
@@ -241,6 +242,9 @@ public class JAboutPanel extends JPanel{
     private void initializeDetailsLabel(JLabel label, Handler handler){
         label.addPropertyChangeListener(handler);
         label.addComponentListener(handler);
+            // If the label is not a hyperlink label
+        if (!(label instanceof JHyperlinkLabel))
+            label.setInheritsPopupMenu(true);
             // Set the colors to null to inherit them from the parent
         label.setForeground(null);
         label.setBackground(null);
@@ -259,6 +263,7 @@ public class JAboutPanel extends JPanel{
         iconLabel = new JThumbnailLabel();
         iconLabel.setImageAlwaysScaled(true);
         iconLabel.setVerticalAlignment(SwingConstants.TOP);
+        iconLabel.setInheritsPopupMenu(true);
             // Set the width to 128
         iconLabel.setMinimumSize(new Dimension(128,iconLabel.getMinimumSize().height));
         iconLabel.setPreferredSize(new Dimension(128,iconLabel.getPreferredSize().height));
@@ -274,6 +279,7 @@ public class JAboutPanel extends JPanel{
         iconLabel.setVisible(false);
             // Create a details panel to display the labels and stuff
         detailsPanel = new JPanel();
+        detailsPanel.setInheritsPopupMenu(true);
             // Set the detail panel's layout to a box layout
         detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
                     // Set the colors to null to inherit them from the parent
@@ -333,6 +339,7 @@ public class JAboutPanel extends JPanel{
         websiteLabel.setComponentPopupMenu(websitePopup);
             // Create the credits panel
         creditsPanel = new JPanel(new BorderLayout());
+        creditsPanel.setInheritsPopupMenu(true);
             // Set the border for the credits panel
         creditsPanel.setBorder(createCreditBorder());
             // Set the colors to null to inherit them from the parent
@@ -354,11 +361,13 @@ public class JAboutPanel extends JPanel{
         creditsPanel.add(creditsScrollPane, BorderLayout.CENTER);
             // Create the bottom panel
         bottomPanel = new JPanel(new BorderLayout(6,0));
+        bottomPanel.setInheritsPopupMenu(true);
             // Set the colors to null to inherit them from the parent
         bottomPanel.setForeground(null);
         bottomPanel.setBackground(null);
             // Create the button panel
         buttonPanel = new JPanel();
+        buttonPanel.setInheritsPopupMenu(true);
             // Set the button panel's layout
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
             // Set the colors to null to inherit them from the parent
@@ -370,6 +379,7 @@ public class JAboutPanel extends JPanel{
         updateButton.setToolTipText(getUpdateButtonToolTipText());
         updateButton.addActionListener(handler);
         updateButton.addComponentListener(handler);
+        updateButton.setInheritsPopupMenu(true);
             // Set the button foreground to null to inherit it from the parent
         updateButton.setForeground(null);
             // Add the update button to the button panel
@@ -383,6 +393,7 @@ public class JAboutPanel extends JPanel{
         licenseButton.setActionCommand(OPEN_LICENSE_SELECTED);
         licenseButton.addActionListener(handler);
         licenseButton.addComponentListener(handler);
+        licenseButton.setInheritsPopupMenu(true);
             // Set the button foreground to null to inherit it from the parent
         licenseButton.setForeground(null);
             // Add the license button to the button panel
@@ -395,6 +406,7 @@ public class JAboutPanel extends JPanel{
         closeButton = new JButton(getCloseButtonText());
         closeButton.setActionCommand(CLOSE_SELECTED);
         closeButton.addActionListener(handler);
+        closeButton.setInheritsPopupMenu(true);
             // Set the button foreground to null to inherit it from the parent
         closeButton.setForeground(null);
             // Add the close button to the button panel
@@ -503,6 +515,7 @@ public class JAboutPanel extends JPanel{
         String yearText = Integer.toString(Math.min(startYear, endYear));
             // If the starting and ending year are different
         if (startYear != endYear)
+                // Add the ending year to the String
             yearText += "-"+Math.max(startYear, endYear);
         return String.format(COPYRIGHT_TEXT_TEMPLATE, yearText);
     }
