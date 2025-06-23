@@ -87,6 +87,17 @@ public class JAboutPanel extends JPanel{
      */
     public static final String BOTTOM_ACCESSORY_PROPERTY_CHANGED = 
             "BottomAccessoryPropertyChanged";
+    
+    public static final String UPDATE_BUTTON_IS_SHOWN_PROPERTY_CHANGED = 
+            "UpdateButtonIsShownPropertyChanged";
+    
+    public static final String LICENSE_BUTTON_IS_SHWON_PROPERTY_CHANGED = 
+            "LicenseButtonIsShownPropertyChanged";
+    /**
+     * This identifies that the buttons have been set to be shown or hidden.
+     */
+    public static final String CONTROL_BUTTONS_ARE_SHOWN_PROPERTY_CHANGED = 
+            "ControlButtonsAreShownPropertyChanged";
     /**
      * This is the text that appears before the program version on the program 
      * version label.
@@ -96,8 +107,22 @@ public class JAboutPanel extends JPanel{
      * This is a template for the text to display for the copyright.
      */
     private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
-    
-//    private int flags = 0;
+    /**
+     * The flag controlling whether the control buttons are shown.
+     */
+    protected static final int SHOW_CONTROL_BUTTONS_FLAG = 0x01;
+    /**
+     * The flag controlling whether the update button is shown.
+     */
+    protected static final int SHOW_UPDATE_BUTTON_FLAG = 0x02;
+    /**
+     * The flag controlling whether the license button is shown.
+     */
+    protected static final int SHOW_LICENSE_BUTTON_FLAG = 0x04;
+    /**
+     * This stores a bunch of flags that control properties of this panel.
+     */
+    private int flags = SHOW_CONTROL_BUTTONS_FLAG;
     /**
      * This is the starting value of the year range of the copyright. If this is 
      * null, then the copyright is disabled.
@@ -847,6 +872,83 @@ public class JAboutPanel extends JPanel{
      */
     public JComponent getBottomAccessory(){
         return bottomAccessory;
+    }
+    /**
+     * This returns whether the given flag is set on the flags for this panel.
+     * @param flag The flag to check for.
+     * @return Whether the given flag is set for this panel.
+     * @see #setFlag(int, boolean) 
+     * @see #setFlag(int, boolean, java.lang.String) 
+     */
+    protected boolean getFlag(int flag){
+        return (flags & flag) == flag;
+    }
+    /**
+     * This sets or clears the given flag for this panel based off the given 
+     * value.
+     * @param flag The flag to set or clear.
+     * @param value {@code true} if the flag should be set, {@code false} if the 
+     * flag should be cleared.
+     * @return Whether the flags changed as a result of this method.
+     * @see #getFlag(int) 
+     * @see #setFlag(int, boolean, java.lang.String) 
+     */
+    protected boolean setFlag(int flag, boolean value){
+            // Get the current value for the flags
+        int old = flags;
+            // If the given value is true, set the flag. Otherwise clear the 
+        flags = (value) ? (flags | flag) : (flags & ~flag); // flag
+        return old != flags;
+    }
+    /**
+     * This sets or clears the given flag for this panel based off the given 
+     * value. This will also fire a property change with the given property 
+     * name.
+     * @param flag The flag to set or clear.
+     * @param value {@code true} if the flag should be set, {@code false} if the 
+     * flag should be cleared.
+     * @param propName The property name of the property being changed.
+     * @return Whether the flags changed as a result of this method.
+     * @see #getFlag(int) 
+     * @see #setFlag(int, boolean) 
+     */
+    protected boolean setFlag(int flag, boolean value, String propName){
+            // Set or clear the flag and get whether there was a change
+        boolean change = setFlag(flag,value);
+            // If the flag changed as a result
+        if (change)
+            firePropertyChange(propName,!value,value);
+        return change;
+    }
+    
+    public void setUpdateButtonIsShown(boolean value){
+        setFlag(SHOW_UPDATE_BUTTON_FLAG,value,
+                UPDATE_BUTTON_IS_SHOWN_PROPERTY_CHANGED);
+        updateButton.setVisible(value);
+    }
+    
+    public boolean getUpdateButtonIsShown(){
+        return getFlag(SHOW_UPDATE_BUTTON_FLAG);
+    }
+    
+    public void setLicenseButtonIsShown(boolean value){
+        setFlag(SHOW_LICENSE_BUTTON_FLAG,value,
+                LICENSE_BUTTON_IS_SHWON_PROPERTY_CHANGED);
+        licenseButton.setVisible(value);
+    }
+    
+    public boolean getLicenseButtonIsShown(){
+        return getFlag(SHOW_LICENSE_BUTTON_FLAG);
+    }
+    
+    public void setControlButtonsAreShown(boolean value){
+        setFlag(SHOW_CONTROL_BUTTONS_FLAG,value,
+                CONTROL_BUTTONS_ARE_SHOWN_PROPERTY_CHANGED);
+        buttonPanel.setVisible(value);
+    }
+    
+    public boolean getControlButtonsAreShown(){
+        return getFlag(SHOW_CONTROL_BUTTONS_FLAG);
     }
     
     @Override
