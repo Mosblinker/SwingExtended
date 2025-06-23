@@ -631,6 +631,22 @@ public class JAboutPanel extends JPanel{
         creditsTextPane.setEditorKitForContentType(type, kit);
     }
     
+    public JPopupMenu getCreditsPopupMenu(){
+        return creditsTextPane.getComponentPopupMenu();
+    }
+    
+    public void setCreditsPopupMenu(JPopupMenu popup){
+        creditsTextPane.setComponentPopupMenu(popup);
+    }
+    
+    public boolean getCreditsInheritsPopupMenu(){
+        return creditsTextPane.getInheritsPopupMenu();
+    }
+    
+    public void setCreditsInheritsPopupMenu(boolean value){
+        creditsTextPane.setInheritsPopupMenu(value);
+    }
+    
     // TODO: Add more credit methods
     
     
@@ -1006,6 +1022,24 @@ public class JAboutPanel extends JPanel{
                         // If the editor kit for the credit text panel changed
                     if (c == creditsTextPane)
                         firePropertyChange(CREDITS_EDITOR_KIT_PROPERTY_CHANGED,
+                                evt.getOldValue(),evt.getNewValue());
+                    // If whether the component inherits popup menus has changed
+                case("inheritsPopupMenu"):
+                        // If the value for the credit text panel changed
+                    if (c == creditsTextPane)
+                        creditsScrollPane.setInheritsPopupMenu(
+                                creditsTextPane.getInheritsPopupMenu());
+                    // If the popup menu has changed
+                case("componentPopupMenu"):
+                        // If the popup menu for the credit text panel changed
+                    if (c == creditsTextPane)
+                            // Add the word "credits" to the start of the name 
+                            // and capitalize the first letter. 
+                            // inheritsPopupMenu -> creditsInheritsPopupMenu
+                            // componentPopupMenu -> creditsComponentPopupMenu
+                        firePropertyChange("credits"+
+                                evt.getPropertyName().substring(0, 1).toUpperCase() +
+                                evt.getPropertyName().substring(1),
                                 evt.getOldValue(),evt.getNewValue());
             }
         }
