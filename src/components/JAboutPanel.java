@@ -7,6 +7,7 @@ package components;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.datatransfer.Clipboard;
@@ -14,6 +15,8 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -78,6 +81,12 @@ public class JAboutPanel extends JPanel{
     
     public static final String CLOSE_BUTTON_TEXT_PROPERTY_CHANGED = 
             "CloseButtonTextPropertyChanged";
+    /**
+     * This identifies that the accessory component under the details has 
+     * changed.
+     */
+    public static final String BOTTOM_ACCESSORY_PROPERTY_CHANGED = 
+            "BottomAccessoryPropertyChanged";
     /**
      * This is the text that appears before the program version on the program 
      * version label.
@@ -173,6 +182,12 @@ public class JAboutPanel extends JPanel{
      */
     protected JPanel bottomPanel;
     /**
+     * This is the panel used to contain the bottom accessory within the bottom 
+     * panel. This is initialized the first time the bottom accessory is set to 
+     * a non-null value.
+     */
+    protected JPanel bottomAccessoryPanel = null;
+    /**
      * This is the panel used to contain the buttons for this panel.
      */
     protected JPanel buttonPanel;
@@ -200,6 +215,16 @@ public class JAboutPanel extends JPanel{
      * This is the menu item for copying the program website to the clipboard.
      */
     protected JMenuItem websiteCopyItem;
+    /**
+     * This is the accessory that appears at the bottom next to the control 
+     * buttons.
+     */
+    private JComponent bottomAccessory = null;
+    /**
+     * This is the handler used to update the visibility of containers when 
+     * their child components are shown or hidden.
+     */
+    private ParentVisibilityHandler visHandler;
     /**
      * This creates the border for the credits panel.
      * @return The border for the credits panel.
@@ -259,6 +284,8 @@ public class JAboutPanel extends JPanel{
     private void initialize(){
             // A handler to listen to the components
         Handler handler = new Handler();
+            // A handler to listen to changes to the visibility of components
+        visHandler = new ParentVisibilityHandler();
             // Create the icon label
         iconLabel = new JThumbnailLabel();
         iconLabel.setImageAlwaysScaled(true);
@@ -362,12 +389,14 @@ public class JAboutPanel extends JPanel{
             // Create the bottom panel
         bottomPanel = new JPanel(new BorderLayout(6,0));
         bottomPanel.setInheritsPopupMenu(true);
+        bottomPanel.addContainerListener(visHandler);
             // Set the colors to null to inherit them from the parent
         bottomPanel.setForeground(null);
         bottomPanel.setBackground(null);
             // Create the button panel
         buttonPanel = new JPanel();
         buttonPanel.setInheritsPopupMenu(true);
+        buttonPanel.addContainerListener(visHandler);
             // Set the button panel's layout
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
             // Set the colors to null to inherit them from the parent
@@ -774,6 +803,51 @@ public class JAboutPanel extends JPanel{
     public JMenuItem getWebsiteCopyMenuItem(){
         return websiteCopyItem;
     }
+    /**
+     * This sets the accessory component to display at the bottom next to the 
+     * control buttons. The accessory components can be used to add additional 
+     * controls such as a button to add items to the list. <p>
+     * 
+     * Note: If there was a previous accessory, you should remove any listeners 
+     * that the accessory may have added to this {@code JListSelector}.
+     * 
+     * @param accessory The bottom accessory component.
+     * @see #getBottomAccessory 
+     */
+    public void setBottomAccessory(JComponent accessory){
+            // If the bottom accessory would not be changed
+        if (accessory == bottomAccessory)   
+            return;
+        JComponent old = bottomAccessory;   // Get the old bottom accessory
+        bottomAccessory = accessory;
+        firePropertyChange(BOTTOM_ACCESSORY_PROPERTY_CHANGED,old,accessory);
+            // If the bottom accessory panel is not initialized
+        if (bottomAccessoryPanel == null){
+                // Create the bottom accessory panel with a border layout
+            bottomAccessoryPanel = new JPanel(new BorderLayout(0,0));
+            bottomAccessoryPanel.setInheritsPopupMenu(true);
+            bottomAccessoryPanel.addContainerListener(visHandler);
+                // Set the colors to null to inherit them from the parent
+            bottomAccessoryPanel.setForeground(null);
+            bottomAccessoryPanel.setBackground(null);
+            bottomPanel.add(bottomAccessoryPanel,BorderLayout.CENTER);
+        }
+        if (old != null)            // If the old accessory is not null
+            bottomAccessoryPanel.remove(old);
+        if (accessory != null)      // If the new accessory is not null
+            bottomAccessoryPanel.add(accessory,BorderLayout.CENTER);
+        bottomAccessoryPanel.revalidate();
+        bottomAccessoryPanel.repaint();
+    }
+    /**
+     * This returns the accessory component displayed at the bottom of this 
+     * panel next to the control buttons.
+     * @return The bottom accessory component, or null.
+     * @see #setBottomAccessory 
+     */
+    public JComponent getBottomAccessory(){
+        return bottomAccessory;
+    }
     
     @Override
     public void setEnabled(boolean enabled){
@@ -952,7 +1026,108 @@ public class JAboutPanel extends JPanel{
         if (filler != null)
             filler.setVisible(evt.getComponent().isVisible());
     }
-    
+    /**
+     * This returns an array of components that are visible in the given 
+     * container.
+     * @param c The container to get the visible components from.
+     * @return An array of components from the given container that are visible, 
+     * or an empty array if the container is empty or has no visible components.
+     * @see #containsVisibleComponents 
+     * @see Component#isVisible 
+     */
+    protected Component[] getVisibleComponents(Container c){
+            // A list to get the visible components in the container
+        ArrayList<Component> compList = new ArrayList<>(
+                Arrays.asList(c.getComponents()));
+            // Remove any component that is either null or not visible
+        compList.removeIf((Component t) -> t == null || !t.isVisible());
+        return compList.toArray(Component[]::new);
+    }
+    /**
+     * This goes through the components in the given container and returns 
+     * whether there is at least one component that is visible. If the container 
+     * is empty or no components in the container are visible, then this returns 
+     * false.
+     * @param c The container to check.
+     * @return Whether the container contains at least one visible component.
+     * @see Component#isVisible 
+     * @see #getVisibleComponents 
+     * @see #updateContainerVisibility 
+     * @see #updateParentVisibility 
+     */
+    protected boolean containsVisibleComponents(Container c){
+            // Go through the components in the container
+        for (int i = 0; i < c.getComponentCount(); i++){
+                // Get the component at the current index
+            Component temp = c.getComponent(i);
+                // If the component is non-null and visible
+            if (temp != null && temp.isVisible())   
+                return true;
+        }
+        return false;
+    }
+    /**
+     * This updates the visibility of the given container based off whether any 
+     * of the components in the container are visible. This effectively 
+     * calls {@link #containsVisibleComponents containsVisibleComponents} with 
+     * the given container and sets the container's visibility based of the 
+     * value returned.
+     * @param c The container to update the visibility of.
+     * @see #containsVisibleComponents 
+     * @see #updateParentVisibility 
+     */
+    protected void updateContainerVisibility(Container c){
+        c.setVisible(containsVisibleComponents(c));
+    }
+    /**
+     * This updates the visibility of the parent of the given component. This 
+     * effectively calls {@link #updateContainerVisibility 
+     * updateContainerVisibility} with the parent of the given component.
+     * @param c The component to update the parent's visibility.
+     * @see #updateContainerVisibility 
+     * @see #containsVisibleComponents 
+     * @see Component#getParent 
+     */
+    protected void updateParentVisibility(Component c){
+            // If neither the component or its parent are null.
+        if (c == null || c.getParent() == null)
+            return;
+        updateContainerVisibility(c.getParent());
+    }
+    /**
+     * This returns a listener used to update the visibility of a container 
+     * based off the visibility of its child components. The listener adds the 
+     * {@link #getChildVisibilityListener child visibility listener} to any 
+     * component added to the container and removes it from components removed 
+     * from the container.
+     * @return The listener used to update the visibility of a container.
+     * @see #getChildVisibilityListener 
+     * @see #containsVisibleComponents 
+     * @see #updateContainerVisibility 
+     * @see #updateParentVisibility 
+     */
+    protected ContainerListener getVisibilityListener(){
+        return visHandler;
+    }
+    /**
+     * This returns a listener used to update the visibility of the parent of a 
+     * component based off the visibility of the component and its sibling 
+     * components. This listener invokes {@link #updateParentVisibility 
+     * updateParentVisibility} with the component when the component is either 
+     * shown or hidden.
+     * @return The listener used to update the visibility of the parent of a 
+     * component when the components visibility changes.
+     * @see #getVisibilityListener 
+     * @see #containsVisibleComponents 
+     * @see #updateContainerVisibility 
+     * @see #updateParentVisibility 
+     */
+    protected ComponentListener getChildVisibilityListener(){
+        return visHandler;
+    }
+    /**
+     * 
+     */
     private class Handler extends ComponentAdapter implements 
             PropertyChangeListener, ActionListener{
         @Override
@@ -1075,6 +1250,31 @@ public class JAboutPanel extends JPanel{
         @Override
         public void componentShown(ComponentEvent evt) {
             updateFillerVisibility(evt);
+        }
+    }
+    /**
+     * This is a handler used to update the visibility of containers based off 
+     * their child component's visibility.
+     */
+    private class ParentVisibilityHandler extends ComponentAdapter implements 
+            ContainerListener{
+        @Override
+        public void componentShown(ComponentEvent evt){
+            updateParentVisibility(evt.getComponent());
+        }
+        @Override
+        public void componentHidden(ComponentEvent evt){
+            updateParentVisibility(evt.getComponent());
+        }
+        @Override
+        public void componentAdded(ContainerEvent evt) {
+            evt.getChild().addComponentListener(this);
+            updateContainerVisibility(evt.getContainer());
+        }
+        @Override
+        public void componentRemoved(ContainerEvent evt) {
+            evt.getChild().removeComponentListener(this);
+            updateContainerVisibility(evt.getContainer());
         }
     }
 }
