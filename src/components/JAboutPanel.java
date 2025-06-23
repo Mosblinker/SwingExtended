@@ -73,6 +73,9 @@ public class JAboutPanel extends JPanel{
     public static final String UPDATE_BUTTON_TEXT_PROPERTY_CHANGED = 
             "UpdateTextPropertyChanged";
     
+    public static final String UPDATE_BUTTON_TOOL_TIP_TEXT_PROPERTY_CHANGED = 
+            "UpdateButtonToolTipTextProperyChanged";
+    
     public static final String CLOSE_BUTTON_TEXT_PROPERTY_CHANGED = 
             "CloseButtonTextPropertyChanged";
     /**
@@ -107,6 +110,12 @@ public class JAboutPanel extends JPanel{
      * text.
      */
     private String updateText = null;
+    /**
+     * This is the tool tip text set for the update button if one has been set 
+     * for it. If  this is null, then the update button will use the default 
+     * update button tool tip text.
+     */
+    private String updateToolTip = null;
     /**
      * This is the text set for the close button if one has been set for it. If 
      * this is null, then the close button will use the default close button 
@@ -358,6 +367,7 @@ public class JAboutPanel extends JPanel{
             // Create a button to check for updates
         updateButton = new JButton(getUpdateButtonText());
         updateButton.setActionCommand(UPDATE_CHECK_SELECTED);
+        updateButton.setToolTipText(getUpdateButtonToolTipText());
         updateButton.addActionListener(handler);
         updateButton.addComponentListener(handler);
             // Set the button foreground to null to inherit it from the parent
@@ -632,6 +642,29 @@ public class JAboutPanel extends JPanel{
     
     public boolean isCloseButtonTextSet(){
         return closeText != null;
+    }
+    
+    public void setUpdateButtonToolTipText(String text){
+            // If the update tool tip text would not change
+        if (Objects.equals(text, updateToolTip))
+            return;
+            // Get the old update tool tip text
+        String old = updateToolTip;
+        updateToolTip = text;
+            // Update the update button tool tip text
+        updateButton.setToolTipText(getUpdateButtonToolTipText());
+        firePropertyChange(UPDATE_BUTTON_TOOL_TIP_TEXT_PROPERTY_CHANGED,old,text);
+    }
+    
+    public String getUpdateButtonToolTipText(){
+            // If the update tool tip text is null
+        if (updateToolTip == null)
+            return "Check to see if this program has an update available.";
+        return updateToolTip;
+    }
+    
+    public boolean isUpdateButtonToolTipTextSet(){
+        return updateToolTip != null;
     }
     
     public void setUpdateButtonText(String text){
