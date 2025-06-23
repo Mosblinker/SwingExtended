@@ -102,7 +102,7 @@ public class JAboutPanel extends JPanel{
     protected JMenuItem websiteOpenItem;
     protected JMenuItem websiteCopyItem;
     
-    private Border getCreditBorder(){
+    private Border createCreditBorder(){
         TitledBorder border = BorderFactory.createTitledBorder("Credits");
         border.setTitleColor(getForeground());
         border.setTitleFont(getFont());
@@ -200,7 +200,7 @@ public class JAboutPanel extends JPanel{
         websiteLabel.setComponentPopupMenu(websitePopup);
             // Create the credits panel
         creditsPanel = new JPanel(new BorderLayout());
-        creditsPanel.setBorder(getCreditBorder());
+        creditsPanel.setBorder(createCreditBorder());
         creditsPanel.setForeground(null);
         creditsPanel.setBackground(null);
             // Add the credits panel to the details panel
@@ -535,7 +535,7 @@ public class JAboutPanel extends JPanel{
             creditsTextPane.setFont(font);
             updateButton.setFont(font);
             closeButton.setFont(font);
-            creditsPanel.setBorder(getCreditBorder());
+            creditsPanel.setBorder(createCreditBorder());
             licenseButton.setFont(font);
         } catch (NullPointerException ex) {}
     }
@@ -556,7 +556,7 @@ public class JAboutPanel extends JPanel{
         super.setForeground(fg);
         fg = getForeground();
         try{
-            creditsPanel.setBorder(getCreditBorder());
+            creditsPanel.setBorder(createCreditBorder());
             creditsTextPane.setForeground(fg);
         } catch (NullPointerException ex){ }
     }
