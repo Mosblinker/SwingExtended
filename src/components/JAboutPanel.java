@@ -216,8 +216,7 @@ public class JAboutPanel extends JPanel{
      */
     protected JMenuItem websiteCopyItem;
     /**
-     * This is the accessory that appears at the bottom next to the control 
-     * buttons.
+     * This is the accessory that appears at the bottom next to the buttons.
      */
     private JComponent bottomAccessory = null;
     /**
@@ -805,11 +804,11 @@ public class JAboutPanel extends JPanel{
     }
     /**
      * This sets the accessory component to display at the bottom next to the 
-     * control buttons. The accessory components can be used to add additional 
-     * controls such as a button to add items to the list. <p>
+     * buttons. The accessory components can be used to add additional controls 
+     * such as a button to show tips for the program. <p>
      * 
      * Note: If there was a previous accessory, you should remove any listeners 
-     * that the accessory may have added to this {@code JListSelector}.
+     * that the accessory may have added to this {@code JAboutPanel}.
      * 
      * @param accessory The bottom accessory component.
      * @see #getBottomAccessory 
@@ -841,7 +840,7 @@ public class JAboutPanel extends JPanel{
     }
     /**
      * This returns the accessory component displayed at the bottom of this 
-     * panel next to the control buttons.
+     * panel next to the buttons.
      * @return The bottom accessory component, or null.
      * @see #setBottomAccessory 
      */
