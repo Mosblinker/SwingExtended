@@ -79,52 +79,141 @@ public class JAboutPanel extends JPanel{
      */
     private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
     
+//    private int flags = 0;
+    /**
+     * This is the starting value of the year range of the copyright. If this is 
+     * null, then the copyright is disabled.
+     */
     private Integer crStartYear = null;
+    /**
+     * This is the ending value of the year range of the copyright. If this is 
+     * null, then the current year is used.
+     */
     private Integer crEndYear = null;
+    /**
+     * This is the program's version.
+     */
     private String version = null;
+    /**
+     * This is a map that maps the components to filler components that are 
+     * hidden along with those components.
+     */
     private Map<Component,Component> fillerMap = new HashMap<>();
+    /**
+     * This is a map that maps components to property names for an event that's 
+     * fired when a property changes for those components.
+     */
     private Map<Component,String> propNameMap = new HashMap<>();
+    /**
+     * This is the thumbnail label used to display the icon for the program.
+     */
     protected JThumbnailLabel iconLabel;
+    /**
+     * This is the panel containing the details label and credits components.
+     */
     protected JPanel detailsPanel;
+    /**
+     * This is the label used to display the program's name.
+     */
     protected JLabel nameLabel;
+    /**
+     * This is the label used to display the program's version.
+     */
     protected JLabel versionLabel;
+    /**
+     * This is the label used to display the program's copyright information.
+     */
     protected JLabel copyrightLabel;
+    /**
+     * This is the hyperlink label used to display the program's website.
+     */
     protected JHyperlinkLabel websiteLabel;
+    /**
+     * This is the panel containing the credits components.
+     */
     protected JPanel creditsPanel;
+    /**
+     * This is the scroll pane for the credits text pane.
+     */
     protected JScrollPane creditsScrollPane;
+    /**
+     * This is the text pane used to display the credits for the program.
+     */
     protected JTextPane creditsTextPane;
+    /**
+     * This is the panel used to contain the bottom components on this panel.
+     */
     protected JPanel bottomPanel;
+    /**
+     * This is the panel used to contain the buttons for this panel.
+     */
     protected JPanel buttonPanel;
+    /**
+     * This is the button used to close the dialog.
+     */
     protected JButton closeButton;
+    /**
+     * This is the button used to check for updates for the program.
+     */
     protected JButton updateButton;
+    /**
+     * This is the button used to display the license for the program.
+     */
     protected JButton licenseButton;
+    /**
+     * This is the popup menu for the program website label.
+     */
     protected JPopupMenu websitePopup;
+    /**
+     * This is the menu item for opening the program website.
+     */
     protected JMenuItem websiteOpenItem;
+    /**
+     * This is the menu item for copying the program website to the clipboard.
+     */
     protected JMenuItem websiteCopyItem;
-    
+    /**
+     * This creates the border for the credits panel.
+     * @return The border for the credits panel.
+     */
     private Border createCreditBorder(){
+            // Create the title border for the credits panel.
         TitledBorder border = BorderFactory.createTitledBorder("Credits");
         border.setTitleColor(getForeground());
         border.setTitleFont(getFont());
         return border;
     }
-    
+    /**
+     * This creates a filler object 
+     * @param comp
+     * @param minWidth
+     * @param minHeigth
+     * @param maxWidth
+     * @param maxHeight
+     * @return 
+     */
     private Box.Filler createFiller(Component comp, int minWidth, int minHeigth, 
             int maxWidth, int maxHeight){
             // Create a filler object
         Box.Filler filler = new Box.Filler(new Dimension(minWidth, minHeigth), 
                 new Dimension(minWidth, minHeigth), 
                 new Dimension(maxWidth, maxHeight));
-        if (comp != null){
+            // If a component was provided
+        if (comp != null)
                 // Add the component and filler object to the filler map
             fillerMap.put(comp, filler);
-        }
         return filler;
     }
-    
+    /**
+     * This initializes the given details label and adds it to the details 
+     * panel.
+     * @param label The label to initialize.
+     * @param handler The handler to listen to the label.
+     */
     private void initializeDetailsLabel(JLabel label, Handler handler){
         label.addPropertyChangeListener(handler);
         label.addComponentListener(handler);
+            // Set the colors to null to inherit them from the parent
         label.setForeground(null);
         label.setBackground(null);
             // Center the label's alignment
@@ -142,41 +231,55 @@ public class JAboutPanel extends JPanel{
         iconLabel = new JThumbnailLabel();
         iconLabel.setImageAlwaysScaled(true);
         iconLabel.setVerticalAlignment(SwingConstants.TOP);
+            // Set the width to 128
         iconLabel.setMinimumSize(new Dimension(128,iconLabel.getMinimumSize().height));
         iconLabel.setPreferredSize(new Dimension(128,iconLabel.getPreferredSize().height));
+            // Set the colors to null to inherit them from the parent
         iconLabel.setForeground(null);
         iconLabel.setBackground(null);
+            // Assign the icon label the program icon property
         propNameMap.put(iconLabel, PROGRAM_ICON_PROPERTY_CHANGED);
         iconLabel.addPropertyChangeListener("icon", handler);
             // Put the icon label on the left side of the panel
         add(iconLabel, BorderLayout.LINE_START);
-            // Hide the icon label for now
+            // Hide the icon label
         iconLabel.setVisible(false);
             // Create a details panel to display the labels and stuff
         detailsPanel = new JPanel();
+            // Set the detail panel's layout to a box layout
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
+                    // Set the colors to null to inherit them from the parent
         detailsPanel.setForeground(null);
         detailsPanel.setBackground(null);
-        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
             // Put the details panel in the center of the panel
         add(detailsPanel, BorderLayout.CENTER);
-            // Create and add the program name label
+            // Create the program name label
         nameLabel = new JLabel();
         nameLabel.setFont(deriveFont(Font.BOLD,9));
+            // Initialize and add the program name label
         initializeDetailsLabel(nameLabel,handler);
+            // Assign the name label the program name property
         propNameMap.put(nameLabel, PROGRAM_NAME_PROPERTY_CHANGED);
-            // Create and add the version label
+            // Create the version label
         versionLabel = new JLabel();
         versionLabel.setFont(deriveFont(Font.BOLD|Font.ITALIC,5));
+            // Initialize and add the program version label
         initializeDetailsLabel(versionLabel,handler);
+            // Hide the version label
         versionLabel.setVisible(false);
-            // Create and add the copyright label
+            // Create the copyright label
         copyrightLabel = new JLabel();
+            // Initialize and add the program copyright label
         initializeDetailsLabel(copyrightLabel,handler);
+            // Hide the copyright label
         copyrightLabel.setVisible(false);
             // Create and add the website label
         websiteLabel = new JHyperlinkLabel();
+            // Initialize and add the program website label
         initializeDetailsLabel(websiteLabel,handler);
+            // Assign the website label the program website text property
         propNameMap.put(websiteLabel, PROGRAM_WEBSITE_TEXT_PROPERTY_CHANGED);
+            // Hide the website label
         websiteLabel.setVisible(false);
             // Create a popup menu for the website label
         websitePopup = new JPopupMenu();
@@ -185,6 +288,7 @@ public class JAboutPanel extends JPanel{
         websiteOpenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, 0));
         websiteOpenItem.setActionCommand(OPEN_WEBSITE_SELECTED);
         websiteOpenItem.addActionListener(handler);
+            // Disable the open menu item
         websiteOpenItem.setEnabled(false);
             // Add the open menu item to the popup menu for the website label
         websitePopup.add(websiteOpenItem);
@@ -193,6 +297,7 @@ public class JAboutPanel extends JPanel{
         websiteCopyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0));
         websiteCopyItem.setActionCommand(COPY_WEBSITE_SELECTED);
         websiteCopyItem.addActionListener(handler);
+            // Disable the copy menu item
         websiteCopyItem.setEnabled(false);
             // Add the copy menu item to the popup menu for the website label
         websitePopup.add(websiteCopyItem);
@@ -200,54 +305,71 @@ public class JAboutPanel extends JPanel{
         websiteLabel.setComponentPopupMenu(websitePopup);
             // Create the credits panel
         creditsPanel = new JPanel(new BorderLayout());
+            // Set the border for the credits panel
         creditsPanel.setBorder(createCreditBorder());
+            // Set the colors to null to inherit them from the parent
         creditsPanel.setForeground(null);
         creditsPanel.setBackground(null);
             // Add the credits panel to the details panel
         detailsPanel.add(creditsPanel);
-        
+            // Create the text pane to display the credits
         creditsTextPane = new JTextPane();
+            // The credits text pane is not editable
         creditsTextPane.setEditable(false);
         creditsTextPane.addPropertyChangeListener(handler);
+            // Create the scroll pane to scroll the credits text pane
         creditsScrollPane = new JScrollPane(creditsTextPane);
+            // Set the colors to null to inherit them from the parent
         creditsScrollPane.setForeground(null);
         creditsScrollPane.setBackground(null);
+            // Add the credits scroll pane to the credits panel
         creditsPanel.add(creditsScrollPane, BorderLayout.CENTER);
-        
             // Create the bottom panel
-        bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel = new JPanel(new BorderLayout(6,0));
+            // Set the colors to null to inherit them from the parent
         bottomPanel.setForeground(null);
         bottomPanel.setBackground(null);
             // Create the button panel
         buttonPanel = new JPanel();
+            // Set the button panel's layout
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+            // Set the colors to null to inherit them from the parent
         buttonPanel.setForeground(null);
         buttonPanel.setBackground(null);
-        
+            // Create a button to check for updates
         updateButton = new JButton("Check For Updates");
         updateButton.setActionCommand(UPDATE_CHECK_SELECTED);
         updateButton.addActionListener(handler);
         updateButton.addComponentListener(handler);
+            // Set the button foreground to null to inherit it from the parent
         updateButton.setForeground(null);
+            // Add the update button to the button panel
         buttonPanel.add(updateButton);
+            // Add a filler object after the update button
         buttonPanel.add(createFiller(updateButton,6,0,6,32767));
+            // Hide the update button
         updateButton.setVisible(false);
-        
+            // Create a button to display the program license
         licenseButton = new JButton("License");
         licenseButton.setActionCommand(OPEN_LICENSE_SELECTED);
         licenseButton.addActionListener(handler);
         licenseButton.addComponentListener(handler);
+            // Set the button foreground to null to inherit it from the parent
         licenseButton.setForeground(null);
+            // Add the license button to the button panel
         buttonPanel.add(licenseButton);
+            // Add a filler object after the license button
         buttonPanel.add(createFiller(licenseButton,6,0,6,32767));
+            // Hide the license button
         licenseButton.setVisible(false);
-        
+            // Create a button to close the dialog
         closeButton = new JButton("OK");
         closeButton.setActionCommand(CLOSE_SELECTED);
         closeButton.addActionListener(handler);
+            // Set the button foreground to null to inherit it from the parent
         closeButton.setForeground(null);
+            // Add the close button to the button panel
         buttonPanel.add(closeButton);
-        
             // Add the button panel to the bottom panel
         bottomPanel.add(buttonPanel, BorderLayout.LINE_END);
             // Add the bottom panel to this panel
@@ -280,11 +402,15 @@ public class JAboutPanel extends JPanel{
     }
     
     public void setProgramVersion(String version){
+            // If the version would not change
         if (Objects.equals(this.version, version))
             return;
+            // Get the old program version
         String old = this.version;
         this.version = version;
         firePropertyChange(PROGRAM_VERSION_PROPERTY_CHANGED,old,version);
+            // Update the text for the version label to display the version if 
+            // not null
         versionLabel.setText((version!= null)?VERSION_TEST_PREFIX+version:null);
     }
     
@@ -293,30 +419,40 @@ public class JAboutPanel extends JPanel{
     }
     
     public void setCopyrightStartYear(Integer year){
+            // If the copyright start year would not change
         if (Objects.equals(crStartYear, year))
             return;
+            // Get the old copyright starting year
         Integer old = crStartYear;
         crStartYear = year;
         firePropertyChange(PROGRAM_COPYRIGHT_START_YEAR_PROPERTY_CHANGED,old,year);
+            // Update the copyright text
         updateCopyrightText();
     }
-    
+    /**
+     * This returns the current year.
+     * @return The current year.
+     */
     protected int getCurrentYear(){
         return new java.util.GregorianCalendar().get(java.util.Calendar.YEAR);
     }
     
     public int getCopyrightEndYear(){
+            // If the copyright end year is null
         if (crEndYear == null)
             return getCurrentYear();
         return crEndYear;
     }
     
     public void setCopyrightEndYear(Integer year){
+            // If the copyright end year would not change
         if (Objects.equals(crEndYear, year))
             return;
+            // Get the old copyright ending year
         Integer old = crEndYear;
         crEndYear = year;
         firePropertyChange(PROGRAM_COPYRIGHT_END_YEAR_PROPERTY_CHANGED,old,year);
+            // Update the copyright text
         updateCopyrightText();
     }
     
@@ -334,14 +470,18 @@ public class JAboutPanel extends JPanel{
     }
     
     protected String getCopyrightText(int startYear, int endYear){
+            // Get the starting year, as a String
         String yearText = Integer.toString(Math.min(startYear, endYear));
+            // If the starting and ending year are different
         if (startYear != endYear)
             yearText += "-"+Math.max(startYear, endYear);
         return String.format(COPYRIGHT_TEXT_TEMPLATE, yearText);
     }
     
     protected void updateCopyrightText(){
+            // Get the starting year for the copyright range
         Integer start = getCopyrightStartYear();
+            // If the starting year is not null
         if (start != null)
             copyrightLabel.setText(getCopyrightText(start,getCopyrightEndYear()));
         else
@@ -449,7 +589,8 @@ public class JAboutPanel extends JPanel{
         creditsTextPane.setEditorKitForContentType(type, kit);
     }
     
-    // TODO: Add credit methods
+    // TODO: Add more credit methods
+    
     
     public JThumbnailLabel getProgramIconLabel(){
         return iconLabel;
@@ -525,6 +666,7 @@ public class JAboutPanel extends JPanel{
     @Override
     public void setFont(Font font){
         super.setFont(font);
+            // Get the actual font of the component
         font = getFont();
         try{
             iconLabel.setFont(font);
@@ -546,14 +688,18 @@ public class JAboutPanel extends JPanel{
      * @return 
      */
     protected Font deriveFont(int relStyle, float relSize){
+            // Get the font for the label
         Font font = getFont();
+            // If the font is somehow still null
         if (font == null)
             font = new Font(Font.SANS_SERIF,Font.PLAIN,0);
-        return font.deriveFont(font.getStyle() | relStyle, font.getSize2D() + relSize);
+        return font.deriveFont(font.getStyle() | relStyle, 
+                font.getSize2D() + relSize);
     }
     @Override
     public void setForeground(Color fg){
         super.setForeground(fg);
+            // Get the actual foreground
         fg = getForeground();
         try{
             creditsPanel.setBorder(createCreditBorder());
@@ -563,6 +709,7 @@ public class JAboutPanel extends JPanel{
     @Override
     public void setBackground(Color bg){
         super.setBackground(bg);
+            // Get the actual background
         bg = getBackground();
         try{
             closeButton.setBackground(bg);
@@ -572,6 +719,7 @@ public class JAboutPanel extends JPanel{
     }
     @Override
     public Dimension getMinimumSize(){
+            // If the minimum size is set, return it. Otherwise, return 640x480
         return (isMinimumSizeSet())?super.getMinimumSize():new Dimension(640,480);
     }
     @Override
@@ -682,34 +830,52 @@ public class JAboutPanel extends JPanel{
             PropertyChangeListener, ActionListener{
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
+                // If the property name is null or the source isn't a component
             if (evt.getPropertyName() == null || !(evt.getSource() instanceof Component))
                 return;
+                // Get the component source
             Component c = (Component) evt.getSource();
+                // Get the property name to use for a forwarded event (typically 
+                // used if it's a label)
             String fwdPropEvt = propNameMap.get(c);
+                // Determine what to do depending on the property name
             switch(evt.getPropertyName()){
+                    // If the icon changed for a label
                 case("icon"):
+                        // If the icon label's icon changed
                     if (c == iconLabel)
+                            // Update whether the icon label is visible
                         iconLabel.setVisible(iconLabel.getIcon() != null);
+                        // If the change should be forwarded to the listeners
                     if (fwdPropEvt != null)
                         firePropertyChange(fwdPropEvt,evt.getOldValue(),evt.getNewValue());
                     break;
+                    // If the text changed
                 case("text"):
+                        // If a label's text changed and it's not the name label
                     if (c instanceof JLabel && c != nameLabel){
+                            // Get the label's text
                         String text = ((JLabel)c).getText();
+                            // Update wether the label is visible
                         c.setVisible(text != null && !text.isEmpty());
-                    }
+                    }   // If the change should be forwarded to the listeners
                     if (fwdPropEvt != null)
                         firePropertyChange(fwdPropEvt,evt.getOldValue(),evt.getNewValue());
                     break;
+                    // If the URI for the website label changed
                 case(JHyperlinkLabel.URI_PROPERTY_CHANGED):
+                        // Update the website menu items
                     updateWebsiteMenuItems();
                     firePropertyChange(PROGRAM_WEBSITE_URI_PROPERTY_CHANGED,
                             evt.getOldValue(),evt.getNewValue());
                     break;
+                    // If the website has been visited or unvisited
                 case(JHyperlinkLabel.HYPERLINK_VISITED_PROPERTY_CHANGED):
                     firePropertyChange(PROGRAM_WEBSITE_VISITED_PROPERTY_CHANGED,
                             evt.getOldValue(),evt.getNewValue());
                     break;
+                    // If the failure message, unvisited color, visited color, 
+                    // or selected color changed
                 case(JHyperlinkLabel.FAILURE_MESSAGES_SHOWN_PROPERTY_CHANGED):
                 case(JHyperlinkLabel.UNVISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
                 case(JHyperlinkLabel.VISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
@@ -717,12 +883,16 @@ public class JAboutPanel extends JPanel{
                     firePropertyChange(evt.getPropertyName(),evt.getOldValue(),
                             evt.getNewValue());
                     break;
+                    // If the document changed
                 case("document"):
+                        // If the document for the credit text panel changed
                     if (c == creditsTextPane)
                         firePropertyChange(CREDITS_DOCUMENT_PROPERTY_CHANGED,
                                 evt.getOldValue(),evt.getNewValue());
                     break;
+                    // If the editor kit changed
                 case("editorKit"):
+                        // If the editor kit for the credit text panel changed
                     if (c == creditsTextPane)
                         firePropertyChange(CREDITS_EDITOR_KIT_PROPERTY_CHANGED,
                                 evt.getOldValue(),evt.getNewValue());
@@ -730,15 +900,23 @@ public class JAboutPanel extends JPanel{
         }
         @Override
         public void actionPerformed(ActionEvent evt) {
+                // If the action command is null
             if (evt.getActionCommand() == null)
                 return;
+                // Determine the action to perform for the action command
             switch(evt.getActionCommand()){
+                    // If the website should be opened
                 case(OPEN_WEBSITE_SELECTED):
+                        // Open the website
                     openProgramWebsite();
                     break;
+                    // If the website should be copied
                 case(COPY_WEBSITE_SELECTED):
+                        // Copy the website to the clipboard
                     copyProgramWebsite();
                     break;
+                    // If the close button, update button, or the license button 
+                    // were pressed
                 case(CLOSE_SELECTED):
                 case(UPDATE_CHECK_SELECTED):
                 case(OPEN_LICENSE_SELECTED):
