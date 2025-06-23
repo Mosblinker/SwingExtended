@@ -97,9 +97,22 @@ public class JAboutPanel extends JPanel{
      */
     private Integer crEndYear = null;
     /**
-     * This is the program's version.
+     * This is the program's version. If this is null, then the version is not 
+     * set.
      */
     private String version = null;
+    /**
+     * This is the text set for the update button if one has been set for it. If 
+     * this is null, then the update button will use the default update button 
+     * text.
+     */
+    private String updateText = null;
+    /**
+     * This is the text set for the close button if one has been set for it. If 
+     * this is null, then the close button will use the default close button 
+     * text.
+     */
+    private String closeText = null;
     /**
      * This is a map that maps the components to filler components that are 
      * hidden along with those components.
@@ -343,7 +356,7 @@ public class JAboutPanel extends JPanel{
         buttonPanel.setForeground(null);
         buttonPanel.setBackground(null);
             // Create a button to check for updates
-        updateButton = new JButton("Check For Updates");
+        updateButton = new JButton(getUpdateButtonText());
         updateButton.setActionCommand(UPDATE_CHECK_SELECTED);
         updateButton.addActionListener(handler);
         updateButton.addComponentListener(handler);
@@ -369,7 +382,7 @@ public class JAboutPanel extends JPanel{
             // Hide the license button
         licenseButton.setVisible(false);
             // Create a button to close the dialog
-        closeButton = new JButton("OK");
+        closeButton = new JButton(getCloseButtonText());
         closeButton.setActionCommand(CLOSE_SELECTED);
         closeButton.addActionListener(handler);
             // Set the button foreground to null to inherit it from the parent
@@ -597,6 +610,52 @@ public class JAboutPanel extends JPanel{
     
     // TODO: Add more credit methods
     
+    
+    public void setCloseButtonText(String text){
+            // If the close text would not change
+        if (Objects.equals(text, closeText))
+            return;
+            // Get the old close text
+        String old = closeText;
+        closeText = text;
+            // Update the close button text
+        closeButton.setText(getCloseButtonText());
+        firePropertyChange(CLOSE_BUTTON_TEXT_PROPERTY_CHANGED,old,closeText);
+    }
+    
+    public String getCloseButtonText(){
+            // If the close text is null
+        if (closeText == null)
+            return "OK";
+        return closeText;
+    }
+    
+    public boolean isCloseButtonTextSet(){
+        return closeText != null;
+    }
+    
+    public void setUpdateButtonText(String text){
+            // If the update text would not change
+        if (Objects.equals(text, updateText))
+            return;
+            // Get the old update text
+        String old = updateText;
+        updateText = text;
+            // Update the update button text
+        updateButton.setText(getUpdateButtonText());
+        firePropertyChange(UPDATE_BUTTON_TEXT_PROPERTY_CHANGED,old,updateText);
+    }
+    
+    public String getUpdateButtonText(){
+            // If the update text is not set
+        if (updateText == null)
+            return "Check For Updates";
+        return updateText;
+    }
+    
+    public boolean isUpdateButtonTextSet(){
+        return updateText != null;
+    }
     
     public JThumbnailLabel getProgramIconLabel(){
         return iconLabel;
