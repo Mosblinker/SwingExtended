@@ -34,6 +34,8 @@ public class JAboutPanel extends JPanel{
     
     public static final String UPDATE_CHECK_SELECTED = "CheckForUpdatesSelected";
     
+    public static final String OPEN_LICENSE_SELECTED = "OpenLicenseSelected";
+    
     public static final String OPEN_WEBSITE_SELECTED = "OpenWebsiteSelected";
     
     public static final String COPY_WEBSITE_SELECTED = "CopyWebsiteSelected";
@@ -95,9 +97,30 @@ public class JAboutPanel extends JPanel{
     protected JPanel buttonPanel;
     protected JButton closeButton;
     protected JButton updateButton;
+    protected JButton licenseButton;
     protected JPopupMenu websitePopup;
     protected JMenuItem websiteOpenItem;
     protected JMenuItem websiteCopyItem;
+    
+    private Border getCreditBorder(){
+        TitledBorder border = BorderFactory.createTitledBorder("Credits");
+        border.setTitleColor(getForeground());
+        border.setTitleFont(getFont());
+        return border;
+    }
+    
+    private Box.Filler createFiller(Component comp, int minWidth, int minHeigth, 
+            int maxWidth, int maxHeight){
+            // Create a filler object
+        Box.Filler filler = new Box.Filler(new Dimension(minWidth, minHeigth), 
+                new Dimension(minWidth, minHeigth), 
+                new Dimension(maxWidth, maxHeight));
+        if (comp != null){
+                // Add the component and filler object to the filler map
+            fillerMap.put(comp, filler);
+        }
+        return filler;
+    }
     
     private void initializeDetailsLabel(JLabel label, Handler handler){
         label.addPropertyChangeListener(handler);
@@ -108,20 +131,8 @@ public class JAboutPanel extends JPanel{
         label.setAlignmentX(0.5f);
             // Add the label to the details panel
         detailsPanel.add(label);
-            // Create a filler object to go under the label
-        Box.Filler filler = new Box.Filler(new Dimension(0, 7), 
-                new Dimension(0, 7), new Dimension(32767, 7));
-            // Add the label and filler object to the filler map
-        fillerMap.put(label, filler);
-            // Add the filler object to the details panel
-        detailsPanel.add(filler);
-    }
-    
-    private Border getCreditBorder(){
-        TitledBorder border = BorderFactory.createTitledBorder("Credits");
-        border.setTitleColor(getForeground());
-        border.setTitleFont(getFont());
-        return border;
+            // Add a filler object to the details panel
+        detailsPanel.add(createFiller(label,0,7,32767,7));
     }
     
     private void initialize(){
@@ -219,11 +230,16 @@ public class JAboutPanel extends JPanel{
         updateButton.addComponentListener(handler);
         updateButton.setForeground(null);
         buttonPanel.add(updateButton);
-            // Create a filler object to go after the button
-        Box.Filler filler = new Box.Filler(new Dimension(6, 0), 
-                new Dimension(6, 0), new Dimension(6, 32767));
-        buttonPanel.add(filler);
-        fillerMap.put(updateButton, filler);
+        buttonPanel.add(createFiller(updateButton,6,0,6,32767));
+        
+        licenseButton = new JButton("License");
+        licenseButton.setActionCommand(OPEN_LICENSE_SELECTED);
+        licenseButton.addActionListener(handler);
+        licenseButton.addComponentListener(handler);
+        licenseButton.setForeground(null);
+        buttonPanel.add(licenseButton);
+        buttonPanel.add(createFiller(licenseButton,6,0,6,32767));
+        
         closeButton = new JButton("OK");
         closeButton.setActionCommand(CLOSE_SELECTED);
         closeButton.addActionListener(handler);
@@ -465,6 +481,10 @@ public class JAboutPanel extends JPanel{
         return fillerMap.get(c);
     }
     
+    public JButton getLicenseButton(){
+        return licenseButton;
+    }
+    
     public JButton getUpdateButton(){
         return updateButton;
     }
@@ -492,6 +512,7 @@ public class JAboutPanel extends JPanel{
 //            websiteLabel.setEnabled(enabled);
             updateWebsiteMenuItems();
             updateButton.setEnabled(enabled);
+            licenseButton.setEnabled(enabled);
         } catch (NullPointerException ex){}
     }
     
@@ -513,6 +534,7 @@ public class JAboutPanel extends JPanel{
             updateButton.setFont(font);
             closeButton.setFont(font);
             creditsPanel.setBorder(getCreditBorder());
+            licenseButton.setFont(font);
         } catch (NullPointerException ex) {}
     }
     /**
@@ -543,6 +565,7 @@ public class JAboutPanel extends JPanel{
         try{
             closeButton.setBackground(bg);
             updateButton.setBackground(bg);
+            licenseButton.setBackground(bg);
         } catch (NullPointerException ex){ }
     }
     @Override
@@ -716,6 +739,7 @@ public class JAboutPanel extends JPanel{
                     break;
                 case(CLOSE_SELECTED):
                 case(UPDATE_CHECK_SELECTED):
+                case(OPEN_LICENSE_SELECTED):
                     fireActionPerformed(evt);
             }
         }
