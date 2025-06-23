@@ -296,7 +296,9 @@ public class JAboutPanel extends JPanel{
     }
     
     private void initialize(){
-        setBorder(BorderFactory.createEmptyBorder(11, 10, 11, 10));
+            // A panel to contain all the components
+        JPanel panel = new JPanel(new BorderLayout(18, 7));
+        panel.setBorder(BorderFactory.createEmptyBorder(11, 10, 11, 10));
             // A handler to listen to the components
         Handler handler = new Handler();
             // A handler to listen to changes to the visibility of components
@@ -316,7 +318,7 @@ public class JAboutPanel extends JPanel{
         propNameMap.put(iconLabel, PROGRAM_ICON_PROPERTY_CHANGED);
         iconLabel.addPropertyChangeListener("icon", handler);
             // Put the icon label on the left side of the panel
-        add(iconLabel, BorderLayout.LINE_START);
+        panel.add(iconLabel, BorderLayout.LINE_START);
             // Hide the icon label
         iconLabel.setVisible(false);
             // Create a details panel to display the labels and stuff
@@ -328,7 +330,7 @@ public class JAboutPanel extends JPanel{
         detailsPanel.setForeground(null);
         detailsPanel.setBackground(null);
             // Put the details panel in the center of the panel
-        add(detailsPanel, BorderLayout.CENTER);
+        panel.add(detailsPanel, BorderLayout.CENTER);
             // Create the program name label
         nameLabel = new JLabel();
         nameLabel.setFont(deriveFont(Font.BOLD,9));
@@ -457,12 +459,14 @@ public class JAboutPanel extends JPanel{
         buttonPanel.add(closeButton);
             // Add the button panel to the bottom panel
         bottomPanel.add(buttonPanel, BorderLayout.LINE_END);
-            // Add the bottom panel to this panel
-        add(bottomPanel, BorderLayout.PAGE_END);
+            // Add the bottom panel to the panel
+        panel.add(bottomPanel, BorderLayout.PAGE_END);
+            // Add the panel to this panel
+        add(panel, BorderLayout.CENTER);
     }
     
     public JAboutPanel(){
-        super(new BorderLayout(18, 7));
+        super(new BorderLayout(0, 0));
         initialize();
     }
     
