@@ -52,11 +52,8 @@ public class JAboutPanel extends JPanel{
     public static final String PROGRAM_VERSION_PROPERTY_CHANGED = 
             "ProgramVersionPropertyChanged";
     
-    public static final String PROGRAM_COPYRIGHT_START_YEAR_PROPERTY_CHANGED = 
-            "ProgramCopyrightStartYearPropertyChanged";
-    
-    public static final String PROGRAM_COPYRIGHT_END_YEAR_PROPERTY_CHANGED = 
-            "ProgramCopyrightEndYearPropertyChanged";
+    public static final String PROGRAM_COPYRIGHT_PROPERTY_CHANGED = 
+            "ProgramCopyrightPropertyChanged";
     
     public static final String PROGRAM_WEBSITE_URI_PROPERTY_CHANGED = 
             "ProgramWebsitePropertyChanged";
@@ -124,20 +121,13 @@ public class JAboutPanel extends JPanel{
      */
     private int flags = SHOW_CONTROL_BUTTONS_FLAG;
     /**
-     * This is the starting value of the year range of the copyright. If this is 
-     * null, then the copyright is disabled.
-     */
-    private Integer crStartYear = null;
-    /**
-     * This is the ending value of the year range of the copyright. If this is 
-     * null, then the current year is used.
-     */
-    private Integer crEndYear = null;
-    /**
-     * This is the program's version. If this is null, then the version is not 
-     * set.
+     * This is the program's version.
      */
     private String version = null;
+    /**
+     * This is the program's copyright.
+     */
+    private String copyright = null;
     /**
      * This is the text set for the update button if one has been set for it. If 
      * this is null, then the update button will use the default update button 
@@ -261,7 +251,7 @@ public class JAboutPanel extends JPanel{
         return border;
     }
     /**
-     * This creates a filler object 
+     * This creates a filler object to go after the given component.
      * @param comp
      * @param minWidth
      * @param minHeigth
@@ -509,79 +499,22 @@ public class JAboutPanel extends JPanel{
         versionLabel.setText((version!= null)?VERSION_TEST_PREFIX+version:null);
     }
     
-    public Integer getCopyrightStartYear(){
-        return crStartYear;
+    public String getProgramCopyright(){
+        return copyright;
     }
     
-    public void setCopyrightStartYear(Integer year){
-            // If the copyright start year would not change
-        if (Objects.equals(crStartYear, year))
+    public void setProgramCopyright(String copyright){
+            // If the copyright would not change
+        if (Objects.equals(this.copyright, copyright))
             return;
-            // Get the old copyright starting year
-        Integer old = crStartYear;
-        crStartYear = year;
-        firePropertyChange(PROGRAM_COPYRIGHT_START_YEAR_PROPERTY_CHANGED,old,year);
-            // Update the copyright text
-        updateCopyrightText();
-    }
-    /**
-     * This returns the current year.
-     * @return The current year.
-     */
-    protected int getCurrentYear(){
-        return new java.util.GregorianCalendar().get(java.util.Calendar.YEAR);
-    }
-    
-    public int getCopyrightEndYear(){
-            // If the copyright end year is null
-        if (crEndYear == null)
-            return getCurrentYear();
-        return crEndYear;
-    }
-    
-    public void setCopyrightEndYear(Integer year){
-            // If the copyright end year would not change
-        if (Objects.equals(crEndYear, year))
-            return;
-            // Get the old copyright ending year
-        Integer old = crEndYear;
-        crEndYear = year;
-        firePropertyChange(PROGRAM_COPYRIGHT_END_YEAR_PROPERTY_CHANGED,old,year);
-            // Update the copyright text
-        updateCopyrightText();
-    }
-    
-    public boolean isCopyrightEndYearSet(){
-        return crEndYear != null;
-    }
-    
-    public void setCopyrightYear(Integer startYear, Integer endYear){
-        setCopyrightStartYear(startYear);
-        setCopyrightEndYear(endYear);
-    }
-    
-    public void setCopyrightYear(Integer startYear){
-        setCopyrightYear(startYear,null);
-    }
-    
-    protected String getCopyrightText(int startYear, int endYear){
-            // Get the starting year, as a String
-        String yearText = Integer.toString(Math.min(startYear, endYear));
-            // If the starting and ending year are different
-        if (startYear != endYear)
-                // Add the ending year to the String
-            yearText += "-"+Math.max(startYear, endYear);
-        return String.format(COPYRIGHT_TEXT_TEMPLATE, yearText);
-    }
-    
-    protected void updateCopyrightText(){
-            // Get the starting year for the copyright range
-        Integer start = getCopyrightStartYear();
-            // If the starting year is not null
-        if (start != null)
-            copyrightLabel.setText(getCopyrightText(start,getCopyrightEndYear()));
-        else
-            copyrightLabel.setText(null);
+            // Get the old program copyright
+        String old = this.copyright;
+        this.copyright = copyright;
+        firePropertyChange(PROGRAM_COPYRIGHT_PROPERTY_CHANGED,old,copyright);
+            // Update the text for the copyright label to display the copyright 
+            // if not null
+        copyrightLabel.setText((copyright!= null)?
+                String.format(COPYRIGHT_TEXT_TEMPLATE, copyright):null);
     }
     
     public String getProgramWebsiteText(){
@@ -1027,7 +960,8 @@ public class JAboutPanel extends JPanel{
     }
     @Override
     protected String paramString(){
-        return super.paramString();
+        return super.paramString()+
+                ",programIcon="+Objects.toString(getProgramIcon(), "");
     }
     /**
      * This adds the given {@code ActionListener} to this panel.
