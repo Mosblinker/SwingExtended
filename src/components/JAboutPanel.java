@@ -69,6 +69,12 @@ public class JAboutPanel extends JPanel{
     
     public static final String CREDITS_EDITOR_KIT_PROPERTY_CHANGED = 
             "CreditsEditorKitPropertyChanged";
+    
+    public static final String UPDATE_BUTTON_TEXT_PROPERTY_CHANGED = 
+            "UpdateTextPropertyChanged";
+    
+    public static final String CLOSE_BUTTON_TEXT_PROPERTY_CHANGED = 
+            "CloseButtonTextPropertyChanged";
     /**
      * This is the text that appears before the program version on the program 
      * version label.
