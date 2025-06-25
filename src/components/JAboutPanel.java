@@ -264,12 +264,12 @@ public class JAboutPanel extends JPanel{
     }
     /**
      * This creates a filler object to go after the given component.
-     * @param comp
-     * @param minWidth
-     * @param minHeigth
-     * @param maxWidth
-     * @param maxHeight
-     * @return 
+     * @param comp The component to associate with this filler object, or null.
+     * @param minWidth The minimum width for this filler.
+     * @param minHeigth The minimum height for this filler.
+     * @param maxWidth The maximum width for this filler.
+     * @param maxHeight The maximum height for this filler.
+     * @return The filler object that was created.
      */
     private Box.Filler createFiller(Component comp, int minWidth, int minHeigth, 
             int maxWidth, int maxHeight){
@@ -306,7 +306,9 @@ public class JAboutPanel extends JPanel{
             // Add a filler object to the details panel
         detailsPanel.add(createFiller(label,0,7,32767,7));
     }
-    
+    /**
+     * This initializes the components of this about panel.
+     */
     private void initialize(){
             // A panel to contain all the components
         JPanel panel = new JPanel(new BorderLayout(18, 7));
@@ -481,27 +483,53 @@ public class JAboutPanel extends JPanel{
         super(new BorderLayout(0, 0));
         initialize();
     }
-    
+    /**
+     * This returns the icon being displayed for the program.
+     * @return The icon displayed for the program.
+     * @see #setProgramIcon(javax.swing.Icon) 
+     */
     public Icon getProgramIcon(){
         return iconLabel.getIcon();
     }
-    
+    /**
+     * This sets the icon to display for the program.
+     * @param icon The icon to display for the program, or null.
+     * @see #getProgramIcon() 
+     */
     public void setProgramIcon(Icon icon){
         iconLabel.setIcon(icon);
     }
-    
+    /**
+     * This returns the name of the program.
+     * @return The program name.
+     * @see #setProgramName(java.lang.String) 
+     */
     public String getProgramName(){
         return nameLabel.getText();
     }
-    
+    /**
+     * This sets the name of the program. The default value for this is null.
+     * @param name The program name, or null.
+     * @see #getProgramName() 
+     */
     public void setProgramName(String name){
         nameLabel.setText(name);
     }
-    
+    /**
+     * This returns the version of the program.
+     * @return The program version, or null.
+     * @see #setProgramVersion(java.lang.String) 
+     */
     public String getProgramVersion(){
         return version;
     }
-    
+    /**
+     * This sets the version of the program. The version of the program is 
+     * displayed by the panel with the word "Version" before it. The default 
+     * value for this is null.
+     * @param version The program version, or null.
+     * @see #getProgramVersion() 
+     */
     public void setProgramVersion(String version){
             // If the version would not change
         if (Objects.equals(this.version, version))
@@ -514,11 +542,23 @@ public class JAboutPanel extends JPanel{
             // not null
         versionLabel.setText((version!= null)?VERSION_TEST_PREFIX+version:null);
     }
-    
+    /**
+     * This returns the copyright text for the program.
+     * @return The copyright text for the program, or null.
+     * @see #setProgramCopyright(java.lang.String) 
+     */
     public String getProgramCopyright(){
         return copyright;
     }
-    
+    /**
+     * This sets the copyright text for the program. The copyright text is 
+     * displayed by the panel with the text "Copyright &copy;" before it. The 
+     * default value for this is null.
+     * @param copyright The copyright text for the program, or null.
+     * @see #getProgramCopyright() 
+     * @see #COPYRIGHT_CHARACTER
+     * @see #COPYRIGHT_CHARACTER_STRING
+     */
     public void setProgramCopyright(String copyright){
             // If the copyright would not change
         if (Objects.equals(this.copyright, copyright))
@@ -529,47 +569,159 @@ public class JAboutPanel extends JPanel{
         firePropertyChange(PROGRAM_COPYRIGHT_PROPERTY_CHANGED,old,copyright);
             // Update the text for the copyright label to display the copyright 
             // if not null
-        copyrightLabel.setText((copyright!= null)?
-                COPYRIGHT_TEXT_PREFIX+copyright:null);
+        copyrightLabel.setText((copyright!=null)?COPYRIGHT_TEXT_PREFIX+copyright:
+                null);
     }
-    
+    /**
+     * This returns the text to display for the link to the program's website.
+     * @return The text to display for the link to the program's website, or 
+     * null.
+     * @see #setProgramWebsiteText(java.lang.String) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see #setProgramWebsite(java.lang.String, java.net.URI) 
+     */
     public String getProgramWebsiteText(){
         return websiteLabel.getText();
     }
-    
+    /**
+     * This sets the text to display for the link to the program's website. The 
+     * default value for this is null.
+     * @param text The text to display for the link to the program's website, or 
+     * null.
+     * @see #getProgramWebsiteText() 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see #setProgramWebsite(java.lang.String, java.net.URI) 
+     */
     public void setProgramWebsiteText(String text){
         websiteLabel.setText(text);
     }
-    
+    /**
+     * This returns the URI for the link to the program's website. The link to 
+     * the program's website is only displayed if the text has been set for the 
+     * link using the {@link #setProgramWebsiteText setProgramWebsiteText}.
+     * @return The URI for the link to the program, or null.
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see #openProgramWebsite() 
+     * @see #copyProgramWebsite(java.awt.datatransfer.Clipboard) 
+     * @see #copyProgramWebsite() 
+     * @see #getProgramWebsiteText() 
+     * @see #setProgramWebsiteText(java.lang.String) 
+     * @see #setProgramWebsite(java.lang.String, java.net.URI) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see JHyperlinkLabel#getURI() 
+     */
     public URI getProgramWebsiteURI(){
         return websiteLabel.getURI();
     }
-    
+    /**
+     * This sets the the URI for the link to the program's website. The link to 
+     * the program's website is only displayed if the text has been set for the 
+     * link using the {@link #setProgramWebsiteText setProgramWebsiteText}. This 
+     * will also make the program website to be unvisited. The default value for 
+     * this is null.
+     * @param uri The URI for the link to the program's website, or null.
+     * @see #getProgramWebsiteURI() 
+     * @see #openProgramWebsite() 
+     * @see #copyProgramWebsite(java.awt.datatransfer.Clipboard) 
+     * @see #copyProgramWebsite() 
+     * @see #getProgramWebsiteText() 
+     * @see #setProgramWebsiteText(java.lang.String) 
+     * @see #setProgramWebsite(java.lang.String, java.net.URI) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see JHyperlinkLabel#setURI(java.net.URI) 
+     */
     public void setProgramWebsiteURI(URI uri){
         websiteLabel.setURI(uri);
     }
-    
+    /**
+     * This sets the text and URI for the link to the program website. This is 
+     * equivalent to calling both {@link #setProgramWebsiteText(java.lang.String) 
+     * setProgramWebsiteText} and {@link #setProgramWebsiteURI(java.net.URI) 
+     * setProgramWebsiteURI}. 
+     * @param text The text to display for the link to the program's website.
+     * @param uri The URI for the link to the program's website.
+     * @see #setProgramWebsiteText(java.lang.String) 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see #getProgramWebsiteText() 
+     * @see #getProgramWebsiteURI() 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #openProgramWebsite() 
+     * @see #copyProgramWebsite(java.awt.datatransfer.Clipboard) 
+     * @see #copyProgramWebsite() 
+     */
     public void setProgramWebsite(String text, URI uri){
         setProgramWebsiteText(text);
         setProgramWebsiteURI(uri);
     }
-    
+    /**
+     * This opens the program website in the user's default browser. If this 
+     * fails to open the browser, then this will display an error message to the 
+     * user if {@link #getFailureMessagesAreShown() failure messages are to be 
+     * shown}.
+     * @throws IllegalStateException If the program website URI is not set.
+     * @see #copyProgramWebsite(java.awt.datatransfer.Clipboard) 
+     * @see #copyProgramWebsite() 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see #getFailureMessagesAreShown() 
+     * @see #setFailureMessagesAreShown(boolean)
+     * @see JHyperlinkLabel#openHyperlink() 
+     */
     public void openProgramWebsite(){
         websiteLabel.openHyperlink();
     }
-    
+    /**
+     * This copies the program website to the given clipboard.
+     * @param clipboard The clipboard to copy the program website to.
+     * @throws IllegalStateException If the program website URI is not set.
+     * @see #copyProgramWebsite() 
+     * @see #openProgramWebsite() 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#copyHyperlink(java.awt.datatransfer.Clipboard) 
+     */
     public void copyProgramWebsite(Clipboard clipboard){
         websiteLabel.copyHyperlink(clipboard);
     }
-    
+    /**
+     * This copies the program website to the system clipboard.
+     * @throws IllegalStateException If the program website URI is not set.
+     * @see #openProgramWebsite() 
+     * @see #copyProgramWebsite(java.awt.datatransfer.Clipboard) 
+     * @see #getToolkit() 
+     * @see Toolkit#getSystemClipboard() 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#copyHyperlink() 
+     */
     public void copyProgramWebsite(){
         websiteLabel.copyHyperlink();
     }
-    
+    /**
+     * This returns whether the program website has been visited yet.
+     * @return Whether the program website has been visited yet.
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#isVisited() 
+     */
     public boolean isProgramWebsiteVisited(){
         return websiteLabel.isVisited();
     }
-    
+    /**
+     * This sets whether the program website has been visited yet. The default 
+     * for this value is {@code false}.
+     * @param value Whether the program website has been visited yet.
+     * @see #isProgramWebsiteVisited() 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#setVisited(boolean) 
+     */
     public void setProgramWebsiteVisited(boolean value){
         websiteLabel.setVisited(value);
     }
@@ -628,39 +780,170 @@ public class JAboutPanel extends JPanel{
     
     // TODO: Add more credit methods
     
-    
+    /**
+     * This returns the color to use as the foreground color of the text for 
+     * hyperlinks when there's a hyperlink set and that hyperlink has not been 
+     * visited yet.
+     * @return The color for unvisited hyperlinks. If no color has been set for 
+     * unvisited hyperlinks, then {@link 
+     * JHyperlinkLabel#UNVISITED_HYPERLINK_COLOR} is returned.
+     * @see #setUnvisitedHyperlinkColor(java.awt.Color) 
+     * @see #isUnvisitedHyperlinkColorSet() 
+     * @see #getVisitedHyperlinkColor() 
+     * @see #setVisitedHyperlinkColor(java.awt.Color) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#UNVISITED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#getUnvisitedHyperlinkColor() 
+     */
     public Color getUnvisitedHyperlinkColor(){
         return websiteLabel.getUnvisitedHyperlinkColor();
     }
-    
+    /**
+     * This sets the color to use as the foreground color of the text for 
+     * hyperlinks when there's a hyperlink set and that hyperlink has not been
+     * visited yet.
+     * @param color The color for unvisited hyperlinks. If this is null, then 
+     * {@link JHyperlinkLabel#UNVISITED_HYPERLINK_COLOR 
+     * UNVISITED_HYPERLINK_COLOR} will be used instead.
+     * @see #getUnvisitedHyperlinkColor() 
+     * @see #isUnvisitedHyperlinkColorSet() 
+     * @see #getVisitedHyperlinkColor() 
+     * @see #setVisitedHyperlinkColor(java.awt.Color) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#UNVISITED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#setUnvisitedHyperlinkColor(java.awt.Color) 
+     */
     public void setUnvisitedHyperlinkColor(Color color){
         websiteLabel.setUnvisitedHyperlinkColor(color);
     }
-    
+    /**
+     * This returns whether a color for unvisited hyperlinks has been explicitly 
+     * set for this component.
+     * @return {@code true} if the unvisited hyperlink color has been explicitly 
+     * set for this component; {@code false} otherwise.
+     * @see #getUnvisitedHyperlinkColor() 
+     * @see #setUnvisitedHyperlinkColor(java.awt.Color) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#UNVISITED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#isUnvisitedHyperlinkColorSet() 
+     */
     public boolean isUnvisitedHyperlinkColorSet(){
         return websiteLabel.isUnvisitedHyperlinkColorSet();
     }
-    
+    /**
+     * This returns the color to use as the foreground color of the text for 
+     * hyperlinks when there's a hyperlink set and that hyperlink has been 
+     * visited.
+     * @return The color for visited hyperlinks. If no color has been set for 
+     * visited hyperlinks, then {@link JHyperlinkLabel#VISITED_HYPERLINK_COLOR 
+     * VISITED_HYPERLINK_COLOR} is returned.
+     * @see #setVisitedHyperlinkColor(java.awt.Color) 
+     * @see #isVisitedHyperlinkColorSet() 
+     * @see #getUnvisitedHyperlinkColor() 
+     * @see #setUnvisitedHyperlinkColor(java.awt.Color) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#VISITED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#getVisitedHyperlinkColor() 
+     */
     public Color getVisitedHyperlinkColor(){
         return websiteLabel.getVisitedHyperlinkColor();
     }
-    
+    /**
+     * This sets the color to use as the foreground color of the text for 
+     * hyperlinks when there's a hyperlink set and that hyperlink has been 
+     * visited.
+     * @param color The color for visited hyperlinks. If this is null, then 
+     * {@link JHyperlinkLabel#VISITED_HYPERLINK_COLOR VISITED_HYPERLINK_COLOR} 
+     * will be used instead.
+     * @see #getVisitedHyperlinkColor() 
+     * @see #isVisitedHyperlinkColorSet() 
+     * @see #getUnvisitedHyperlinkColor() 
+     * @see #setUnvisitedHyperlinkColor(java.awt.Color) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#VISITED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#setVisitedHyperlinkColor(java.awt.Color) 
+     */
     public void setVisitedHyperlinkColor(Color color){
         websiteLabel.setVisitedHyperlinkColor(color);
     }
-    
+    /**
+     * This returns whether a color for visited hyperlinks has been explicitly 
+     * set for this component.
+     * @return {@code true} if the visited hyperlink color has been explicitly 
+     * set for this component; {@code false} otherwise.
+     * @see #getVisitedHyperlinkColor() 
+     * @see #setVisitedHyperlinkColor(java.awt.Color) 
+     * @see #isProgramWebsiteVisited() 
+     * @see #setProgramWebsiteVisited(boolean) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#VISITED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#isVisitedHyperlinkColorSet() 
+     */
     public boolean isVisitedHyperlinkColorSet(){
         return websiteLabel.isVisitedHyperlinkColorSet();
     }
-    
+    /**
+     * This returns the color to use as the foreground color of the text for 
+     * hyperlinks when there's a hyperlink set and the label is being clicked 
+     * on.
+     * @return The color for selected hyperlinks. If no color has been set for 
+     * selected hyperlinks, then {@link JHyperlinkLabel#SELECTED_HYPERLINK_COLOR 
+     * SELECTED_HYPERLINK_COLOR} is returned.
+     * @see #setSelectedHyperlinkColor(java.awt.Color) 
+     * @see #isSelectedHyperlinkColorSet() 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#getSelectedHyperlinkColor() 
+     */
     public Color getSelectedHyperlinkColor(){
         return websiteLabel.getSelectedHyperlinkColor();
     }
-    
+    /**
+     * This sets the color to use as the foreground color of the text for 
+     * hyperlinks when there's a hyperlink set and the label is being clicked 
+     * on.
+     * @param color The color for selected hyperlinks. If this is null, then 
+     * {@link JHyperlinkLabel#SELECTED_HYPERLINK_COLOR SELECTED_HYPERLINK_COLOR} 
+     * will be used instead.
+     * @see #getSelectedHyperlinkColor
+     * @see #isSelectedHyperlinkColorSet() 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#setSelectedHyperlinkColor(java.awt.Color) 
+     */
     public void setSelectedHyperlinkColor(Color color){
         websiteLabel.setSelectedHyperlinkColor(color);
     }
-    
+    /**
+     * This returns whether a color for selected hyperlinks has been explicitly 
+     * set for this component.
+     * @return {@code true} if the selected hyperlink color has been explicitly 
+     * set for this component; {@code false} otherwise.
+     * @see #getSelectedHyperlinkColor() 
+     * @see #setSelectedHyperlinkColor(java.awt.Color) 
+     * @see #getProgramWebsiteURI() 
+     * @see #setProgramWebsiteURI(java.net.URI) 
+     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#isSelectedHyperlinkColorSet() 
+     */
     public boolean isSelectedHyperlinkColorSet(){
         return websiteLabel.isSelectedHyperlinkColorSet();
     }
@@ -935,7 +1218,10 @@ public class JAboutPanel extends JPanel{
     public boolean getControlButtonsAreShown(){
         return getFlag(SHOW_CONTROL_BUTTONS_FLAG);
     }
-    
+    /**
+     * {@inheritDoc }
+     * @param enabled {@inheritDoc }
+     */
     @Override
     public void setEnabled(boolean enabled){
         super.setEnabled(enabled);
@@ -946,11 +1232,18 @@ public class JAboutPanel extends JPanel{
             licenseButton.setEnabled(enabled);
         } catch (NullPointerException ex){}
     }
-    
+    /**
+     * This updates whether the website menu items are enabled or disabled.
+     */
     private void updateWebsiteMenuItems(){
         websiteOpenItem.setEnabled(isEnabled() && websiteLabel.getURI() != null);
         websiteCopyItem.setEnabled(websiteOpenItem.isEnabled());
     }
+    /**
+     * {@inheritDoc }
+     * @param font {@inheritDoc }
+     * @see #getFont() 
+     */
     @Override
     public void setFont(Font font){
         super.setFont(font);
@@ -970,12 +1263,14 @@ public class JAboutPanel extends JPanel{
         } catch (NullPointerException ex) {}
     }
     /**
-     * 
-     * @param relStyle
-     * @param relSize
-     * @return 
+     * This derives a font from the panel's font.
+     * @param relStyle The style changes to apply to the font.
+     * @param relSize The difference between the target font and the panel's 
+     * font.
+     * @return The derived font.
+     * @see #getFont() 
      */
-    protected Font deriveFont(int relStyle, float relSize){
+    private Font deriveFont(int relStyle, float relSize){
             // Get the font for the label
         Font font = getFont();
             // If the font is somehow still null
@@ -984,6 +1279,11 @@ public class JAboutPanel extends JPanel{
         return font.deriveFont(font.getStyle() | relStyle, 
                 font.getSize2D() + relSize);
     }
+    /**
+     * {@inheritDoc }
+     * @param fg {@inheritDoc }
+     * @see #getForeground() 
+     */
     @Override
     public void setForeground(Color fg){
         super.setForeground(fg);
@@ -994,6 +1294,12 @@ public class JAboutPanel extends JPanel{
             creditsTextPane.setForeground(fg);
         } catch (NullPointerException ex){ }
     }
+    /**
+     * {@inheritDoc }
+     * @param bg {@inheritDoc }
+     * @see #getBackground() 
+     * @see #setOpaque(boolean) 
+     */
     @Override
     public void setBackground(Color bg){
         super.setBackground(bg);
@@ -1005,11 +1311,25 @@ public class JAboutPanel extends JPanel{
             licenseButton.setBackground(bg);
         } catch (NullPointerException ex){ }
     }
+    /**
+     * This returns the minimum size for this component. If the minimum size has 
+     * been set to a non-null value, then that is what is returned. Otherwise, 
+     * this will return a minimum size of 640 x 480.
+     * @return {@inheritDoc }
+     * @see #setMinimumSize
+     */
     @Override
     public Dimension getMinimumSize(){
             // If the minimum size is set, return it. Otherwise, return 640x480
         return (isMinimumSizeSet())?super.getMinimumSize():new Dimension(640,480);
     }
+    /**
+     * This returns a String representation of this JAboutPanel. This method is 
+     * primarily intended to be used only for debugging purposes, and the 
+     * content and format of the returned String may vary between 
+     * implementations.
+     * @return A String representation of this JAboutPanel.
+     */
     @Override
     protected String paramString(){
         return super.paramString()+
@@ -1230,7 +1550,7 @@ public class JAboutPanel extends JPanel{
         return visHandler;
     }
     /**
-     * 
+     * This is a handler class to listen to components for this panel.
      */
     private class Handler extends ComponentAdapter implements 
             PropertyChangeListener, ActionListener{
