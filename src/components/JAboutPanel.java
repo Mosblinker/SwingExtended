@@ -989,7 +989,23 @@ public class JAboutPanel extends JPanel{
     @Override
     protected String paramString(){
         return super.paramString()+
-                ",programIcon="+Objects.toString(getProgramIcon(), "");
+                    // State the unvisited hyperlink color if it's set
+                ",unvisitedHyperlinkColor="+((isUnvisitedHyperlinkColorSet())?
+                    getUnvisitedHyperlinkColor():"")+
+                    // State the visited hyperlink color if it's set
+                ",visitedHyperlinkColor="+((isVisitedHyperlinkColorSet())?
+                    getVisitedHyperlinkColor():"")+
+                    // State the selected hyperlink color if it's set
+                ",selectedHyperlinkColor="+((isSelectedHyperlinkColorSet())?
+                    getSelectedHyperlinkColor():"")+
+                ",programIcon="+Objects.toString(getProgramIcon(),"")+
+                ",programName="+Objects.toString(getProgramName(),"")+
+                ",programVersion="+Objects.toString(getProgramVersion(),"")+
+                ",programCopyright="+Objects.toString(getProgramCopyright(),"")+
+                ",programWebsiteText="+Objects.toString(getProgramWebsiteText(),"")+
+                ",programWebsiteURI="+Objects.toString(getProgramWebsiteURI(),"")+
+                    // State if the program website has been visited
+                ((isProgramWebsiteVisited())?",programWebsiteVisited":"");
     }
     /**
      * This adds the given {@code ActionListener} to this panel.
