@@ -101,9 +101,21 @@ public class JAboutPanel extends JPanel{
      */
     private static final String VERSION_TEST_PREFIX = "Version ";
     /**
-     * This is a template for the text to display for the copyright.
+     * This is the copyright character.
+     * @see #COPYRIGHT_CHARACTER_STRING
      */
-    private static final String COPYRIGHT_TEXT_TEMPLATE = "Copyright © %s";
+    public static final char COPYRIGHT_CHARACTER = '©';
+    /**
+     * This is a string containing the copyright character.
+     * @see #COPYRIGHT_CHARACTER
+     */
+    public static final String COPYRIGHT_CHARACTER_STRING = ""+COPYRIGHT_CHARACTER;
+    /**
+     * This is the text that appears before the copyright on the copyright 
+     * label.
+     */
+    private static final String COPYRIGHT_TEXT_PREFIX = "Copyright "+
+            COPYRIGHT_CHARACTER+" ";
     /**
      * The flag controlling whether the control buttons are shown.
      */
@@ -518,7 +530,7 @@ public class JAboutPanel extends JPanel{
             // Update the text for the copyright label to display the copyright 
             // if not null
         copyrightLabel.setText((copyright!= null)?
-                String.format(COPYRIGHT_TEXT_TEMPLATE, copyright):null);
+                COPYRIGHT_TEXT_PREFIX+copyright:null);
     }
     
     public String getProgramWebsiteText(){
