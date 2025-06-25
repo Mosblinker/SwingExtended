@@ -574,42 +574,6 @@ public class JAboutPanel extends JPanel{
         websiteLabel.setVisited(value);
     }
     
-    public Color getUnvisitedHyperlinkColor(){
-        return websiteLabel.getUnvisitedHyperlinkColor();
-    }
-    
-    public void setUnvisitedHyperlinkColor(Color color){
-        websiteLabel.setUnvisitedHyperlinkColor(color);
-    }
-    
-    public boolean isUnvisitedHyperlinkColorSet(){
-        return websiteLabel.isUnvisitedHyperlinkColorSet();
-    }
-    
-    public Color getVisitedHyperlinkColor(){
-        return websiteLabel.getVisitedHyperlinkColor();
-    }
-    
-    public void setVisitedHyperlinkColor(Color color){
-        websiteLabel.setVisitedHyperlinkColor(color);
-    }
-    
-    public boolean isVisitedHyperlinkColorSet(){
-        return websiteLabel.isVisitedHyperlinkColorSet();
-    }
-    
-    public Color getSelectedHyperlinkColor(){
-        return websiteLabel.getSelectedHyperlinkColor();
-    }
-    
-    public void setSelectedHyperlinkColor(Color color){
-        websiteLabel.setSelectedHyperlinkColor(color);
-    }
-    
-    public boolean isSelectedHyperlinkColorSet(){
-        return websiteLabel.isSelectedHyperlinkColorSet();
-    }
-    
     public String getCreditsText(int offset, int length) throws BadLocationException{
         return creditsTextPane.getText(offset, length);
     }
@@ -664,6 +628,66 @@ public class JAboutPanel extends JPanel{
     
     // TODO: Add more credit methods
     
+    
+    public Color getUnvisitedHyperlinkColor(){
+        return websiteLabel.getUnvisitedHyperlinkColor();
+    }
+    
+    public void setUnvisitedHyperlinkColor(Color color){
+        websiteLabel.setUnvisitedHyperlinkColor(color);
+    }
+    
+    public boolean isUnvisitedHyperlinkColorSet(){
+        return websiteLabel.isUnvisitedHyperlinkColorSet();
+    }
+    
+    public Color getVisitedHyperlinkColor(){
+        return websiteLabel.getVisitedHyperlinkColor();
+    }
+    
+    public void setVisitedHyperlinkColor(Color color){
+        websiteLabel.setVisitedHyperlinkColor(color);
+    }
+    
+    public boolean isVisitedHyperlinkColorSet(){
+        return websiteLabel.isVisitedHyperlinkColorSet();
+    }
+    
+    public Color getSelectedHyperlinkColor(){
+        return websiteLabel.getSelectedHyperlinkColor();
+    }
+    
+    public void setSelectedHyperlinkColor(Color color){
+        websiteLabel.setSelectedHyperlinkColor(color);
+    }
+    
+    public boolean isSelectedHyperlinkColorSet(){
+        return websiteLabel.isSelectedHyperlinkColorSet();
+    }
+    /**
+     * This returns whether the user will be notified with a message dialog when 
+     * the hyperlink fails to open.
+     * @return {@code true} if a message dialog will be displayed if the 
+     * hyperlink fails to open, {@code false} otherwise.
+     * @see #setFailureMessagesAreShown(boolean) 
+     * @see #openProgramWebsite() 
+     * @see JHyperlinkLabel#getFailureMessagesAreShown() 
+     */
+    public boolean getFailureMessagesAreShown(){
+        return websiteLabel.getFailureMessagesAreShown();
+    }
+    /**
+     * This sets whether the user will be notified with a message dialog when 
+     * the hyperlink fails to open. The default for this value is {@code true}.
+     * @param value {@code true} if a message dialog will be displayed if the 
+     * hyperlink fails to open, {@code false} otherwise.
+     * @see #getFailureMessagesAreShown() 
+     * @see #openProgramWebsite() 
+     * @see JHyperlinkLabel#setFailureMessagesAreShown(boolean) 
+     */
+    public void setFailureMessagesAreShown(boolean value){
+        websiteLabel.setFailureMessagesAreShown(value);
+    }
     
     public void setCloseButtonText(String text){
             // If the close text would not change
