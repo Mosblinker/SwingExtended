@@ -255,7 +255,6 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_graphicsConfiguration] = new PropertyDescriptor ( "graphicsConfiguration", components.JHyperlinkLabel.class, "getGraphicsConfiguration", null ); // NOI18N
             properties[PROPERTY_graphicsConfiguration].setHidden ( true );
             properties[PROPERTY_handCursor] = new PropertyDescriptor ( "handCursor", components.JHyperlinkLabel.class, "getHandCursor", "setHandCursor" ); // NOI18N
-            properties[PROPERTY_handCursor].setHidden ( true );
             properties[PROPERTY_handCursorSet] = new PropertyDescriptor ( "handCursorSet", components.JHyperlinkLabel.class, "isHandCursorSet", null ); // NOI18N
             properties[PROPERTY_handCursorSet].setHidden ( true );
             properties[PROPERTY_height] = new PropertyDescriptor ( "height", components.JHyperlinkLabel.class, "getHeight", null ); // NOI18N
