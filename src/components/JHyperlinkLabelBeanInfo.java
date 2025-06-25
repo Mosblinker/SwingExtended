@@ -122,37 +122,40 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
     private static final int PROPERTY_requestFocusEnabled = 92;
     private static final int PROPERTY_rootPane = 93;
     private static final int PROPERTY_selectedHyperlinkColor = 94;
-    private static final int PROPERTY_showing = 95;
-    private static final int PROPERTY_size = 96;
-    private static final int PROPERTY_text = 97;
-    private static final int PROPERTY_toolkit = 98;
-    private static final int PROPERTY_toolTipText = 99;
-    private static final int PROPERTY_toolTipTextSet = 100;
-    private static final int PROPERTY_topLevelAncestor = 101;
-    private static final int PROPERTY_transferHandler = 102;
-    private static final int PROPERTY_treeLock = 103;
-    private static final int PROPERTY_UI = 104;
-    private static final int PROPERTY_UIClassID = 105;
-    private static final int PROPERTY_unvisitedHyperlinkColor = 106;
-    private static final int PROPERTY_URI = 107;
-    private static final int PROPERTY_valid = 108;
-    private static final int PROPERTY_validateRoot = 109;
-    private static final int PROPERTY_verifyInputWhenFocusTarget = 110;
-    private static final int PROPERTY_verticalAlignment = 111;
-    private static final int PROPERTY_verticalTextPosition = 112;
-    private static final int PROPERTY_vetoableChangeListeners = 113;
-    private static final int PROPERTY_visible = 114;
-    private static final int PROPERTY_visibleRect = 115;
-    private static final int PROPERTY_visited = 116;
-    private static final int PROPERTY_visitedHyperlinkColor = 117;
-    private static final int PROPERTY_width = 118;
-    private static final int PROPERTY_x = 119;
-    private static final int PROPERTY_y = 120;
+    private static final int PROPERTY_selectedHyperlinkColorSet = 95;
+    private static final int PROPERTY_showing = 96;
+    private static final int PROPERTY_size = 97;
+    private static final int PROPERTY_text = 98;
+    private static final int PROPERTY_toolkit = 99;
+    private static final int PROPERTY_toolTipText = 100;
+    private static final int PROPERTY_toolTipTextSet = 101;
+    private static final int PROPERTY_topLevelAncestor = 102;
+    private static final int PROPERTY_transferHandler = 103;
+    private static final int PROPERTY_treeLock = 104;
+    private static final int PROPERTY_UI = 105;
+    private static final int PROPERTY_UIClassID = 106;
+    private static final int PROPERTY_unvisitedHyperlinkColor = 107;
+    private static final int PROPERTY_unvisitedHyperlinkColorSet = 108;
+    private static final int PROPERTY_URI = 109;
+    private static final int PROPERTY_valid = 110;
+    private static final int PROPERTY_validateRoot = 111;
+    private static final int PROPERTY_verifyInputWhenFocusTarget = 112;
+    private static final int PROPERTY_verticalAlignment = 113;
+    private static final int PROPERTY_verticalTextPosition = 114;
+    private static final int PROPERTY_vetoableChangeListeners = 115;
+    private static final int PROPERTY_visible = 116;
+    private static final int PROPERTY_visibleRect = 117;
+    private static final int PROPERTY_visited = 118;
+    private static final int PROPERTY_visitedHyperlinkColor = 119;
+    private static final int PROPERTY_visitedHyperlinkColorSet = 120;
+    private static final int PROPERTY_width = 121;
+    private static final int PROPERTY_x = 122;
+    private static final int PROPERTY_y = 123;
 
     // Property array 
     /*lazy PropertyDescriptor*/
     private static PropertyDescriptor[] getPdescriptor(){
-        PropertyDescriptor[] properties = new PropertyDescriptor[121];
+        PropertyDescriptor[] properties = new PropertyDescriptor[124];
     
         try {
             properties[PROPERTY_accessibleContext] = new PropertyDescriptor ( "accessibleContext", components.JHyperlinkLabel.class, "getAccessibleContext", null ); // NOI18N
@@ -354,6 +357,8 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_rootPane].setHidden ( true );
             properties[PROPERTY_selectedHyperlinkColor] = new PropertyDescriptor ( "selectedHyperlinkColor", components.JHyperlinkLabel.class, "getSelectedHyperlinkColor", "setSelectedHyperlinkColor" ); // NOI18N
             properties[PROPERTY_selectedHyperlinkColor].setShortDescription ( "The color to use for the hyperlink when it is selected." );
+            properties[PROPERTY_selectedHyperlinkColorSet] = new PropertyDescriptor ( "selectedHyperlinkColorSet", components.JHyperlinkLabel.class, "isSelectedHyperlinkColorSet", null ); // NOI18N
+            properties[PROPERTY_selectedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_showing] = new PropertyDescriptor ( "showing", components.JHyperlinkLabel.class, "isShowing", null ); // NOI18N
             properties[PROPERTY_showing].setHidden ( true );
             properties[PROPERTY_size] = new PropertyDescriptor ( "size", components.JHyperlinkLabel.class, "getSize", "setSize" ); // NOI18N
@@ -382,6 +387,8 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_UIClassID] = new PropertyDescriptor ( "UIClassID", components.JHyperlinkLabel.class, "getUIClassID", null ); // NOI18N
             properties[PROPERTY_unvisitedHyperlinkColor] = new PropertyDescriptor ( "unvisitedHyperlinkColor", components.JHyperlinkLabel.class, "getUnvisitedHyperlinkColor", "setUnvisitedHyperlinkColor" ); // NOI18N
             properties[PROPERTY_unvisitedHyperlinkColor].setShortDescription ( "The color to use for hyperlinks that have not been visited yet." );
+            properties[PROPERTY_unvisitedHyperlinkColorSet] = new PropertyDescriptor ( "unvisitedHyperlinkColorSet", components.JHyperlinkLabel.class, "isUnvisitedHyperlinkColorSet", null ); // NOI18N
+            properties[PROPERTY_unvisitedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_URI] = new PropertyDescriptor ( "URI", components.JHyperlinkLabel.class, "getURI", "setURI" ); // NOI18N
             properties[PROPERTY_URI].setPreferred ( true );
             properties[PROPERTY_URI].setShortDescription ( "The URI of the hyperlink." );
@@ -410,6 +417,8 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_visited].setShortDescription ( "This indicates whether the hyperlink has been visited." );
             properties[PROPERTY_visitedHyperlinkColor] = new PropertyDescriptor ( "visitedHyperlinkColor", components.JHyperlinkLabel.class, "getVisitedHyperlinkColor", "setVisitedHyperlinkColor" ); // NOI18N
             properties[PROPERTY_visitedHyperlinkColor].setShortDescription ( "The color to use for visited hyperlinks." );
+            properties[PROPERTY_visitedHyperlinkColorSet] = new PropertyDescriptor ( "visitedHyperlinkColorSet", components.JHyperlinkLabel.class, "isVisitedHyperlinkColorSet", null ); // NOI18N
+            properties[PROPERTY_visitedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_width] = new PropertyDescriptor ( "width", components.JHyperlinkLabel.class, "getWidth", null ); // NOI18N
             properties[PROPERTY_width].setHidden ( true );
             properties[PROPERTY_x] = new PropertyDescriptor ( "x", components.JHyperlinkLabel.class, "getX", null ); // NOI18N
