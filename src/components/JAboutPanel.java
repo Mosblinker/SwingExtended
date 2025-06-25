@@ -582,6 +582,10 @@ public class JAboutPanel extends JPanel{
         websiteLabel.setUnvisitedHyperlinkColor(color);
     }
     
+    public boolean isUnvisitedHyperlinkColorSet(){
+        return websiteLabel.isUnvisitedHyperlinkColorSet();
+    }
+    
     public Color getVisitedHyperlinkColor(){
         return websiteLabel.getVisitedHyperlinkColor();
     }
@@ -590,12 +594,20 @@ public class JAboutPanel extends JPanel{
         websiteLabel.setVisitedHyperlinkColor(color);
     }
     
+    public boolean isVisitedHyperlinkColorSet(){
+        return websiteLabel.isVisitedHyperlinkColorSet();
+    }
+    
     public Color getSelectedHyperlinkColor(){
         return websiteLabel.getSelectedHyperlinkColor();
     }
     
     public void setSelectedHyperlinkColor(Color color){
         websiteLabel.setSelectedHyperlinkColor(color);
+    }
+    
+    public boolean isSelectedHyperlinkColorSet(){
+        return websiteLabel.isSelectedHyperlinkColorSet();
     }
     
     public String getCreditsText(int offset, int length) throws BadLocationException{
