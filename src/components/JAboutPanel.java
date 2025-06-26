@@ -312,7 +312,7 @@ public class JAboutPanel extends JPanel{
     private void initialize(){
             // A panel to contain all the components
         JPanel panel = new JPanel(new BorderLayout(18, 7));
-        panel.setBorder(BorderFactory.createEmptyBorder(11, 10, 11, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(7, 6, 7, 6));
             // A handler to listen to the components
         Handler handler = new Handler();
             // A handler to listen to changes to the visibility of components
