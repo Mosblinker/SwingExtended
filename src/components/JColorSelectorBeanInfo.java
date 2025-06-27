@@ -286,6 +286,7 @@ public class JColorSelectorBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_componentOrientation].setHidden ( true );
             properties[PROPERTY_componentPopupMenu] = new PropertyDescriptor ( "componentPopupMenu", components.JColorSelector.class, "getComponentPopupMenu", "setComponentPopupMenu" ); // NOI18N
             properties[PROPERTY_componentPopupMenu].setShortDescription ( "The popup menu to show" );
+            properties[PROPERTY_componentPopupMenu].setBound ( true );
             properties[PROPERTY_components] = new PropertyDescriptor ( "components", components.JColorSelector.class, "getComponents", null ); // NOI18N
             properties[PROPERTY_components].setHidden ( true );
             properties[PROPERTY_containerListeners] = new PropertyDescriptor ( "containerListeners", components.JColorSelector.class, "getContainerListeners", null ); // NOI18N
