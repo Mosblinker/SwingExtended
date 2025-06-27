@@ -141,37 +141,38 @@ public class JThumbnailLabelBeanInfo extends SimpleBeanInfo {
     private static final int PROPERTY_thumbnailRegionHeight = 113;
     private static final int PROPERTY_thumbnailRegionLocation = 114;
     private static final int PROPERTY_thumbnailRegionSize = 115;
-    private static final int PROPERTY_thumbnailRegionWidth = 116;
-    private static final int PROPERTY_thumbnailRegionX = 117;
-    private static final int PROPERTY_thumbnailRegionY = 118;
-    private static final int PROPERTY_thumbnailSize = 119;
-    private static final int PROPERTY_thumbnailTransform = 120;
-    private static final int PROPERTY_thumbnailWidth = 121;
-    private static final int PROPERTY_thumbnailX = 122;
-    private static final int PROPERTY_thumbnailY = 123;
-    private static final int PROPERTY_toolkit = 124;
-    private static final int PROPERTY_toolTipText = 125;
-    private static final int PROPERTY_topLevelAncestor = 126;
-    private static final int PROPERTY_transferHandler = 127;
-    private static final int PROPERTY_treeLock = 128;
-    private static final int PROPERTY_UI = 129;
-    private static final int PROPERTY_UIClassID = 130;
-    private static final int PROPERTY_valid = 131;
-    private static final int PROPERTY_validateRoot = 132;
-    private static final int PROPERTY_verifyInputWhenFocusTarget = 133;
-    private static final int PROPERTY_verticalAlignment = 134;
-    private static final int PROPERTY_verticalTextPosition = 135;
-    private static final int PROPERTY_vetoableChangeListeners = 136;
-    private static final int PROPERTY_visible = 137;
-    private static final int PROPERTY_visibleRect = 138;
-    private static final int PROPERTY_width = 139;
-    private static final int PROPERTY_x = 140;
-    private static final int PROPERTY_y = 141;
+    private static final int PROPERTY_thumbnailRegionTransform = 116;
+    private static final int PROPERTY_thumbnailRegionWidth = 117;
+    private static final int PROPERTY_thumbnailRegionX = 118;
+    private static final int PROPERTY_thumbnailRegionY = 119;
+    private static final int PROPERTY_thumbnailSize = 120;
+    private static final int PROPERTY_thumbnailTransform = 121;
+    private static final int PROPERTY_thumbnailWidth = 122;
+    private static final int PROPERTY_thumbnailX = 123;
+    private static final int PROPERTY_thumbnailY = 124;
+    private static final int PROPERTY_toolkit = 125;
+    private static final int PROPERTY_toolTipText = 126;
+    private static final int PROPERTY_topLevelAncestor = 127;
+    private static final int PROPERTY_transferHandler = 128;
+    private static final int PROPERTY_treeLock = 129;
+    private static final int PROPERTY_UI = 130;
+    private static final int PROPERTY_UIClassID = 131;
+    private static final int PROPERTY_valid = 132;
+    private static final int PROPERTY_validateRoot = 133;
+    private static final int PROPERTY_verifyInputWhenFocusTarget = 134;
+    private static final int PROPERTY_verticalAlignment = 135;
+    private static final int PROPERTY_verticalTextPosition = 136;
+    private static final int PROPERTY_vetoableChangeListeners = 137;
+    private static final int PROPERTY_visible = 138;
+    private static final int PROPERTY_visibleRect = 139;
+    private static final int PROPERTY_width = 140;
+    private static final int PROPERTY_x = 141;
+    private static final int PROPERTY_y = 142;
 
     // Property array 
     /*lazy PropertyDescriptor*/
     private static PropertyDescriptor[] getPdescriptor(){
-        PropertyDescriptor[] properties = new PropertyDescriptor[142];
+        PropertyDescriptor[] properties = new PropertyDescriptor[143];
     
         try {
             properties[PROPERTY_accessibleContext] = new PropertyDescriptor ( "accessibleContext", components.JThumbnailLabel.class, "getAccessibleContext", null ); // NOI18N
@@ -427,6 +428,8 @@ public class JThumbnailLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_thumbnailRegionLocation].setHidden ( true );
             properties[PROPERTY_thumbnailRegionSize] = new PropertyDescriptor ( "thumbnailRegionSize", components.JThumbnailLabel.class, "getThumbnailRegionSize", null ); // NOI18N
             properties[PROPERTY_thumbnailRegionSize].setHidden ( true );
+            properties[PROPERTY_thumbnailRegionTransform] = new PropertyDescriptor ( "thumbnailRegionTransform", components.JThumbnailLabel.class, "getThumbnailRegionTransform", null ); // NOI18N
+            properties[PROPERTY_thumbnailRegionTransform].setHidden ( true );
             properties[PROPERTY_thumbnailRegionWidth] = new PropertyDescriptor ( "thumbnailRegionWidth", components.JThumbnailLabel.class, "getThumbnailRegionWidth", null ); // NOI18N
             properties[PROPERTY_thumbnailRegionWidth].setHidden ( true );
             properties[PROPERTY_thumbnailRegionX] = new PropertyDescriptor ( "thumbnailRegionX", components.JThumbnailLabel.class, "getThumbnailRegionX", null ); // NOI18N
