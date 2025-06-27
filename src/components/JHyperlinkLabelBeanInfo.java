@@ -356,6 +356,7 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_rootPane].setHidden ( true );
             properties[PROPERTY_selectedHyperlinkColor] = new PropertyDescriptor ( "selectedHyperlinkColor", components.JHyperlinkLabel.class, "getSelectedHyperlinkColor", "setSelectedHyperlinkColor" ); // NOI18N
             properties[PROPERTY_selectedHyperlinkColor].setShortDescription ( "The color to use for the hyperlink when it is selected." );
+            properties[PROPERTY_selectedHyperlinkColor].setBound ( true );
             properties[PROPERTY_selectedHyperlinkColorSet] = new PropertyDescriptor ( "selectedHyperlinkColorSet", components.JHyperlinkLabel.class, "isSelectedHyperlinkColorSet", null ); // NOI18N
             properties[PROPERTY_selectedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_showing] = new PropertyDescriptor ( "showing", components.JHyperlinkLabel.class, "isShowing", null ); // NOI18N
@@ -386,11 +387,13 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_UIClassID] = new PropertyDescriptor ( "UIClassID", components.JHyperlinkLabel.class, "getUIClassID", null ); // NOI18N
             properties[PROPERTY_unvisitedHyperlinkColor] = new PropertyDescriptor ( "unvisitedHyperlinkColor", components.JHyperlinkLabel.class, "getUnvisitedHyperlinkColor", "setUnvisitedHyperlinkColor" ); // NOI18N
             properties[PROPERTY_unvisitedHyperlinkColor].setShortDescription ( "The color to use for hyperlinks that have not been visited yet." );
+            properties[PROPERTY_unvisitedHyperlinkColor].setBound ( true );
             properties[PROPERTY_unvisitedHyperlinkColorSet] = new PropertyDescriptor ( "unvisitedHyperlinkColorSet", components.JHyperlinkLabel.class, "isUnvisitedHyperlinkColorSet", null ); // NOI18N
             properties[PROPERTY_unvisitedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_URI] = new PropertyDescriptor ( "URI", components.JHyperlinkLabel.class, "getURI", "setURI" ); // NOI18N
             properties[PROPERTY_URI].setPreferred ( true );
             properties[PROPERTY_URI].setShortDescription ( "The URI of the hyperlink." );
+            properties[PROPERTY_URI].setBound ( true );
             properties[PROPERTY_URI].setPropertyEditorClass ( beans.URIPropertyEditor.class );
             properties[PROPERTY_valid] = new PropertyDescriptor ( "valid", components.JHyperlinkLabel.class, "isValid", null ); // NOI18N
             properties[PROPERTY_valid].setHidden ( true );
@@ -416,6 +419,7 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_visited].setShortDescription ( "This indicates whether the hyperlink has been visited." );
             properties[PROPERTY_visitedHyperlinkColor] = new PropertyDescriptor ( "visitedHyperlinkColor", components.JHyperlinkLabel.class, "getVisitedHyperlinkColor", "setVisitedHyperlinkColor" ); // NOI18N
             properties[PROPERTY_visitedHyperlinkColor].setShortDescription ( "The color to use for visited hyperlinks." );
+            properties[PROPERTY_visitedHyperlinkColor].setBound ( true );
             properties[PROPERTY_visitedHyperlinkColorSet] = new PropertyDescriptor ( "visitedHyperlinkColorSet", components.JHyperlinkLabel.class, "isVisitedHyperlinkColorSet", null ); // NOI18N
             properties[PROPERTY_visitedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_width] = new PropertyDescriptor ( "width", components.JHyperlinkLabel.class, "getWidth", null ); // NOI18N
