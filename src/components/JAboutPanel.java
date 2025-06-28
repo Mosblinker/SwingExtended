@@ -902,52 +902,51 @@ public class JAboutPanel extends JPanel{
     }
     /**
      * This returns the color to use as the foreground color of the text for 
-     * hyperlinks when there's a hyperlink set and the label is being clicked 
-     * on.
-     * @return The color for selected hyperlinks. If no color has been set for 
-     * selected hyperlinks, then {@link JHyperlinkLabel#SELECTED_HYPERLINK_COLOR 
-     * SELECTED_HYPERLINK_COLOR} is returned.
-     * @see #setSelectedHyperlinkColor(java.awt.Color) 
-     * @see #isSelectedHyperlinkColorSet() 
+     * hyperlinks when there's a hyperlink set and is being activated.
+     * @return The color for activated hyperlinks. If no color has been set for 
+     * activated hyperlinks, then {@link 
+     * JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR ACTIVATED_HYPERLINK_COLOR} is 
+     * returned.
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
+     * @see #isActivatedHyperlinkColorSet() 
      * @see #getProgramWebsiteURI() 
      * @see #setProgramWebsiteURI(java.net.URI) 
-     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
-     * @see JHyperlinkLabel#getSelectedHyperlinkColor() 
+     * @see JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#getActivatedHyperlinkColor() 
      */
-    public Color getSelectedHyperlinkColor(){
-        return websiteLabel.getSelectedHyperlinkColor();
+    public Color getActivatedHyperlinkColor(){
+        return websiteLabel.getActivatedHyperlinkColor();
     }
     /**
      * This sets the color to use as the foreground color of the text for 
-     * hyperlinks when there's a hyperlink set and the label is being clicked 
-     * on.
-     * @param color The color for selected hyperlinks. If this is null, then 
-     * {@link JHyperlinkLabel#SELECTED_HYPERLINK_COLOR SELECTED_HYPERLINK_COLOR} 
-     * will be used instead.
-     * @see #getSelectedHyperlinkColor
-     * @see #isSelectedHyperlinkColorSet() 
+     * hyperlinks when there's a hyperlink set and is being activated.
+     * @param color The color for activated hyperlinks. If this is null, then 
+     * {@link JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR 
+     * ACTIVATED_HYPERLINK_COLOR} will be used instead.
+     * @see #getActivatedHyperlinkColor
+     * @see #isActivatedHyperlinkColorSet() 
      * @see #getProgramWebsiteURI() 
      * @see #setProgramWebsiteURI(java.net.URI) 
-     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
-     * @see JHyperlinkLabel#setSelectedHyperlinkColor(java.awt.Color) 
+     * @see JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#setActivatedHyperlinkColor(java.awt.Color) 
      */
-    public void setSelectedHyperlinkColor(Color color){
-        websiteLabel.setSelectedHyperlinkColor(color);
+    public void setActivatedHyperlinkColor(Color color){
+        websiteLabel.setActivatedHyperlinkColor(color);
     }
     /**
-     * This returns whether a color for selected hyperlinks has been explicitly 
+     * This returns whether a color for activated hyperlinks has been explicitly 
      * set for this component.
-     * @return {@code true} if the selected hyperlink color has been explicitly 
+     * @return {@code true} if the activated hyperlink color has been explicitly 
      * set for this component; {@code false} otherwise.
-     * @see #getSelectedHyperlinkColor() 
-     * @see #setSelectedHyperlinkColor(java.awt.Color) 
+     * @see #getActivatedHyperlinkColor() 
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
      * @see #getProgramWebsiteURI() 
      * @see #setProgramWebsiteURI(java.net.URI) 
-     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
-     * @see JHyperlinkLabel#isSelectedHyperlinkColorSet() 
+     * @see JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#isActivatedHyperlinkColorSet() 
      */
-    public boolean isSelectedHyperlinkColorSet(){
-        return websiteLabel.isSelectedHyperlinkColorSet();
+    public boolean isActivatedHyperlinkColorSet(){
+        return websiteLabel.isActivatedHyperlinkColorSet();
     }
     /**
      * This returns whether the user will be notified with a message dialog when 
@@ -1341,9 +1340,9 @@ public class JAboutPanel extends JPanel{
                     // State the visited hyperlink color if it's set
                 ",visitedHyperlinkColor="+((isVisitedHyperlinkColorSet())?
                     getVisitedHyperlinkColor():"")+
-                    // State the selected hyperlink color if it's set
-                ",selectedHyperlinkColor="+((isSelectedHyperlinkColorSet())?
-                    getSelectedHyperlinkColor():"")+
+                    // State the activated hyperlink color if it's set
+                ",activatedHyperlinkColor="+((isActivatedHyperlinkColorSet())?
+                    getActivatedHyperlinkColor():"")+
                 ",programIcon="+Objects.toString(getProgramIcon(),"")+
                 ",programName="+Objects.toString(getProgramName(),"")+
                 ",programVersion="+Objects.toString(getProgramVersion(),"")+
@@ -1603,11 +1602,11 @@ public class JAboutPanel extends JPanel{
                             evt.getOldValue(),evt.getNewValue());
                     break;
                     // If the failure message, unvisited color, visited color, 
-                    // or selected color changed
+                    // or activated color changed
                 case(JHyperlinkLabel.FAILURE_MESSAGES_SHOWN_PROPERTY_CHANGED):
                 case(JHyperlinkLabel.UNVISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
                 case(JHyperlinkLabel.VISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
-                case(JHyperlinkLabel.SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED):
+                case(JHyperlinkLabel.ACTIVATED_HYPERLINK_COLOR_PROPERTY_CHANGED):
                     firePropertyChange(evt.getPropertyName(),evt.getOldValue(),
                             evt.getNewValue());
                     break;
