@@ -103,9 +103,9 @@ public class JHyperlinkLabel extends JLabel{
     private Color visitedColor = null;
     /**
      * This is the color to use for the foreground when the hyperlink is being 
-     * selected by the user.
+     * activated.
      */
-    private Color selectedColor = null;
+    private Color activatedColor = null;
     /**
      * This is a bunch of flags that control the state of this label.
      */
@@ -391,8 +391,8 @@ public class JHyperlinkLabel extends JLabel{
      * @see #setSelected(boolean) 
      * @see #isHoveredOver() 
      * @see #setHoveredOver(boolean) 
-     * @see #getSelectedHyperlinkColor() 
-     * @see #setSelectedHyperlinkColor(java.awt.Color) 
+     * @see #getActivatedHyperlinkColor() 
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
      */
     protected boolean isSelected(){
         return getFlag(HYPERLINK_ACTIVATED_FLAG);
@@ -404,8 +404,8 @@ public class JHyperlinkLabel extends JLabel{
      * @see #isSelected() 
      * @see #isHoveredOver() 
      * @see #setHoveredOver(boolean) 
-     * @see #getSelectedHyperlinkColor() 
-     * @see #setSelectedHyperlinkColor(java.awt.Color) 
+     * @see #getActivatedHyperlinkColor() 
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
      */
     protected void setSelected(boolean value){
             // If the hyperlink has been selected or un-selected
@@ -649,60 +649,60 @@ public class JHyperlinkLabel extends JLabel{
     }
     /**
      * This returns the color to use as the foreground color of the text when 
-     * there's a hyperlink set and the label is being clicked on.
-     * @return The color for selected hyperlinks. If no color has been set for 
+     * there's a hyperlink set and the hyperlink is activated.
+     * @return The color for activated hyperlinks. If no color has been set for 
      * selected hyperlinks, then {@link #ACTIVATED_HYPERLINK_COLOR 
      * ACTIVATED_HYPERLINK_COLOR} is returned.
-     * @see #setSelectedHyperlinkColor(java.awt.Color) 
-     * @see #isSelectedHyperlinkColorSet() 
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
+     * @see #isActivatedHyperlinkColorSet() 
      * @see #getURI() 
      * @see #setURI(java.net.URI) 
      * @see #ACTIVATED_HYPERLINK_COLOR
      */
-    public Color getSelectedHyperlinkColor(){
-            // If the selected hyperlink color is not set
-        if (selectedColor == null)
+    public Color getActivatedHyperlinkColor(){
+            // If the activated hyperlink color is not set
+        if (activatedColor == null)
             return ACTIVATED_HYPERLINK_COLOR;
-        return selectedColor;
+        return activatedColor;
     }
     /**
      * This sets the color to use as the foreground color of the text when 
-     * there's a hyperlink set and the label is being clicked on.
-     * @param color The color for selected hyperlinks. If this is null, then 
+     * there's a hyperlink set and the hyperlink is activated.
+     * @param color The color for activated hyperlinks. If this is null, then 
      * {@link #ACTIVATED_HYPERLINK_COLOR ACTIVATED_HYPERLINK_COLOR} will be used 
      * instead.
-     * @see #getSelectedHyperlinkColor
-     * @see #isSelectedHyperlinkColorSet() 
+     * @see #getActivatedHyperlinkColor
+     * @see #isActivatedHyperlinkColorSet() 
      * @see #getURI() 
      * @see #setURI(java.net.URI) 
      * @see #ACTIVATED_HYPERLINK_COLOR
      */
-    public void setSelectedHyperlinkColor(Color color){
-            // If the selected hyperlink color would change
-        if (!Objects.equals(selectedColor, color)){
-                // Get the old color when the hyperlink is selected
-            Color old = selectedColor;
-            selectedColor = color;
+    public void setActivatedHyperlinkColor(Color color){
+            // If the activated hyperlink color would change
+        if (!Objects.equals(activatedColor, color)){
+                // Get the old color when the hyperlink is activated
+            Color old = activatedColor;
+            activatedColor = color;
             firePropertyChange(ACTIVATED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
                     color);
-                // If the URI is set and the hyperlink is currently selected
+                // If the URI is set and the hyperlink is currently activated
             if (getURI() != null && isSelected())
                 repaint();
         }
     }
     /**
-     * This returns whether a color for selected hyperlinks has been explicitly 
+     * This returns whether a color for activated hyperlinks has been explicitly 
      * set for this label.
-     * @return {@code true} if the selected hyperlink color has been explicitly 
+     * @return {@code true} if the activated hyperlink color has been explicitly 
      * set for this label; {@code false} otherwise.
-     * @see #getSelectedHyperlinkColor() 
-     * @see #setSelectedHyperlinkColor(java.awt.Color) 
+     * @see #getActivatedHyperlinkColor() 
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
      * @see #getURI() 
      * @see #setURI(java.net.URI) 
      * @see #ACTIVATED_HYPERLINK_COLOR
      */
-    public boolean isSelectedHyperlinkColorSet(){
-        return selectedColor != null;
+    public boolean isActivatedHyperlinkColorSet(){
+        return activatedColor != null;
     }
     /**
      * This returns the foreground color for the hyperlink text.
@@ -720,16 +720,16 @@ public class JHyperlinkLabel extends JLabel{
      * @see #setUnvisitedHyperlinkColor(java.awt.Color) 
      * @see #getVisitedHyperlinkColor() 
      * @see #setVisitedHyperlinkColor(java.awt.Color) 
-     * @see #getSelectedHyperlinkColor() 
-     * @see #setSelectedHyperlinkColor(java.awt.Color) 
+     * @see #getActivatedHyperlinkColor() 
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
      */
     protected Color getHyperlinkColor(){
             // If the URI is not set or the label is disabled
         if (getURI() == null || !isEnabled())
             return null;
-            // If the hyperlink is currently selected
+            // If the hyperlink is currently activated
         if (isSelected())
-            return getSelectedHyperlinkColor();
+            return getActivatedHyperlinkColor();
             // If the hyperlink has been visited
         if (isVisited())
             return getVisitedHyperlinkColor();
@@ -1105,7 +1105,7 @@ public class JHyperlinkLabel extends JLabel{
                 ",failureMessagesAreShown="+getFailureMessagesAreShown()+
                 ",unvisitedColor="+Objects.toString(unvisitedColor, "")+
                 ",visitedColor="+Objects.toString(visitedColor, "")+
-                ",selectedColor="+Objects.toString(selectedColor, "");
+                ",activatedColor="+Objects.toString(activatedColor, "");
     }
     /**
      * A handler class to handle mouse events on the label.
