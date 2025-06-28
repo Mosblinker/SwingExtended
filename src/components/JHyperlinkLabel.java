@@ -1118,7 +1118,7 @@ public class JHyperlinkLabel extends JLabel{
      * @see #addHyperlinkListener(HyperlinkListener) 
      * @see #removeHyperlinkListener(HyperlinkListener) 
      */
-    public HyperlinkListener[] getActionListeners(){
+    public HyperlinkListener[] getHyperlinkListeners(){
         return listenerList.getListeners(HyperlinkListener.class);
     }
     /**
