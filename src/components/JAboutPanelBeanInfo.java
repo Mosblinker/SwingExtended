@@ -207,8 +207,11 @@ public class JAboutPanelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_bounds] = new PropertyDescriptor ( "bounds", components.JAboutPanel.class, "getBounds", "setBounds" ); // NOI18N
             properties[PROPERTY_bounds].setHidden ( true );
             properties[PROPERTY_closeButton] = new PropertyDescriptor ( "closeButton", components.JAboutPanel.class, "getCloseButton", null ); // NOI18N
+            properties[PROPERTY_closeButton].setHidden ( true );
             properties[PROPERTY_closeButtonText] = new PropertyDescriptor ( "closeButtonText", components.JAboutPanel.class, "getCloseButtonText", "setCloseButtonText" ); // NOI18N
+            properties[PROPERTY_closeButtonText].setBound ( true );
             properties[PROPERTY_closeButtonTextSet] = new PropertyDescriptor ( "closeButtonTextSet", components.JAboutPanel.class, "isCloseButtonTextSet", null ); // NOI18N
+            properties[PROPERTY_closeButtonTextSet].setHidden ( true );
             properties[PROPERTY_colorModel] = new PropertyDescriptor ( "colorModel", components.JAboutPanel.class, "getColorModel", null ); // NOI18N
             properties[PROPERTY_colorModel].setHidden ( true );
             properties[PROPERTY_component] = new IndexedPropertyDescriptor ( "component", components.JAboutPanel.class, null, null, "getComponent", null ); // NOI18N
@@ -229,12 +232,21 @@ public class JAboutPanelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_controlButtonsAreShown].setShortDescription ( "Sets whether the control buttons are shown." );
             properties[PROPERTY_controlButtonsAreShown].setBound ( true );
             properties[PROPERTY_creditsDocument] = new PropertyDescriptor ( "creditsDocument", components.JAboutPanel.class, "getCreditsDocument", "setCreditsDocument" ); // NOI18N
+            properties[PROPERTY_creditsDocument].setPreferred ( true );
+            properties[PROPERTY_creditsDocument].setBound ( true );
             properties[PROPERTY_creditsEditorKit] = new PropertyDescriptor ( "creditsEditorKit", components.JAboutPanel.class, "getCreditsEditorKit", "setCreditsEditorKit" ); // NOI18N
+            properties[PROPERTY_creditsEditorKit].setPreferred ( true );
+            properties[PROPERTY_creditsEditorKit].setBound ( true );
             properties[PROPERTY_creditsInheritsPopupMenu] = new PropertyDescriptor ( "creditsInheritsPopupMenu", components.JAboutPanel.class, "getCreditsInheritsPopupMenu", "setCreditsInheritsPopupMenu" ); // NOI18N
+            properties[PROPERTY_creditsInheritsPopupMenu].setBound ( true );
             properties[PROPERTY_creditsPopupMenu] = new PropertyDescriptor ( "creditsPopupMenu", components.JAboutPanel.class, "getCreditsPopupMenu", "setCreditsPopupMenu" ); // NOI18N
+            properties[PROPERTY_creditsPopupMenu].setBound ( true );
             properties[PROPERTY_creditsScrollPane] = new PropertyDescriptor ( "creditsScrollPane", components.JAboutPanel.class, "getCreditsScrollPane", null ); // NOI18N
+            properties[PROPERTY_creditsScrollPane].setHidden ( true );
             properties[PROPERTY_creditsText] = new PropertyDescriptor ( "creditsText", components.JAboutPanel.class, "getCreditsText", "setCreditsText" ); // NOI18N
+            properties[PROPERTY_creditsText].setPreferred ( true );
             properties[PROPERTY_creditsTextPane] = new PropertyDescriptor ( "creditsTextPane", components.JAboutPanel.class, "getCreditsTextPane", null ); // NOI18N
+            properties[PROPERTY_creditsTextPane].setHidden ( true );
             properties[PROPERTY_cursor] = new PropertyDescriptor ( "cursor", components.JAboutPanel.class, "getCursor", "setCursor" ); // NOI18N
             properties[PROPERTY_cursorSet] = new PropertyDescriptor ( "cursorSet", components.JAboutPanel.class, "isCursorSet", null ); // NOI18N
             properties[PROPERTY_cursorSet].setHidden ( true );
@@ -250,6 +262,7 @@ public class JAboutPanelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_enabled].setBound ( true );
             properties[PROPERTY_failureMessagesAreShown] = new PropertyDescriptor ( "failureMessagesAreShown", components.JAboutPanel.class, "getFailureMessagesAreShown", "setFailureMessagesAreShown" ); // NOI18N
             properties[PROPERTY_failureMessagesAreShown].setShortDescription ( "Whether error messages will be shown to the user if and when this fails to open the hyperlink." );
+            properties[PROPERTY_failureMessagesAreShown].setBound ( true );
             properties[PROPERTY_focusable] = new PropertyDescriptor ( "focusable", components.JAboutPanel.class, "isFocusable", "setFocusable" ); // NOI18N
             properties[PROPERTY_focusCycleRoot] = new PropertyDescriptor ( "focusCycleRoot", components.JAboutPanel.class, "isFocusCycleRoot", "setFocusCycleRoot" ); // NOI18N
             properties[PROPERTY_focusCycleRootAncestor] = new PropertyDescriptor ( "focusCycleRootAncestor", components.JAboutPanel.class, "getFocusCycleRootAncestor", null ); // NOI18N
@@ -311,7 +324,9 @@ public class JAboutPanelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_layout] = new PropertyDescriptor ( "layout", components.JAboutPanel.class, "getLayout", "setLayout" ); // NOI18N
             properties[PROPERTY_layout].setHidden ( true );
             properties[PROPERTY_licenseButton] = new PropertyDescriptor ( "licenseButton", components.JAboutPanel.class, "getLicenseButton", null ); // NOI18N
+            properties[PROPERTY_licenseButton].setHidden ( true );
             properties[PROPERTY_licenseButtonIsShown] = new PropertyDescriptor ( "licenseButtonIsShown", components.JAboutPanel.class, "getLicenseButtonIsShown", "setLicenseButtonIsShown" ); // NOI18N
+            properties[PROPERTY_licenseButtonIsShown].setBound ( true );
             properties[PROPERTY_lightweight] = new PropertyDescriptor ( "lightweight", components.JAboutPanel.class, "isLightweight", null ); // NOI18N
             properties[PROPERTY_lightweight].setHidden ( true );
             properties[PROPERTY_locale] = new PropertyDescriptor ( "locale", components.JAboutPanel.class, "getLocale", "setLocale" ); // NOI18N
@@ -360,21 +375,37 @@ public class JAboutPanelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_preferredSizeSet] = new PropertyDescriptor ( "preferredSizeSet", components.JAboutPanel.class, "isPreferredSizeSet", null ); // NOI18N
             properties[PROPERTY_preferredSizeSet].setHidden ( true );
             properties[PROPERTY_programCopyright] = new PropertyDescriptor ( "programCopyright", components.JAboutPanel.class, "getProgramCopyright", "setProgramCopyright" ); // NOI18N
+            properties[PROPERTY_programCopyright].setPreferred ( true );
+            properties[PROPERTY_programCopyright].setBound ( true );
             properties[PROPERTY_programCopyrightLabel] = new PropertyDescriptor ( "programCopyrightLabel", components.JAboutPanel.class, "getProgramCopyrightLabel", null ); // NOI18N
+            properties[PROPERTY_programCopyrightLabel].setHidden ( true );
             properties[PROPERTY_programIcon] = new PropertyDescriptor ( "programIcon", components.JAboutPanel.class, "getProgramIcon", "setProgramIcon" ); // NOI18N
+            properties[PROPERTY_programIcon].setPreferred ( true );
+            properties[PROPERTY_programIcon].setBound ( true );
             properties[PROPERTY_programIconLabel] = new PropertyDescriptor ( "programIconLabel", components.JAboutPanel.class, "getProgramIconLabel", null ); // NOI18N
+            properties[PROPERTY_programIconLabel].setHidden ( true );
             properties[PROPERTY_programName] = new PropertyDescriptor ( "programName", components.JAboutPanel.class, "getProgramName", "setProgramName" ); // NOI18N
+            properties[PROPERTY_programName].setPreferred ( true );
+            properties[PROPERTY_programName].setBound ( true );
             properties[PROPERTY_programNameLabel] = new PropertyDescriptor ( "programNameLabel", components.JAboutPanel.class, "getProgramNameLabel", null ); // NOI18N
+            properties[PROPERTY_programNameLabel].setHidden ( true );
             properties[PROPERTY_programVersion] = new PropertyDescriptor ( "programVersion", components.JAboutPanel.class, "getProgramVersion", "setProgramVersion" ); // NOI18N
+            properties[PROPERTY_programVersion].setPreferred ( true );
+            properties[PROPERTY_programVersion].setBound ( true );
             properties[PROPERTY_programVersionLabel] = new PropertyDescriptor ( "programVersionLabel", components.JAboutPanel.class, "getProgramVersionLabel", null ); // NOI18N
+            properties[PROPERTY_programVersionLabel].setHidden ( true );
             properties[PROPERTY_programWebsiteLabel] = new PropertyDescriptor ( "programWebsiteLabel", components.JAboutPanel.class, "getProgramWebsiteLabel", null ); // NOI18N
+            properties[PROPERTY_programWebsiteLabel].setHidden ( true );
             properties[PROPERTY_programWebsiteText] = new PropertyDescriptor ( "programWebsiteText", components.JAboutPanel.class, "getProgramWebsiteText", "setProgramWebsiteText" ); // NOI18N
+            properties[PROPERTY_programWebsiteText].setPreferred ( true );
+            properties[PROPERTY_programWebsiteText].setBound ( true );
             properties[PROPERTY_programWebsiteURI] = new PropertyDescriptor ( "programWebsiteURI", components.JAboutPanel.class, "getProgramWebsiteURI", "setProgramWebsiteURI" ); // NOI18N
             properties[PROPERTY_programWebsiteURI].setPreferred ( true );
-            properties[PROPERTY_programWebsiteURI].setShortDescription ( "The URI of the hyperlink." );
+            properties[PROPERTY_programWebsiteURI].setShortDescription ( "The URI of the program's website." );
             properties[PROPERTY_programWebsiteURI].setBound ( true );
             properties[PROPERTY_programWebsiteURI].setPropertyEditorClass ( beans.URIPropertyEditor.class );
             properties[PROPERTY_programWebsiteVisited] = new PropertyDescriptor ( "programWebsiteVisited", components.JAboutPanel.class, "isProgramWebsiteVisited", "setProgramWebsiteVisited" ); // NOI18N
+            properties[PROPERTY_programWebsiteVisited].setBound ( true );
             properties[PROPERTY_propertyChangeListeners] = new PropertyDescriptor ( "propertyChangeListeners", components.JAboutPanel.class, "getPropertyChangeListeners", null ); // NOI18N
             properties[PROPERTY_propertyChangeListeners].setHidden ( true );
             properties[PROPERTY_registeredKeyStrokes] = new PropertyDescriptor ( "registeredKeyStrokes", components.JAboutPanel.class, "getRegisteredKeyStrokes", null ); // NOI18N
@@ -414,10 +445,15 @@ public class JAboutPanelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_unvisitedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_updateButton] = new PropertyDescriptor ( "updateButton", components.JAboutPanel.class, "getUpdateButton", null ); // NOI18N
             properties[PROPERTY_updateButtonIsShown] = new PropertyDescriptor ( "updateButtonIsShown", components.JAboutPanel.class, "getUpdateButtonIsShown", "setUpdateButtonIsShown" ); // NOI18N
+            properties[PROPERTY_updateButtonIsShown].setBound ( true );
             properties[PROPERTY_updateButtonText] = new PropertyDescriptor ( "updateButtonText", components.JAboutPanel.class, "getUpdateButtonText", "setUpdateButtonText" ); // NOI18N
+            properties[PROPERTY_updateButtonText].setBound ( true );
             properties[PROPERTY_updateButtonTextSet] = new PropertyDescriptor ( "updateButtonTextSet", components.JAboutPanel.class, "isUpdateButtonTextSet", null ); // NOI18N
+            properties[PROPERTY_updateButtonTextSet].setHidden ( true );
             properties[PROPERTY_updateButtonToolTipText] = new PropertyDescriptor ( "updateButtonToolTipText", components.JAboutPanel.class, "getUpdateButtonToolTipText", "setUpdateButtonToolTipText" ); // NOI18N
+            properties[PROPERTY_updateButtonToolTipText].setBound ( true );
             properties[PROPERTY_updateButtonToolTipTextSet] = new PropertyDescriptor ( "updateButtonToolTipTextSet", components.JAboutPanel.class, "isUpdateButtonToolTipTextSet", null ); // NOI18N
+            properties[PROPERTY_updateButtonToolTipTextSet].setHidden ( true );
             properties[PROPERTY_valid] = new PropertyDescriptor ( "valid", components.JAboutPanel.class, "isValid", null ); // NOI18N
             properties[PROPERTY_valid].setHidden ( true );
             properties[PROPERTY_validateRoot] = new PropertyDescriptor ( "validateRoot", components.JAboutPanel.class, "isValidateRoot", null ); // NOI18N
@@ -436,8 +472,11 @@ public class JAboutPanelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_visitedHyperlinkColorSet] = new PropertyDescriptor ( "visitedHyperlinkColorSet", components.JAboutPanel.class, "isVisitedHyperlinkColorSet", null ); // NOI18N
             properties[PROPERTY_visitedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_websiteCopyMenuItem] = new PropertyDescriptor ( "websiteCopyMenuItem", components.JAboutPanel.class, "getWebsiteCopyMenuItem", null ); // NOI18N
+            properties[PROPERTY_websiteCopyMenuItem].setHidden ( true );
             properties[PROPERTY_websiteOpenMenuItem] = new PropertyDescriptor ( "websiteOpenMenuItem", components.JAboutPanel.class, "getWebsiteOpenMenuItem", null ); // NOI18N
+            properties[PROPERTY_websiteOpenMenuItem].setHidden ( true );
             properties[PROPERTY_websitePopup] = new PropertyDescriptor ( "websitePopup", components.JAboutPanel.class, "getWebsitePopup", null ); // NOI18N
+            properties[PROPERTY_websitePopup].setHidden ( true );
             properties[PROPERTY_width] = new PropertyDescriptor ( "width", components.JAboutPanel.class, "getWidth", null ); // NOI18N
             properties[PROPERTY_width].setHidden ( true );
             properties[PROPERTY_x] = new PropertyDescriptor ( "x", components.JAboutPanel.class, "getX", null ); // NOI18N
