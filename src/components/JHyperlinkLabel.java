@@ -7,6 +7,7 @@ package components;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
@@ -17,6 +18,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 /**
  * This is a label that acts as a hyperlink to a website or resource. The user 
@@ -388,6 +391,7 @@ public class JHyperlinkLabel extends JLabel{
      * This returns whether this label is currently activated.
      * @return {@code true} if the label is currently activated, {@code false} 
      * otherwise.
+     * @see #setActivated(boolean, java.awt.event.InputEvent) 
      * @see #setActivated(boolean) 
      * @see #isHoveredOver() 
      * @see #setHoveredOver(boolean) 
@@ -401,16 +405,37 @@ public class JHyperlinkLabel extends JLabel{
      * This sets whether this label is currently activated.
      * @param value {@code true} if the label is currently activated, {@code 
      * false} otherwise.
+     * @param evt The input event that triggered this change.
      * @see #isActivated() 
+     * @see #setActivated(boolean) 
+     * @see #isHoveredOver() 
+     * @see #setHoveredOver(boolean) 
+     * @see #getActivatedHyperlinkColor() 
+     * @see #setActivatedHyperlinkColor(java.awt.Color) 
+     */
+    protected void setActivated(boolean value, InputEvent evt){
+            // If the hyperlink has been activated or unactivated
+        if (setFlag(HYPERLINK_ACTIVATED_FLAG,value)){
+            repaint();
+                // If the hyperlink has been activated
+            if (value)
+                    // Notify the hyperlink listeners
+                fireHyperlinkUpdate(HyperlinkEvent.EventType.ACTIVATED,evt);
+        }
+    }
+    /**
+     * This sets whether this label is currently activated.
+     * @param value {@code true} if the label is currently activated, {@code 
+     * false} otherwise.
+     * @see #isActivated() 
+     * @see #setActivated(boolean, java.awt.event.InputEvent) 
      * @see #isHoveredOver() 
      * @see #setHoveredOver(boolean) 
      * @see #getActivatedHyperlinkColor() 
      * @see #setActivatedHyperlinkColor(java.awt.Color) 
      */
     protected void setActivated(boolean value){
-            // If the hyperlink has been activated or unactivated
-        if (setFlag(HYPERLINK_ACTIVATED_FLAG,value))
-            repaint();
+        setActivated(value,null);
     }
     /**
      * This returns whether this label is currently being hovered over by the 
@@ -420,6 +445,7 @@ public class JHyperlinkLabel extends JLabel{
      * @see #setHoveredOver(boolean) 
      * @see #isActivated() 
      * @see #setActivated(boolean) 
+     * @see #setActivated(boolean, java.awt.event.InputEvent) 
      */
     protected boolean isHoveredOver(){
         return getFlag(HYPERLINK_HOVERED_FLAG);
@@ -432,6 +458,7 @@ public class JHyperlinkLabel extends JLabel{
      * @see #isHoveredOver() 
      * @see #isActivated() 
      * @see #setActivated(boolean) 
+     * @see #setActivated(boolean, java.awt.event.InputEvent) 
      */
     protected void setHoveredOver(boolean value){
             // If the hyperlink is being hovered over
@@ -1091,6 +1118,117 @@ public class JHyperlinkLabel extends JLabel{
         copyHyperlink(getToolkit().getSystemClipboard());
     }
     /**
+     * This adds the given {@code HyperlinkListener} to this label.
+     * @param l The listener to add.
+     * @see #removeHyperlinkListener(HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     */
+    public void addHyperlinkListener(HyperlinkListener l){
+        if (l != null)          // If the listener is not null
+            listenerList.add(HyperlinkListener.class, l);
+    }
+    /**
+     * This removes the given {@code HyperlinkListener} from this label.
+     * @param l The listener to remove.
+     * @see #addHyperlinkListener(HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     */
+    public void removeHyperlinkListener(HyperlinkListener l){
+        listenerList.remove(HyperlinkListener.class, l);
+    }
+    /**
+     * This returns an array containing all the {@code HyperlinkListener}s that 
+     * have been added to this label.
+     * @return An array containing the {@code HyperlinkListener}s that have been 
+     * added, or an empty array if none have been added.
+     * @see #addHyperlinkListener(HyperlinkListener) 
+     * @see #removeHyperlinkListener(HyperlinkListener) 
+     */
+    public HyperlinkListener[] getHyperlinkListeners(){
+        return listenerList.getListeners(HyperlinkListener.class);
+    }
+    /**
+     * This notifies all the {@code HyperlinkListener}s that have been added to 
+     * this label that the hyperlink has been updated if the given {@code 
+     * HyperlinkEvent} is not null.
+     * @param evt The {@code HyperlinkEvent} to fire.
+     * @see #addHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #removeHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.net.URL, java.lang.String, java.awt.event.InputEvent) 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.awt.event.InputEvent) 
+     */
+    protected void fireHyperlinkUpdate(HyperlinkEvent evt){
+            // If the event is null
+        if (evt == null)
+            return;
+            // A for loop to go through the hyperlink listeners
+        for (HyperlinkListener l : listenerList.getListeners(
+                HyperlinkListener.class)){
+                // If the listener is not null
+            if (l != null)
+                l.hyperlinkUpdate(evt);
+        }
+    }
+    /**
+     * This notifies all the {@code HyperlinkListener}s that have been added to 
+     * this label that the hyperlink has been updated with the given event type, 
+     * URL, description, and input event.
+     * @param type The event type for the hyperlink event.
+     * @param url The affected URL, or null.
+     * @param desc The description of the link, or null. This may be useful when 
+     * attempting to form a URL resulted in a {@code MalformedURLException} 
+     * being thrown. This description provides the text used when attempting to 
+     * form the URL.
+     * @param inputEvent The {@code InputEvent} that triggered this event, or 
+     * null.
+     * @see #addHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #removeHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent) 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.awt.event.InputEvent) 
+     */
+    protected void fireHyperlinkUpdate(HyperlinkEvent.EventType type, URL url, 
+            String desc, InputEvent inputEvent){
+        fireHyperlinkUpdate(new HyperlinkEvent(this,type,url,desc,null,inputEvent));
+    }
+    /**
+     * This notifies all the {@code HyperlinkListener}s that have been added to 
+     * this label that the hyperlink has been updated with the given event type 
+     * and input event, along with the {@link #getURI() URI} set for this label.
+     * @param type The event type for the hyperlink event.
+     * @param inputEvent The {@code InputEvent} that triggered this event, or 
+     * null.
+     * @see #getURI() 
+     * @see #addHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #removeHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent) 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.net.URL, java.lang.String, java.awt.event.InputEvent) 
+     */
+    protected void fireHyperlinkUpdate(HyperlinkEvent.EventType type, 
+            InputEvent inputEvent){
+            // The URL version of the URI
+        URL url = null;
+            // A description of the link
+        String desc = null;
+            // If the URI is not null
+        if (getURI() != null){
+            try {   // Try to convert it to a URL
+                url = getURI().toURL();
+            } catch (MalformedURLException | IllegalArgumentException ex) {
+                Logger.getLogger("SwingExtended").log(Level.WARNING, 
+                        "URI cannot be converted to URL", ex);
+            }
+            desc = getURI().toString();
+        }
+        fireHyperlinkUpdate(type,url,desc,inputEvent);
+    }
+    /**
      * This returns a String representation of this JHyperlinkLabel. This method 
      * is primarily intended to be used only for debugging purposes, and the 
      * content and format of the returned String may vary between 
@@ -1101,6 +1239,7 @@ public class JHyperlinkLabel extends JLabel{
     protected String paramString(){
         return super.paramString()+
                 ",uri="+Objects.toString(getURI(), "")+
+                    // State whether the link has been visited yet
                 ((isVisited())?",visited":"")+
                 ",failureMessagesAreShown="+getFailureMessagesAreShown()+
                 ",unvisitedColor="+Objects.toString(unvisitedColor, "")+
@@ -1140,7 +1279,7 @@ public class JHyperlinkLabel extends JLabel{
         public void mouseReleased(MouseEvent evt){
                 // If the left mouse button was released
             if (SwingUtilities.isLeftMouseButton(evt))
-                setActivated(false);
+                setActivated(false,evt);
         }
         /**
          * This is for highlighting the label when hovered over.
@@ -1149,6 +1288,8 @@ public class JHyperlinkLabel extends JLabel{
         @Override
         public void mouseEntered(MouseEvent evt) {
             setHoveredOver(true);
+                // Notify the hyperlink listeners that the label has been entered
+            fireHyperlinkUpdate(HyperlinkEvent.EventType.ENTERED,evt);
         }
         /**
          * This is for un-highlighting the label when not hovered over.
@@ -1157,6 +1298,8 @@ public class JHyperlinkLabel extends JLabel{
         @Override
         public void mouseExited(MouseEvent evt) {
             setHoveredOver(false);
+                // Notify the hyperlink listeners that the label has been exited
+            fireHyperlinkUpdate(HyperlinkEvent.EventType.EXITED,evt);
         }
     }
 }
