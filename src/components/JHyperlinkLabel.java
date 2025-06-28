@@ -7,6 +7,7 @@ package components;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
@@ -17,6 +18,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 /**
@@ -1122,6 +1124,87 @@ public class JHyperlinkLabel extends JLabel{
         return listenerList.getListeners(HyperlinkListener.class);
     }
     /**
+     * This notifies all the {@code HyperlinkListener}s that have been added to 
+     * this label that the hyperlink has been updated if the given {@code 
+     * HyperlinkEvent} is not null.
+     * @param evt The {@code HyperlinkEvent} to fire.
+     * @see #addHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #removeHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.net.URL, java.lang.String, java.awt.event.InputEvent) 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.awt.event.InputEvent) 
+     */
+    protected void fireHyperlinkUpdate(HyperlinkEvent evt){
+            // If the event is null
+        if (evt == null)
+            return;
+            // A for loop to go through the hyperlink listeners
+        for (HyperlinkListener l : listenerList.getListeners(
+                HyperlinkListener.class)){
+                // If the listener is not null
+            if (l != null)
+                l.hyperlinkUpdate(evt);
+        }
+    }
+    /**
+     * This notifies all the {@code HyperlinkListener}s that have been added to 
+     * this label that the hyperlink has been updated with the given event type, 
+     * URL, description, and input event.
+     * @param type The event type for the hyperlink event.
+     * @param url The affected URL, or null.
+     * @param desc The description of the link, or null. This may be useful when 
+     * attempting to form a URL resulted in a {@code MalformedURLException} 
+     * being thrown. This description provides the text used when attempting to 
+     * form the URL.
+     * @param inputEvent The {@code InputEvent} that triggered this event, or 
+     * null.
+     * @see #addHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #removeHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent) 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.awt.event.InputEvent) 
+     */
+    protected void fireHyperlinkUpdate(HyperlinkEvent.EventType type, URL url, 
+            String desc, InputEvent inputEvent){
+        fireHyperlinkUpdate(new HyperlinkEvent(this,type,url,desc,null,inputEvent));
+    }
+    /**
+     * This notifies all the {@code HyperlinkListener}s that have been added to 
+     * this label that the hyperlink has been updated with the given event type 
+     * and input event, along with the {@link #getURI() URI} set for this label.
+     * @param type The event type for the hyperlink event.
+     * @param inputEvent The {@code InputEvent} that triggered this event, or 
+     * null.
+     * @see #getURI() 
+     * @see #addHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #removeHyperlinkListener(javax.swing.event.HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent) 
+     * @see #fireHyperlinkUpdate(javax.swing.event.HyperlinkEvent.EventType, 
+     * java.net.URL, java.lang.String, java.awt.event.InputEvent) 
+     */
+    protected void fireHyperlinkUpdate(HyperlinkEvent.EventType type, 
+            InputEvent inputEvent){
+            // The URL version of the URI
+        URL url = null;
+            // A description of the link
+        String desc = null;
+            // If the URI is not null
+        if (getURI() != null){
+            try {   // Try to convert it to a URL
+                url = getURI().toURL();
+            } catch (MalformedURLException | IllegalArgumentException ex) {
+                Logger.getLogger("SwingExtended").log(Level.WARNING, 
+                        "URI cannot be converted to URL", ex);
+            }
+            desc = getURI().toString();
+        }
+        fireHyperlinkUpdate(type,url,desc,inputEvent);
+    }
+    /**
      * This returns a String representation of this JHyperlinkLabel. This method 
      * is primarily intended to be used only for debugging purposes, and the 
      * content and format of the returned String may vary between 
@@ -1132,6 +1215,7 @@ public class JHyperlinkLabel extends JLabel{
     protected String paramString(){
         return super.paramString()+
                 ",uri="+Objects.toString(getURI(), "")+
+                    // State whether the link has been visited yet
                 ((isVisited())?",visited":"")+
                 ",failureMessagesAreShown="+getFailureMessagesAreShown()+
                 ",unvisitedColor="+Objects.toString(unvisitedColor, "")+
