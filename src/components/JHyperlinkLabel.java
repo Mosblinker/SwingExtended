@@ -1288,6 +1288,8 @@ public class JHyperlinkLabel extends JLabel{
         @Override
         public void mouseEntered(MouseEvent evt) {
             setHoveredOver(true);
+                // Notify the hyperlink listeners that the label has been entered
+            fireHyperlinkUpdate(HyperlinkEvent.EventType.ENTERED,evt);
         }
         /**
          * This is for un-highlighting the label when not hovered over.
@@ -1296,6 +1298,8 @@ public class JHyperlinkLabel extends JLabel{
         @Override
         public void mouseExited(MouseEvent evt) {
             setHoveredOver(false);
+                // Notify the hyperlink listeners that the label has been exited
+            fireHyperlinkUpdate(HyperlinkEvent.EventType.EXITED,evt);
         }
     }
 }
