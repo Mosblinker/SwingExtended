@@ -1234,8 +1234,13 @@ public class JHyperlinkLabel extends JLabel{
         public void mouseClicked(MouseEvent evt) {
                 // If there is a URI, the label is enabled, and the label was 
                 // clicked on with the left mouse button
-            if (getURI() != null && isEnabled() && SwingUtilities.isLeftMouseButton(evt))
+            if (getURI() != null && isEnabled() && SwingUtilities.isLeftMouseButton(evt)){
+                    // Notify the hyperlink listeners that the hyperlink is 
+                    // activated
+                fireHyperlinkUpdate(HyperlinkEvent.EventType.ACTIVATED,evt);
+                    // Open the hyperlink
                 openHyperlink();
+            }
         }
         /**
          * This processes the label being pressed.
