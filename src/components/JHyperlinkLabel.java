@@ -385,30 +385,30 @@ public class JHyperlinkLabel extends JLabel{
             repaint();
     }
     /**
-     * This returns whether this label is currently selected by the user.
-     * @return {@code true} if the label is currently selected, {@code false} 
+     * This returns whether this label is currently activated.
+     * @return {@code true} if the label is currently activated, {@code false} 
      * otherwise.
-     * @see #setSelected(boolean) 
+     * @see #setActivated(boolean) 
      * @see #isHoveredOver() 
      * @see #setHoveredOver(boolean) 
      * @see #getActivatedHyperlinkColor() 
      * @see #setActivatedHyperlinkColor(java.awt.Color) 
      */
-    protected boolean isSelected(){
+    protected boolean isActivated(){
         return getFlag(HYPERLINK_ACTIVATED_FLAG);
     }
     /**
-     * This sets whether this label is currently being selected by the user.
-     * @param value {@code true} if the label is currently selected, {@code 
+     * This sets whether this label is currently activated.
+     * @param value {@code true} if the label is currently activated, {@code 
      * false} otherwise.
-     * @see #isSelected() 
+     * @see #isActivated() 
      * @see #isHoveredOver() 
      * @see #setHoveredOver(boolean) 
      * @see #getActivatedHyperlinkColor() 
      * @see #setActivatedHyperlinkColor(java.awt.Color) 
      */
-    protected void setSelected(boolean value){
-            // If the hyperlink has been selected or un-selected
+    protected void setActivated(boolean value){
+            // If the hyperlink has been activated or unactivated
         if (setFlag(HYPERLINK_ACTIVATED_FLAG,value))
             repaint();
     }
@@ -418,8 +418,8 @@ public class JHyperlinkLabel extends JLabel{
      * @return {@code true} if this label is currently being hovered over, 
      * {@code false} otherwise.
      * @see #setHoveredOver(boolean) 
-     * @see #isSelected() 
-     * @see #setSelected(boolean) 
+     * @see #isActivated() 
+     * @see #setActivated(boolean) 
      */
     protected boolean isHoveredOver(){
         return getFlag(HYPERLINK_HOVERED_FLAG);
@@ -430,8 +430,8 @@ public class JHyperlinkLabel extends JLabel{
      * @param value {@code true} if this label is currently being hovered over, 
      * {@code false} otherwise.
      * @see #isHoveredOver() 
-     * @see #isSelected() 
-     * @see #setSelected(boolean) 
+     * @see #isActivated() 
+     * @see #setActivated(boolean) 
      */
     protected void setHoveredOver(boolean value){
             // If the hyperlink is being hovered over
@@ -651,7 +651,7 @@ public class JHyperlinkLabel extends JLabel{
      * This returns the color to use as the foreground color of the text when 
      * there's a hyperlink set and the hyperlink is activated.
      * @return The color for activated hyperlinks. If no color has been set for 
-     * selected hyperlinks, then {@link #ACTIVATED_HYPERLINK_COLOR 
+     * activated hyperlinks, then {@link #ACTIVATED_HYPERLINK_COLOR 
      * ACTIVATED_HYPERLINK_COLOR} is returned.
      * @see #setActivatedHyperlinkColor(java.awt.Color) 
      * @see #isActivatedHyperlinkColorSet() 
@@ -686,7 +686,7 @@ public class JHyperlinkLabel extends JLabel{
             firePropertyChange(ACTIVATED_HYPERLINK_COLOR_PROPERTY_CHANGED,old,
                     color);
                 // If the URI is set and the hyperlink is currently activated
-            if (getURI() != null && isSelected())
+            if (getURI() != null && isActivated())
                 repaint();
         }
     }
@@ -712,8 +712,8 @@ public class JHyperlinkLabel extends JLabel{
      * @see #setURI(java.net.URI) 
      * @see #isVisited() 
      * @see #setVisited(boolean) 
-     * @see #isSelected() 
-     * @see #setSelected(boolean) 
+     * @see #isActivated() 
+     * @see #setActivated(boolean) 
      * @see #isEnabled() 
      * @see #setEnabled(boolean) 
      * @see #getUnvisitedHyperlinkColor() 
@@ -728,7 +728,7 @@ public class JHyperlinkLabel extends JLabel{
         if (getURI() == null || !isEnabled())
             return null;
             // If the hyperlink is currently activated
-        if (isSelected())
+        if (isActivated())
             return getActivatedHyperlinkColor();
             // If the hyperlink has been visited
         if (isVisited())
@@ -1130,7 +1130,7 @@ public class JHyperlinkLabel extends JLabel{
         public void mousePressed(MouseEvent evt){
                 // If the label was pressed with the left mouse button
             if (SwingUtilities.isLeftMouseButton(evt))
-                setSelected(true);
+                setActivated(true);
         }
         /**
          * This processes the label being released.
@@ -1140,7 +1140,7 @@ public class JHyperlinkLabel extends JLabel{
         public void mouseReleased(MouseEvent evt){
                 // If the left mouse button was released
             if (SwingUtilities.isLeftMouseButton(evt))
-                setSelected(false);
+                setActivated(false);
         }
         /**
          * This is for highlighting the label when hovered over.
