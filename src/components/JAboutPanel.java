@@ -903,13 +903,14 @@ public class JAboutPanel extends JPanel{
      * hyperlinks when there's a hyperlink set and the label is being clicked 
      * on.
      * @return The color for selected hyperlinks. If no color has been set for 
-     * selected hyperlinks, then {@link JHyperlinkLabel#SELECTED_HYPERLINK_COLOR 
-     * SELECTED_HYPERLINK_COLOR} is returned.
+     * selected hyperlinks, then {@link 
+     * JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR ACTIVATED_HYPERLINK_COLOR} is 
+     * returned.
      * @see #setSelectedHyperlinkColor(java.awt.Color) 
      * @see #isSelectedHyperlinkColorSet() 
      * @see #getProgramWebsiteURI() 
      * @see #setProgramWebsiteURI(java.net.URI) 
-     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR
      * @see JHyperlinkLabel#getSelectedHyperlinkColor() 
      */
     public Color getSelectedHyperlinkColor(){
@@ -920,13 +921,13 @@ public class JAboutPanel extends JPanel{
      * hyperlinks when there's a hyperlink set and the label is being clicked 
      * on.
      * @param color The color for selected hyperlinks. If this is null, then 
-     * {@link JHyperlinkLabel#SELECTED_HYPERLINK_COLOR SELECTED_HYPERLINK_COLOR} 
-     * will be used instead.
+     * {@link JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR 
+     * ACTIVATED_HYPERLINK_COLOR} will be used instead.
      * @see #getSelectedHyperlinkColor
      * @see #isSelectedHyperlinkColorSet() 
      * @see #getProgramWebsiteURI() 
      * @see #setProgramWebsiteURI(java.net.URI) 
-     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR
      * @see JHyperlinkLabel#setSelectedHyperlinkColor(java.awt.Color) 
      */
     public void setSelectedHyperlinkColor(Color color){
@@ -941,7 +942,7 @@ public class JAboutPanel extends JPanel{
      * @see #setSelectedHyperlinkColor(java.awt.Color) 
      * @see #getProgramWebsiteURI() 
      * @see #setProgramWebsiteURI(java.net.URI) 
-     * @see JHyperlinkLabel#SELECTED_HYPERLINK_COLOR
+     * @see JHyperlinkLabel#ACTIVATED_HYPERLINK_COLOR
      * @see JHyperlinkLabel#isSelectedHyperlinkColorSet() 
      */
     public boolean isSelectedHyperlinkColorSet(){
