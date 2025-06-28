@@ -1606,7 +1606,7 @@ public class JAboutPanel extends JPanel{
                 case(JHyperlinkLabel.FAILURE_MESSAGES_SHOWN_PROPERTY_CHANGED):
                 case(JHyperlinkLabel.UNVISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
                 case(JHyperlinkLabel.VISITED_HYPERLINK_COLOR_PROPERTY_CHANGED):
-                case(JHyperlinkLabel.SELECTED_HYPERLINK_COLOR_PROPERTY_CHANGED):
+                case(JHyperlinkLabel.ACTIVATED_HYPERLINK_COLOR_PROPERTY_CHANGED):
                     firePropertyChange(evt.getPropertyName(),evt.getOldValue(),
                             evt.getNewValue());
                     break;
