@@ -83,79 +83,80 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
     private static final int PROPERTY_hierarchyListeners = 53;
     private static final int PROPERTY_horizontalAlignment = 54;
     private static final int PROPERTY_horizontalTextPosition = 55;
-    private static final int PROPERTY_icon = 56;
-    private static final int PROPERTY_iconTextGap = 57;
-    private static final int PROPERTY_ignoreRepaint = 58;
-    private static final int PROPERTY_inheritsPopupMenu = 59;
-    private static final int PROPERTY_inputContext = 60;
-    private static final int PROPERTY_inputMap = 61;
-    private static final int PROPERTY_inputMethodListeners = 62;
-    private static final int PROPERTY_inputMethodRequests = 63;
-    private static final int PROPERTY_inputVerifier = 64;
-    private static final int PROPERTY_insets = 65;
-    private static final int PROPERTY_keyListeners = 66;
-    private static final int PROPERTY_labelFor = 67;
-    private static final int PROPERTY_layout = 68;
-    private static final int PROPERTY_lightweight = 69;
-    private static final int PROPERTY_locale = 70;
-    private static final int PROPERTY_location = 71;
-    private static final int PROPERTY_locationOnScreen = 72;
-    private static final int PROPERTY_managingFocus = 73;
-    private static final int PROPERTY_maximumSize = 74;
-    private static final int PROPERTY_maximumSizeSet = 75;
-    private static final int PROPERTY_minimumSize = 76;
-    private static final int PROPERTY_minimumSizeSet = 77;
-    private static final int PROPERTY_mixingCutoutShape = 78;
-    private static final int PROPERTY_mouseListeners = 79;
-    private static final int PROPERTY_mouseMotionListeners = 80;
-    private static final int PROPERTY_mousePosition = 81;
-    private static final int PROPERTY_mouseWheelListeners = 82;
-    private static final int PROPERTY_name = 83;
-    private static final int PROPERTY_nextFocusableComponent = 84;
-    private static final int PROPERTY_opaque = 85;
-    private static final int PROPERTY_optimizedDrawingEnabled = 86;
-    private static final int PROPERTY_paintingForPrint = 87;
-    private static final int PROPERTY_paintingTile = 88;
-    private static final int PROPERTY_parent = 89;
-    private static final int PROPERTY_preferredSize = 90;
-    private static final int PROPERTY_preferredSizeSet = 91;
-    private static final int PROPERTY_propertyChangeListeners = 92;
-    private static final int PROPERTY_registeredKeyStrokes = 93;
-    private static final int PROPERTY_requestFocusEnabled = 94;
-    private static final int PROPERTY_rootPane = 95;
-    private static final int PROPERTY_showing = 96;
-    private static final int PROPERTY_size = 97;
-    private static final int PROPERTY_text = 98;
-    private static final int PROPERTY_toolkit = 99;
-    private static final int PROPERTY_toolTipText = 100;
-    private static final int PROPERTY_toolTipTextSet = 101;
-    private static final int PROPERTY_topLevelAncestor = 102;
-    private static final int PROPERTY_transferHandler = 103;
-    private static final int PROPERTY_treeLock = 104;
-    private static final int PROPERTY_UI = 105;
-    private static final int PROPERTY_UIClassID = 106;
-    private static final int PROPERTY_unvisitedHyperlinkColor = 107;
-    private static final int PROPERTY_unvisitedHyperlinkColorSet = 108;
-    private static final int PROPERTY_URI = 109;
-    private static final int PROPERTY_valid = 110;
-    private static final int PROPERTY_validateRoot = 111;
-    private static final int PROPERTY_verifyInputWhenFocusTarget = 112;
-    private static final int PROPERTY_verticalAlignment = 113;
-    private static final int PROPERTY_verticalTextPosition = 114;
-    private static final int PROPERTY_vetoableChangeListeners = 115;
-    private static final int PROPERTY_visible = 116;
-    private static final int PROPERTY_visibleRect = 117;
-    private static final int PROPERTY_visited = 118;
-    private static final int PROPERTY_visitedHyperlinkColor = 119;
-    private static final int PROPERTY_visitedHyperlinkColorSet = 120;
-    private static final int PROPERTY_width = 121;
-    private static final int PROPERTY_x = 122;
-    private static final int PROPERTY_y = 123;
+    private static final int PROPERTY_hyperlinkListeners = 56;
+    private static final int PROPERTY_icon = 57;
+    private static final int PROPERTY_iconTextGap = 58;
+    private static final int PROPERTY_ignoreRepaint = 59;
+    private static final int PROPERTY_inheritsPopupMenu = 60;
+    private static final int PROPERTY_inputContext = 61;
+    private static final int PROPERTY_inputMap = 62;
+    private static final int PROPERTY_inputMethodListeners = 63;
+    private static final int PROPERTY_inputMethodRequests = 64;
+    private static final int PROPERTY_inputVerifier = 65;
+    private static final int PROPERTY_insets = 66;
+    private static final int PROPERTY_keyListeners = 67;
+    private static final int PROPERTY_labelFor = 68;
+    private static final int PROPERTY_layout = 69;
+    private static final int PROPERTY_lightweight = 70;
+    private static final int PROPERTY_locale = 71;
+    private static final int PROPERTY_location = 72;
+    private static final int PROPERTY_locationOnScreen = 73;
+    private static final int PROPERTY_managingFocus = 74;
+    private static final int PROPERTY_maximumSize = 75;
+    private static final int PROPERTY_maximumSizeSet = 76;
+    private static final int PROPERTY_minimumSize = 77;
+    private static final int PROPERTY_minimumSizeSet = 78;
+    private static final int PROPERTY_mixingCutoutShape = 79;
+    private static final int PROPERTY_mouseListeners = 80;
+    private static final int PROPERTY_mouseMotionListeners = 81;
+    private static final int PROPERTY_mousePosition = 82;
+    private static final int PROPERTY_mouseWheelListeners = 83;
+    private static final int PROPERTY_name = 84;
+    private static final int PROPERTY_nextFocusableComponent = 85;
+    private static final int PROPERTY_opaque = 86;
+    private static final int PROPERTY_optimizedDrawingEnabled = 87;
+    private static final int PROPERTY_paintingForPrint = 88;
+    private static final int PROPERTY_paintingTile = 89;
+    private static final int PROPERTY_parent = 90;
+    private static final int PROPERTY_preferredSize = 91;
+    private static final int PROPERTY_preferredSizeSet = 92;
+    private static final int PROPERTY_propertyChangeListeners = 93;
+    private static final int PROPERTY_registeredKeyStrokes = 94;
+    private static final int PROPERTY_requestFocusEnabled = 95;
+    private static final int PROPERTY_rootPane = 96;
+    private static final int PROPERTY_showing = 97;
+    private static final int PROPERTY_size = 98;
+    private static final int PROPERTY_text = 99;
+    private static final int PROPERTY_toolkit = 100;
+    private static final int PROPERTY_toolTipText = 101;
+    private static final int PROPERTY_toolTipTextSet = 102;
+    private static final int PROPERTY_topLevelAncestor = 103;
+    private static final int PROPERTY_transferHandler = 104;
+    private static final int PROPERTY_treeLock = 105;
+    private static final int PROPERTY_UI = 106;
+    private static final int PROPERTY_UIClassID = 107;
+    private static final int PROPERTY_unvisitedHyperlinkColor = 108;
+    private static final int PROPERTY_unvisitedHyperlinkColorSet = 109;
+    private static final int PROPERTY_URI = 110;
+    private static final int PROPERTY_valid = 111;
+    private static final int PROPERTY_validateRoot = 112;
+    private static final int PROPERTY_verifyInputWhenFocusTarget = 113;
+    private static final int PROPERTY_verticalAlignment = 114;
+    private static final int PROPERTY_verticalTextPosition = 115;
+    private static final int PROPERTY_vetoableChangeListeners = 116;
+    private static final int PROPERTY_visible = 117;
+    private static final int PROPERTY_visibleRect = 118;
+    private static final int PROPERTY_visited = 119;
+    private static final int PROPERTY_visitedHyperlinkColor = 120;
+    private static final int PROPERTY_visitedHyperlinkColorSet = 121;
+    private static final int PROPERTY_width = 122;
+    private static final int PROPERTY_x = 123;
+    private static final int PROPERTY_y = 124;
 
     // Property array 
     /*lazy PropertyDescriptor*/
     private static PropertyDescriptor[] getPdescriptor(){
-        PropertyDescriptor[] properties = new PropertyDescriptor[124];
+        PropertyDescriptor[] properties = new PropertyDescriptor[125];
     
         try {
             properties[PROPERTY_accessibleContext] = new PropertyDescriptor ( "accessibleContext", components.JHyperlinkLabel.class, "getAccessibleContext", null ); // NOI18N
@@ -276,6 +277,8 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_horizontalTextPosition] = new PropertyDescriptor ( "horizontalTextPosition", components.JHyperlinkLabel.class, "getHorizontalTextPosition", "setHorizontalTextPosition" ); // NOI18N
             properties[PROPERTY_horizontalTextPosition].setShortDescription ( "The horizontal position of the label's text, relative to its image." );
             properties[PROPERTY_horizontalTextPosition].setPropertyEditorClass ( beans.HorizontalAlignmentEditor.class );
+            properties[PROPERTY_hyperlinkListeners] = new PropertyDescriptor ( "hyperlinkListeners", components.JHyperlinkLabel.class, "getHyperlinkListeners", null ); // NOI18N
+            properties[PROPERTY_hyperlinkListeners].setHidden ( true );
             properties[PROPERTY_icon] = new PropertyDescriptor ( "icon", components.JHyperlinkLabel.class, "getIcon", "setIcon" ); // NOI18N
             properties[PROPERTY_icon].setPreferred ( true );
             properties[PROPERTY_icon].setShortDescription ( "The icon this component will display." );
@@ -445,18 +448,19 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
     private static final int EVENT_focusListener = 3;
     private static final int EVENT_hierarchyBoundsListener = 4;
     private static final int EVENT_hierarchyListener = 5;
-    private static final int EVENT_inputMethodListener = 6;
-    private static final int EVENT_keyListener = 7;
-    private static final int EVENT_mouseListener = 8;
-    private static final int EVENT_mouseMotionListener = 9;
-    private static final int EVENT_mouseWheelListener = 10;
-    private static final int EVENT_propertyChangeListener = 11;
-    private static final int EVENT_vetoableChangeListener = 12;
+    private static final int EVENT_hyperlinkListener = 6;
+    private static final int EVENT_inputMethodListener = 7;
+    private static final int EVENT_keyListener = 8;
+    private static final int EVENT_mouseListener = 9;
+    private static final int EVENT_mouseMotionListener = 10;
+    private static final int EVENT_mouseWheelListener = 11;
+    private static final int EVENT_propertyChangeListener = 12;
+    private static final int EVENT_vetoableChangeListener = 13;
 
     // EventSet array
     /*lazy EventSetDescriptor*/
     private static EventSetDescriptor[] getEdescriptor(){
-        EventSetDescriptor[] eventSets = new EventSetDescriptor[13];
+        EventSetDescriptor[] eventSets = new EventSetDescriptor[14];
     
         try {
             eventSets[EVENT_ancestorListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "ancestorListener", javax.swing.event.AncestorListener.class, new String[] {"ancestorAdded", "ancestorRemoved", "ancestorMoved"}, "addAncestorListener", "removeAncestorListener" ); // NOI18N
@@ -465,6 +469,7 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             eventSets[EVENT_focusListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "focusListener", java.awt.event.FocusListener.class, new String[] {"focusGained", "focusLost"}, "addFocusListener", "removeFocusListener" ); // NOI18N
             eventSets[EVENT_hierarchyBoundsListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "hierarchyBoundsListener", java.awt.event.HierarchyBoundsListener.class, new String[] {"ancestorMoved", "ancestorResized"}, "addHierarchyBoundsListener", "removeHierarchyBoundsListener" ); // NOI18N
             eventSets[EVENT_hierarchyListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "hierarchyListener", java.awt.event.HierarchyListener.class, new String[] {"hierarchyChanged"}, "addHierarchyListener", "removeHierarchyListener" ); // NOI18N
+            eventSets[EVENT_hyperlinkListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "hyperlinkListener", javax.swing.event.HyperlinkListener.class, new String[] {"hyperlinkUpdate"}, "addHyperlinkListener", "removeHyperlinkListener" ); // NOI18N
             eventSets[EVENT_inputMethodListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "inputMethodListener", java.awt.event.InputMethodListener.class, new String[] {"inputMethodTextChanged", "caretPositionChanged"}, "addInputMethodListener", "removeInputMethodListener" ); // NOI18N
             eventSets[EVENT_keyListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "keyListener", java.awt.event.KeyListener.class, new String[] {"keyTyped", "keyPressed", "keyReleased"}, "addKeyListener", "removeKeyListener" ); // NOI18N
             eventSets[EVENT_mouseListener] = new EventSetDescriptor ( components.JHyperlinkLabel.class, "mouseListener", java.awt.event.MouseListener.class, new String[] {"mouseClicked", "mousePressed", "mouseReleased", "mouseEntered", "mouseExited"}, "addMouseListener", "removeMouseListener" ); // NOI18N
