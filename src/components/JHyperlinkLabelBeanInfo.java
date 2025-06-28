@@ -360,11 +360,6 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_requestFocusEnabled] = new PropertyDescriptor ( "requestFocusEnabled", components.JHyperlinkLabel.class, "isRequestFocusEnabled", "setRequestFocusEnabled" ); // NOI18N
             properties[PROPERTY_rootPane] = new PropertyDescriptor ( "rootPane", components.JHyperlinkLabel.class, "getRootPane", null ); // NOI18N
             properties[PROPERTY_rootPane].setHidden ( true );
-            properties[PROPERTY_selectedHyperlinkColor] = new PropertyDescriptor ( "selectedHyperlinkColor", components.JHyperlinkLabel.class, "getSelectedHyperlinkColor", "setSelectedHyperlinkColor" ); // NOI18N
-            properties[PROPERTY_selectedHyperlinkColor].setShortDescription ( "The color to use for the hyperlink when it is selected." );
-            properties[PROPERTY_selectedHyperlinkColor].setBound ( true );
-            properties[PROPERTY_selectedHyperlinkColorSet] = new PropertyDescriptor ( "selectedHyperlinkColorSet", components.JHyperlinkLabel.class, "isSelectedHyperlinkColorSet", null ); // NOI18N
-            properties[PROPERTY_selectedHyperlinkColorSet].setHidden ( true );
             properties[PROPERTY_showing] = new PropertyDescriptor ( "showing", components.JHyperlinkLabel.class, "isShowing", null ); // NOI18N
             properties[PROPERTY_showing].setHidden ( true );
             properties[PROPERTY_size] = new PropertyDescriptor ( "size", components.JHyperlinkLabel.class, "getSize", "setSize" ); // NOI18N
