@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.event.HyperlinkListener;
 
 /**
  * This is a label that acts as a hyperlink to a website or resource. The user 
@@ -1083,6 +1084,36 @@ public class JHyperlinkLabel extends JLabel{
      */
     public void copyHyperlink(){
         copyHyperlink(getToolkit().getSystemClipboard());
+    }
+    /**
+     * This adds the given {@code HyperlinkListener} to this label.
+     * @param l The listener to add.
+     * @see #removeHyperlinkListener(HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     */
+    public void addHyperlinkListener(HyperlinkListener l){
+        if (l != null)          // If the listener is not null
+            listenerList.add(HyperlinkListener.class, l);
+    }
+    /**
+     * This removes the given {@code HyperlinkListener} from this label.
+     * @param l The listener to remove.
+     * @see #addHyperlinkListener(HyperlinkListener) 
+     * @see #getHyperlinkListeners() 
+     */
+    public void removeHyperlinkListener(HyperlinkListener l){
+        listenerList.remove(HyperlinkListener.class, l);
+    }
+    /**
+     * This returns an array containing all the {@code HyperlinkListener}s that 
+     * have been added to this label.
+     * @return An array containing the {@code HyperlinkListener}s that have been 
+     * added, or an empty array if none have been added.
+     * @see #addHyperlinkListener(HyperlinkListener) 
+     * @see #removeHyperlinkListener(HyperlinkListener) 
+     */
+    public HyperlinkListener[] getActionListeners(){
+        return listenerList.getListeners(HyperlinkListener.class);
     }
     /**
      * This returns a String representation of this JHyperlinkLabel. This method 
