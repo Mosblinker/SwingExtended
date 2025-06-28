@@ -743,6 +743,14 @@ public class JAboutPanel extends JPanel{
     // TODO: Add more credit methods
     
     
+    public String getCreditsContentType(){
+        return creditsTextPane.getContentType();
+    }
+    
+    public void setCreditsContentType(String type){
+        creditsTextPane.setContentType(type);
+    }
+    
     public StyledDocument getCreditsDocument(){
         return creditsTextPane.getStyledDocument();
     }
