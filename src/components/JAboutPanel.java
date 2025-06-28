@@ -738,6 +738,11 @@ public class JAboutPanel extends JPanel{
         creditsTextPane.setText(text);
     }
     
+    
+    
+    // TODO: Add more credit methods
+    
+    
     public StyledDocument getCreditsDocument(){
         return creditsTextPane.getStyledDocument();
     }
@@ -777,9 +782,6 @@ public class JAboutPanel extends JPanel{
     public void setCreditsInheritsPopupMenu(boolean value){
         creditsTextPane.setInheritsPopupMenu(value);
     }
-    
-    // TODO: Add more credit methods
-    
     /**
      * This returns the color to use as the foreground color of the text for 
      * hyperlinks when there's a hyperlink set and that hyperlink has not been 
