@@ -221,6 +221,7 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_enabled].setBound ( true );
             properties[PROPERTY_failureMessagesAreShown] = new PropertyDescriptor ( "failureMessagesAreShown", components.JHyperlinkLabel.class, "getFailureMessagesAreShown", "setFailureMessagesAreShown" ); // NOI18N
             properties[PROPERTY_failureMessagesAreShown].setShortDescription ( "Whether error messages will be shown to the user if and when this fails to open the hyperlink." );
+            properties[PROPERTY_failureMessagesAreShown].setBound ( true );
             properties[PROPERTY_focusable] = new PropertyDescriptor ( "focusable", components.JHyperlinkLabel.class, "isFocusable", "setFocusable" ); // NOI18N
             properties[PROPERTY_focusCycleRoot] = new PropertyDescriptor ( "focusCycleRoot", components.JHyperlinkLabel.class, "isFocusCycleRoot", "setFocusCycleRoot" ); // NOI18N
             properties[PROPERTY_focusCycleRootAncestor] = new PropertyDescriptor ( "focusCycleRootAncestor", components.JHyperlinkLabel.class, "getFocusCycleRootAncestor", null ); // NOI18N
@@ -417,6 +418,7 @@ public class JHyperlinkLabelBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_visited] = new PropertyDescriptor ( "visited", components.JHyperlinkLabel.class, "isVisited", "setVisited" ); // NOI18N
             properties[PROPERTY_visited].setPreferred ( true );
             properties[PROPERTY_visited].setShortDescription ( "This indicates whether the hyperlink has been visited." );
+            properties[PROPERTY_visited].setBound ( true );
             properties[PROPERTY_visitedHyperlinkColor] = new PropertyDescriptor ( "visitedHyperlinkColor", components.JHyperlinkLabel.class, "getVisitedHyperlinkColor", "setVisitedHyperlinkColor" ); // NOI18N
             properties[PROPERTY_visitedHyperlinkColor].setShortDescription ( "The color to use for visited hyperlinks." );
             properties[PROPERTY_visitedHyperlinkColor].setBound ( true );
