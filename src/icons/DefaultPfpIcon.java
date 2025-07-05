@@ -77,22 +77,29 @@ public class DefaultPfpIcon implements Icon2D{
         double centerX = getIconWidth()/2.0;
             // This is the y-coordinate of the center of the icon
         double centerY = getIconHeight()/2.0;
+            // Get the smaller of the width and height
+        double size = Math.min(getIconWidth(),getIconHeight());
+            // This gets the radius for the head
+        double r = size/5.0;
             // Create the head shape
         head = new Ellipse2D.Double();
-            // Head is in the horizontal center, is 40x40, and the bottom 
+            // Head is in the horizontal center, is r x r, and the bottom 
             // of the head is at the vertical center
-        head.setFrameFromCenter(centerX, centerY-20, centerX-20, centerY);
+        head.setFrameFromCenter(centerX, centerY-r, centerX-r, centerY);
             // Create the body ellipse
         bodyEllipse = new Ellipse2D.Double();
-            // This ellipse is 10 pixels below the center, is half the width 
-            // of the icon, and is 35 pixels tall
-        bodyEllipse.setFrameFromCenter(centerX, centerY+27.5, 
-                getIconWidth()/4.0, centerY+10);
+            // Get the y-coordinate for the top of the body
+        double y = centerY+(getIconHeight()/10.0);
+            // This ellipse is height/10 pixels below the center, is 1.25 times 
+            // the width of the head, and is 0.35 the height of the icon
+        bodyEllipse.setFrameFromCenter(centerX, y+(getIconHeight()*0.175), 
+               size/4.0, y);
             // Create the body rectangle
         bodyRect = new Rectangle2D.Double();
             // This rectangle is from the center-left of the ellipse to the 
             // right of the ellipse and bottom of the icon
-        bodyRect.setFrameFromDiagonal(bodyEllipse.getMinX(), bodyEllipse.getCenterY(), 
+        bodyRect.setFrameFromDiagonal(
+                bodyEllipse.getMinX(), bodyEllipse.getCenterY(), 
                 bodyEllipse.getMaxX(), getIconHeight());
     }
     @Override
