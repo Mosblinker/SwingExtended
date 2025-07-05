@@ -18,9 +18,13 @@ public class DefaultPfpIcon implements Icon2D{
      */
     private Ellipse2D head = null;
     /**
-     * This is the shape used to draw the body.
+     * This is the ellipse used to draw the body.
      */
-    private Area body = null;
+    private Ellipse2D bodyEllipse = null;
+    /**
+     * This is the rectangle used to draw the body.
+     */
+    private Rectangle2D bodyRect = null;
     /**
      * This is the background color for the icon.
      */
@@ -73,30 +77,23 @@ public class DefaultPfpIcon implements Icon2D{
         double centerX = getIconWidth()/2.0;
             // This is the y-coordinate of the center of the icon
         double centerY = getIconHeight()/2.0;
-            // If the head has not been initialized yet
-        if (head == null){
-            head = new Ellipse2D.Double();
-                // Head is in the horizontal center, is 40x40, and the bottom 
-                // of the head is at the vertical center
-            head.setFrameFromCenter(centerX, centerY-20, centerX-20, centerY);
-        }   // If the body shape has not been initialized yet
-        if (body == null){
-                // Create an ellipse object to use to create the body
-            Ellipse2D ellipse = new Ellipse2D.Double();
-                // This ellipse is 10 pixels below the center, is half the width 
-                // of the icon, and is 30 pixels tall
-            ellipse.setFrameFromCenter(centerX, centerY+25, getIconWidth()/4.0, 
-                    centerY+10);
-                // Create a rectangle object to use to create the body
-            Rectangle2D rect = new Rectangle2D.Double();
-                // This rectangle is from the center-left of the ellipse to the 
-                // right of the ellipse and bottom of the icon
-            rect.setFrameFromDiagonal(ellipse.getMinX(), ellipse.getCenterY(), 
-                    ellipse.getMaxX(), getIconHeight());
-                // Create the body shape using the ellipse and rectangle
-            body = new Area(ellipse);
-            body.add(new Area(rect));
-        }
+            // Create the head shape
+        head = new Ellipse2D.Double();
+            // Head is in the horizontal center, is 40x40, and the bottom 
+            // of the head is at the vertical center
+        head.setFrameFromCenter(centerX, centerY-20, centerX-20, centerY);
+            // Create the body ellipse
+        bodyEllipse = new Ellipse2D.Double();
+            // This ellipse is 10 pixels below the center, is half the width 
+            // of the icon, and is 30 pixels tall
+        bodyEllipse.setFrameFromCenter(centerX, centerY+25, 
+                getIconWidth()/4.0, centerY+10);
+            // Create the body rectangle
+        bodyRect = new Rectangle2D.Double();
+            // This rectangle is from the center-left of the ellipse to the 
+            // right of the ellipse and bottom of the icon
+        bodyRect.setFrameFromDiagonal(bodyEllipse.getMinX(), bodyEllipse.getCenterY(), 
+                bodyEllipse.getMaxX(), getIconHeight());
     }
     @Override
     public void paintIcon2D(Component c, Graphics2D g, int x, int y) {
@@ -117,8 +114,10 @@ public class DefaultPfpIcon implements Icon2D{
         g.setColor(fg);
             // Draw the head
         g.fill(head);
-            // Draw the body
-        g.fill(body);
+            // Draw the body ellipse
+        g.fill(bodyEllipse);
+            // Draw the body rectangle
+        g.fill(bodyRect);
     }
     @Override
     public int getIconWidth() {
