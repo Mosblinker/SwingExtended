@@ -196,4 +196,16 @@ public class DefaultPfpIcon implements Icon2D{
     public int getIconHeight() {
         return height;
     }
+    /**
+     * This returns a String containing parameters for this DefaultPfpIcon.
+     * @return A String with the parameters for this icon.
+     */
+    protected String paramString(){
+        return getIconWidth()+"x"+getIconHeight()+
+                ",color="+getBackground();
+    }
+    @Override
+    public String toString(){
+        return getClass().getName()+"["+paramString()+"]";
+    }
 }
