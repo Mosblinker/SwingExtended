@@ -202,7 +202,7 @@ public class DefaultPfpIcon implements Icon2D{
      */
     protected String paramString(){
         return getIconWidth()+"x"+getIconHeight()+
-                ",color="+getBackground();
+                ",color="+getColor();
     }
     @Override
     public String toString(){
