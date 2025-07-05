@@ -128,7 +128,7 @@ public class DefaultPfpIcon implements Icon2D{
      * This returns the background color for this icon.
      * @return The background color for this icon.
      */
-    public Color getBackground(){
+    public Color getColor(){
         return bg;
     }
     /**
