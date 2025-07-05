@@ -34,14 +34,33 @@ public class DefaultPfpIcon implements Icon2D{
      */
     private Color fg;
     /**
-     * This constructs a DefaultPfpIcon with the given background color.
+     * This is the width of the icon.
+     */
+    private int width;
+    /**
+     * This is the height of the icon.
+     */
+    private int height;
+    /**
+     * This constructs a DefaultPfpIcon with the given size and background 
+     * color.
+     * @param width The width of the icon.
+     * @param height The height of the icon.
      * @param color The background color for the icon (cannot be null).
      * @throws NullPointerException If the given background color is null.
+     * @throws IllegalArgumentException If either the width or height are less 
+     * than or equal to zero.
      */
-    public DefaultPfpIcon(Color color){
+    public DefaultPfpIcon(int width, int height, Color color){
+            // If either the given width or height are less than or equal to zero
+        if (width <= 0 || height <= 0)
+            throw new IllegalArgumentException("Width and height must be "
+                    + "greater than zero (width="+ width+",height-="+height+")");
             // If the given color is null
         if (color == null)
             throw new NullPointerException();
+        this.width = width;
+        this.height = height;
         this.bg = color;
         fg = Color.WHITE;
             // Get the hue, saturation, and brightness of the background color
@@ -55,12 +74,55 @@ public class DefaultPfpIcon implements Icon2D{
         constructShapes();
     }
     /**
-     * This constructs a DefaultPfpIcon with a {@link Color#GRAY gray} 
+     * This constructs a DefaultPfpIcon with the given size and a {@link 
+     * Color#GRAY gray} background.
+     * @param width The width of the icon.
+     * @param height The height of the icon.
+     * @throws IllegalArgumentException If either the width or height are less 
+     * than or equal to zero.
+     * @see Color#GRAY
+     */
+    public DefaultPfpIcon(int width, int height){
+        this(width,height,Color.GRAY);
+    }
+    /**
+     * This constructs a DefaultPfpIcon with the given size and background 
+     * color.
+     * @param size The width and height of the icon.
+     * @param color The background color for the icon (cannot be null).
+     * @throws NullPointerException If the given background color is null.
+     * @throws IllegalArgumentException If the size is less than or equal to 
+     * zero.
+     */
+    public DefaultPfpIcon(int size, Color color){
+        this(size,size,color);
+    }
+    /**
+     * This constructs a DefaultPfpIcon with the given size and a {@link 
+     * Color#GRAY gray} background.
+     * @param size The width and height of the icon.
+     * @throws IllegalArgumentException If the size is less than or equal to 
+     * zero.
+     * @see Color#GRAY
+     */
+    public DefaultPfpIcon(int size){
+        this(size,size);
+    }
+    /**
+     * This constructs a 100x100 DefaultPfpIcon with the given background color.
+     * @param color The background color for the icon (cannot be null).
+     * @throws NullPointerException If the given background color is null.
+     */
+    public DefaultPfpIcon(Color color){
+        this(100,color);
+    }
+    /**
+     * This constructs a 100x100 DefaultPfpIcon with a {@link Color#GRAY gray} 
      * background.
      * @see Color#GRAY
      */
     public DefaultPfpIcon(){
-        this(Color.GRAY);
+        this(100,Color.GRAY);
     }
     /**
      * This returns the background color for this icon.
@@ -128,10 +190,10 @@ public class DefaultPfpIcon implements Icon2D{
     }
     @Override
     public int getIconWidth() {
-        return 100;
+        return width;
     }
     @Override
     public int getIconHeight() {
-        return 100;
+        return height;
     }
 }
