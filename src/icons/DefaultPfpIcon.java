@@ -85,8 +85,8 @@ public class DefaultPfpIcon implements Icon2D{
             // Create the body ellipse
         bodyEllipse = new Ellipse2D.Double();
             // This ellipse is 10 pixels below the center, is half the width 
-            // of the icon, and is 30 pixels tall
-        bodyEllipse.setFrameFromCenter(centerX, centerY+25, 
+            // of the icon, and is 35 pixels tall
+        bodyEllipse.setFrameFromCenter(centerX, centerY+27.5, 
                 getIconWidth()/4.0, centerY+10);
             // Create the body rectangle
         bodyRect = new Rectangle2D.Double();
