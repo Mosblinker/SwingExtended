@@ -1431,4 +1431,46 @@ public class JHyperlinkLabel extends JLabel{
                 getHyperlinkLabel().copyHyperlink(clipboard);
         }
     }
+    /**
+     * This is an action that opens the link in the user's default browser.
+     * @see #openHyperlink() 
+     */
+    public class OpenLinkAction extends HyperlinkAction{
+        /**
+         * This creates an {@code OpenLinkAction}.
+         */
+        public OpenLinkAction(){
+            super();
+        }
+        /**
+         * This creates an {@code OpenLinkAction} with the given name.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         */
+        public OpenLinkAction(String name){
+            super(name);
+        }
+        /**
+         * This creates an {@code OpenLinkAction} with the given name and small 
+         * icon.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param icon The small icon ({@code Action.SMALL_ICON}) for the 
+         * action, or null.
+         */
+        public OpenLinkAction(String name, Icon icon){
+            super(name,icon);
+        }
+        /**
+         * This is invoked when an action occurs. This will open the link in the 
+         * user's default browser.
+         * @param evt The event to be processed.
+         * @throws IllegalStateException If the URI is not set.
+         * @see #getURI() 
+         * @see #getHyperlinkLabel() 
+         * @see JHyperlinkLabel#openHyperlink() 
+         */
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            getHyperlinkLabel().openHyperlink();
+        }
+    }
 }
