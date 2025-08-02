@@ -1016,6 +1016,7 @@ public class JHyperlinkLabel extends JLabel{
      * This opens the hyperlink in the user's default browser. If this fails to 
      * open the browser, then this will display an error message to the user if 
      * {@link #getFailureMessagesAreShown() failure messages are to be shown}.
+     * @return Whether the hyperlink was successfully opened.
      * @throws IllegalStateException If the URI is not set.
      * @see #copyHyperlink(java.awt.datatransfer.Clipboard) 
      * @see #copyHyperlink() 
@@ -1024,7 +1025,7 @@ public class JHyperlinkLabel extends JLabel{
      * @see #getFailureMessagesAreShown() 
      * @see #setFailureMessagesAreShown(boolean) 
      */
-    public void openHyperlink(){
+    public boolean openHyperlink(){
             // If the URI is not set
         if (getURI() == null)
             throw new IllegalStateException();
@@ -1034,7 +1035,8 @@ public class JHyperlinkLabel extends JLabel{
                 Desktop.getDesktop().browse(getURI());
                     // The hyperlink has been visited now
                 setVisited(true);
-            } catch (IOException ex){
+                return true;
+            } catch (IOException | UnsupportedOperationException ex){
                 Logger.getLogger("SwingExtended").log(Level.WARNING, 
                         "Failed to open hyperlink", ex);
                     // Provide error feedback to the user
@@ -1042,7 +1044,7 @@ public class JHyperlinkLabel extends JLabel{
                     // If the program should show error messages
                 if (getFailureMessagesAreShown())
                     JOptionPane.showMessageDialog(this, 
-                            "Failed to open the hyperlink. This may be because "
+                            "Failed to open the link. This may be because "
                                     + "your default browser failed to launch.", 
                             "Failed to Open Hyperlink", 
                             JOptionPane.WARNING_MESSAGE);
@@ -1055,9 +1057,10 @@ public class JHyperlinkLabel extends JLabel{
                 // If the program should show error messages
             if (getFailureMessagesAreShown())
                 JOptionPane.showMessageDialog(this, 
-                        "Java is not able to open hyperlinks on this device.",
+                        "Java is not able to open links on this device.",
                         "Failed to Open Hyperlink",JOptionPane.WARNING_MESSAGE);
         }
+        return false;
     }
     /**
      * This copies the hyperlink to the given clipboard.
