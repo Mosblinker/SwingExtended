@@ -7,6 +7,7 @@ package components;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -135,8 +136,8 @@ public class JHyperlinkLabel extends JLabel{
     }
     /**
      * This constructs a JHyperlinkLabel with the given text, icon, horizontal 
-     * alignment, and URI. The label is centered vertically in its display area, 
-     * and the text is on the trailing edge of the image.
+     * alignment, and {@code URI}. The label is centered vertically in its 
+     * display area, and the text is on the trailing edge of the image.
      * @param text The text to be displayed by this label.
      * @param icon The icon to be displayed by this label.
      * @param horizontalAlignment The horizontal alignment for the contents of 
@@ -147,7 +148,7 @@ public class JHyperlinkLabel extends JLabel{
      *      {@code RIGHT},
      *      {@code LEADING}, or
      *      {@code TRAILING}.
-     * @param uri The URI of the hyperlink that this label links to.
+     * @param uri The {@code URI} of the hyperlink that this label links to.
      */
     public JHyperlinkLabel(String text, Icon icon, int horizontalAlignment, 
             URI uri){
@@ -174,7 +175,8 @@ public class JHyperlinkLabel extends JLabel{
     }
     /**
      * This constructs a JHyperlinkLabel with the given text, horizontal 
-     * alignment, and URI. The label is centered vertically in its display area.
+     * alignment, and {@code URI}. The label is centered vertically in its 
+     * display area.
      * @param text The text to be displayed by this label.
      * @param horizontalAlignment The horizontal alignment for the contents of 
      * this label. This should be one of the following constants defined in 
@@ -184,7 +186,7 @@ public class JHyperlinkLabel extends JLabel{
      *      {@code RIGHT},
      *      {@code LEADING}, or
      *      {@code TRAILING}.
-     * @param uri The URI of the hyperlink that this label links to.
+     * @param uri The {@code URI} of the hyperlink that this label links to.
      */
     public JHyperlinkLabel(String text, int horizontalAlignment, URI uri){
         super(text,horizontalAlignment);
@@ -207,11 +209,11 @@ public class JHyperlinkLabel extends JLabel{
         this(text,horizontalAlignment,null);
     }
     /**
-     * This constructs a JHyperlinkLabel with the given text and URI. The label 
-     * is centered vertically and aligned against the leading edge of its 
-     * display area.
+     * This constructs a JHyperlinkLabel with the given text and {@code URI}. 
+     * The label is centered vertically and aligned against the leading edge of 
+     * its display area.
      * @param text The text to be displayed by this label.
-     * @param uri The URI of the hyperlink that this label links to.
+     * @param uri The {@code URI} of the hyperlink that this label links to.
      */
     public JHyperlinkLabel(String text, URI uri){
         super(text);
@@ -228,7 +230,8 @@ public class JHyperlinkLabel extends JLabel{
     }
     /**
      * This constructs a JHyperlinkLabel with the given icon, horizontal 
-     * alignment, and URI. The label is centered vertically in its display area.
+     * alignment, and {@code URI}. The label is centered vertically in its 
+     * display area.
      * @param icon The icon to be displayed by this label.
      * @param horizontalAlignment The horizontal alignment for the contents of 
      * this label. This should be one of the following constants defined in 
@@ -238,7 +241,7 @@ public class JHyperlinkLabel extends JLabel{
      *      {@code RIGHT},
      *      {@code LEADING}, or
      *      {@code TRAILING}.
-     * @param uri The URI of the hyperlink that this label links to.
+     * @param uri The {@code URI} of the hyperlink that this label links to.
      */
     public JHyperlinkLabel(Icon icon, int horizontalAlignment, URI uri){
         super(icon,horizontalAlignment);
@@ -261,10 +264,10 @@ public class JHyperlinkLabel extends JLabel{
         this(icon,horizontalAlignment,null);
     }
     /**
-     * This constructs a JHyperlinkLabel with the given icon and URI. The label 
-     * is centered horizontally and vertically in its display area.
+     * This constructs a JHyperlinkLabel with the given icon and {@code URI}. 
+     * The label is centered horizontally and vertically in its display area.
      * @param icon The icon to be displayed by this label.
-     * @param uri The URI of the hyperlink that this label links to.
+     * @param uri The {@code URI} of the hyperlink that this label links to.
      */
     public JHyperlinkLabel(Icon icon, URI uri){
         super(icon);
@@ -279,10 +282,10 @@ public class JHyperlinkLabel extends JLabel{
         this(icon,null);
     }
     /**
-     * This constructs a JHyperlinkLabel with the given URI for the hyperlink, 
-     * and with no text or icon. The label is centered vertically and its 
-     * contents will be aligned against the leading edge of its display area.
-     * @param uri The URI of the hyperlink that this label links to.
+     * This constructs a JHyperlinkLabel with the given {@code URI} for the 
+     * hyperlink, and with no text or icon. The label is centered vertically and 
+     * its contents will be aligned against the leading edge of its display area.
+     * @param uri The {@code URI} of the hyperlink that this label links to.
      */
     public JHyperlinkLabel(URI uri){
         super();
@@ -465,8 +468,8 @@ public class JHyperlinkLabel extends JLabel{
                 FAILURE_MESSAGES_SHOWN_PROPERTY_CHANGED);
     }
     /**
-     * This returns the URI for the hyperlink.
-     * @return The URI for the hyperlink.
+     * This returns the {@code URI} for the hyperlink.
+     * @return The {@code URI} for the hyperlink.
      * @see #setURI(java.net.URI) 
      * @see #isVisited() 
      * @see #setVisited(boolean) 
@@ -475,10 +478,10 @@ public class JHyperlinkLabel extends JLabel{
         return uri;
     }
     /**
-     * This sets the URI for the hyperlink. This will also make it so that the 
-     * hyperlink is {@link #isVisited() unvisited}. The default for this value 
-     * is null. 
-     * @param uri The URI for the hyperlink, or null.
+     * This sets the {@code URI} for the hyperlink. This will also make it so 
+     * that the hyperlink is {@link #isVisited() unvisited}. The default for 
+     * this value is null. 
+     * @param uri The {@code URI} for the hyperlink, or null.
      * @see #getURI() 
      * @see #isVisited() 
      * @see #setVisited(boolean) 
@@ -1281,6 +1284,193 @@ public class JHyperlinkLabel extends JLabel{
             setHoveredOver(false);
                 // Notify the hyperlink listeners that the label has been exited
             fireHyperlinkUpdate(HyperlinkEvent.EventType.EXITED,evt);
+        }
+    }
+    /**
+     * This is the abstract class for an action that interacts with a hyperlink 
+     * label.
+     */
+    public abstract class HyperlinkAction extends AbstractAction{
+        /**
+         * This creates a {@code HyperlinkAction}.
+         */
+        HyperlinkAction(){
+            super();
+        }
+        /**
+         * This creates a {@code HyperlinkAction} with the given name.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         */
+        HyperlinkAction(String name){
+            super(name);
+        }
+        /**
+         * This creates a {@code HyperlinkAction} with the given name and small 
+         * icon.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param icon The small icon ({@code Action.SMALL_ICON}) for the 
+         * action, or null.
+         */
+        HyperlinkAction(String name, Icon icon){
+            super(name,icon);
+        }
+        /**
+         * This returns the parent {@code JHyperlinkLabel} for this action.
+         * @return The parent hyperlink label.
+         */
+        public JHyperlinkLabel getHyperlinkLabel(){
+            return JHyperlinkLabel.this;
+        }
+        /**
+         * This returns the URI for the hyperlink. This is equivalent to calling 
+         * {@link #getHyperlinkLabel() getHyperlinkLabel()}{@code .}{@link 
+         * JHyperlinkLabel#getURI() getURI()}.
+         * @return The URI for the hyperlink.
+         * @see #getHyperlinkLabel()
+         * @see JHyperlinkLabel#getURI()
+         */
+        public URI getURI(){
+            return getHyperlinkLabel().getURI();
+        }
+    }
+    /**
+     * This is an action that copies the link to a clipboard.
+     * @see #copyHyperlink(java.awt.datatransfer.Clipboard) 
+     * @see #copyHyperlink() 
+     */
+    public class CopyLinkAction extends HyperlinkAction{
+        /**
+         * The key used for storing the <code>Clipboard</code> that this action 
+         * copies the hyperlink to. The default for this value is 
+         * <code>null</code>, which indicates that the {@link 
+         * Toolkit#getSystemClipboard() system clipboard} is used.
+         */
+        public static final String CLIPBOARD = "Clipboard";
+        /**
+         * This creates a {@code CopyLinkAction}.
+         */
+        public CopyLinkAction(){
+            super();
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         */
+        public CopyLinkAction(String name){
+            super(name);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name and small 
+         * icon.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param icon The small icon ({@code Action.SMALL_ICON}) for the 
+         * action, or null.
+         */
+        public CopyLinkAction(String name, Icon icon){
+            super(name,icon);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given clipboard.
+         * @param clipboard The clipboard ({@code CopyLinkAction.CLIPBOARD}) for 
+         * the action, or null.
+         */
+        public CopyLinkAction(Clipboard clipboard){
+            this();
+            putValue(CLIPBOARD,clipboard);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name and 
+         * clipboard.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param clipboard The clipboard ({@code CopyLinkAction.CLIPBOARD}) for 
+         * the action, or null.
+         */
+        public CopyLinkAction(String name, Clipboard clipboard){
+            this(name);
+            putValue(CLIPBOARD,clipboard);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name, small 
+         * icon, and clipboard.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param icon The small icon ({@code Action.SMALL_ICON}) for the 
+         * action, or null.
+         * @param clipboard The clipboard ({@code CopyLinkAction.CLIPBOARD}) for 
+         * the action, or null.
+         */
+        public CopyLinkAction(String name, Icon icon, Clipboard clipboard){
+            this(name,icon);
+            putValue(CLIPBOARD,clipboard);
+        }
+        /**
+         * This is invoked when an action occurs. This will copy the link to the 
+         * clipboard ({@code CopyLinkAction.CLIPBOARD}) set for this action. If 
+         * no clipboard has been set for this action, then the link will be 
+         * copied to the system clipboard.
+         * @param evt The event to be processed.
+         * @throws ClassCastException If a non-null value is set for the 
+         * clipboard and that value cannot be cast to a {@link 
+         * java.awt.datatransfer.Clipboard Clipboard}.
+         * @throws IllegalStateException If the URI is not set.
+         * @see CLIPBOARD
+         * @see #getURI() 
+         * @see #getHyperlinkLabel() 
+         * @see JHyperlinkLabel#copyHyperlink(java.awt.datatransfer.Clipboard) 
+         * @see JHyperlinkLabel#copyHyperlink() 
+         * @see #getToolkit() 
+         * @see Toolkit#getSystemClipboard() 
+         */
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+                // Get the clipboard set for this action
+            Clipboard clipboard = (Clipboard) getValue(CLIPBOARD);
+                // If no clipboard has been set
+            if (clipboard == null)
+                getHyperlinkLabel().copyHyperlink();
+            else
+                getHyperlinkLabel().copyHyperlink(clipboard);
+        }
+    }
+    /**
+     * This is an action that opens the link in the user's default browser.
+     * @see #openHyperlink() 
+     */
+    public class OpenLinkAction extends HyperlinkAction{
+        /**
+         * This creates an {@code OpenLinkAction}.
+         */
+        public OpenLinkAction(){
+            super();
+        }
+        /**
+         * This creates an {@code OpenLinkAction} with the given name.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         */
+        public OpenLinkAction(String name){
+            super(name);
+        }
+        /**
+         * This creates an {@code OpenLinkAction} with the given name and small 
+         * icon.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param icon The small icon ({@code Action.SMALL_ICON}) for the 
+         * action, or null.
+         */
+        public OpenLinkAction(String name, Icon icon){
+            super(name,icon);
+        }
+        /**
+         * This is invoked when an action occurs. This will open the link in the 
+         * user's default browser.
+         * @param evt The event to be processed.
+         * @throws IllegalStateException If the URI is not set.
+         * @see #getURI() 
+         * @see #getHyperlinkLabel() 
+         * @see JHyperlinkLabel#openHyperlink() 
+         */
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            getHyperlinkLabel().openHyperlink();
         }
     }
 }
