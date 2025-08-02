@@ -1034,7 +1034,7 @@ public class JHyperlinkLabel extends JLabel{
                 Desktop.getDesktop().browse(getURI());
                     // The hyperlink has been visited now
                 setVisited(true);
-            } catch (IOException ex){
+            } catch (IOException | UnsupportedOperationException ex){
                 Logger.getLogger("SwingExtended").log(Level.WARNING, 
                         "Failed to open hyperlink", ex);
                     // Provide error feedback to the user
@@ -1042,7 +1042,7 @@ public class JHyperlinkLabel extends JLabel{
                     // If the program should show error messages
                 if (getFailureMessagesAreShown())
                     JOptionPane.showMessageDialog(this, 
-                            "Failed to open the hyperlink. This may be because "
+                            "Failed to open the link. This may be because "
                                     + "your default browser failed to launch.", 
                             "Failed to Open Hyperlink", 
                             JOptionPane.WARNING_MESSAGE);
@@ -1055,7 +1055,7 @@ public class JHyperlinkLabel extends JLabel{
                 // If the program should show error messages
             if (getFailureMessagesAreShown())
                 JOptionPane.showMessageDialog(this, 
-                        "Java is not able to open hyperlinks on this device.",
+                        "Java is not able to open links on this device.",
                         "Failed to Open Hyperlink",JOptionPane.WARNING_MESSAGE);
         }
     }
