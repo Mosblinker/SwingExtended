@@ -1333,4 +1333,102 @@ public class JHyperlinkLabel extends JLabel{
             return getHyperlinkLabel().getURI();
         }
     }
+    /**
+     * This is an action that copies the link to a clipboard.
+     * @see #copyHyperlink(java.awt.datatransfer.Clipboard) 
+     * @see #copyHyperlink() 
+     */
+    public class CopyLinkAction extends HyperlinkAction{
+        /**
+         * The key used for storing the <code>Clipboard</code> that this action 
+         * copies the hyperlink to. The default for this value is 
+         * <code>null</code>, which indicates that the {@link 
+         * Toolkit#getSystemClipboard() system clipboard} is used.
+         */
+        public static final String CLIPBOARD = "Clipboard";
+        /**
+         * This creates a {@code CopyLinkAction}.
+         */
+        public CopyLinkAction(){
+            super();
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         */
+        public CopyLinkAction(String name){
+            super(name);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name and small 
+         * icon.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param icon The small icon ({@code Action.SMALL_ICON}) for the 
+         * action, or null.
+         */
+        public CopyLinkAction(String name, Icon icon){
+            super(name,icon);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given clipboard.
+         * @param clipboard The clipboard ({@code CopyLinkAction.CLIPBOARD}) for 
+         * the action, or null.
+         */
+        public CopyLinkAction(Clipboard clipboard){
+            this();
+            putValue(CLIPBOARD,clipboard);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name and 
+         * clipboard.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param clipboard The clipboard ({@code CopyLinkAction.CLIPBOARD}) for 
+         * the action, or null.
+         */
+        public CopyLinkAction(String name, Clipboard clipboard){
+            this(name);
+            putValue(CLIPBOARD,clipboard);
+        }
+        /**
+         * This creates a {@code CopyLinkAction} with the given name, small 
+         * icon, and clipboard.
+         * @param name The name ({@code Action.NAME}) for the action, or null.
+         * @param icon The small icon ({@code Action.SMALL_ICON}) for the 
+         * action, or null.
+         * @param clipboard The clipboard ({@code CopyLinkAction.CLIPBOARD}) for 
+         * the action, or null.
+         */
+        public CopyLinkAction(String name, Icon icon, Clipboard clipboard){
+            this(name,icon);
+            putValue(CLIPBOARD,clipboard);
+        }
+        /**
+         * This is invoked when an action occurs. This will copy the link to the 
+         * clipboard ({@code CopyLinkAction.CLIPBOARD}) set for this action. If 
+         * no clipboard has been set for this action, then the link will be 
+         * copied to the system clipboard.
+         * @param evt The event to be processed.
+         * @throws ClassCastException If a non-null value is set for the 
+         * clipboard and that value cannot be cast to a {@link 
+         * java.awt.datatransfer.Clipboard Clipboard}.
+         * @throws IllegalStateException If the URI is not set.
+         * @see CLIPBOARD
+         * @see #getURI() 
+         * @see #getHyperlinkLabel() 
+         * @see JHyperlinkLabel#copyHyperlink(java.awt.datatransfer.Clipboard) 
+         * @see JHyperlinkLabel#copyHyperlink() 
+         * @see #getToolkit() 
+         * @see Toolkit#getSystemClipboard() 
+         */
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+                // Get the clipboard set for this action
+            Clipboard clipboard = (Clipboard) getValue(CLIPBOARD);
+                // If no clipboard has been set
+            if (clipboard == null)
+                getHyperlinkLabel().copyHyperlink();
+            else
+                getHyperlinkLabel().copyHyperlink(clipboard);
+        }
+    }
 }
