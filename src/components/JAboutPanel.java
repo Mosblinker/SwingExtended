@@ -1213,17 +1213,32 @@ public class JAboutPanel extends JPanel{
                 LICENSE_BUTTON_IS_SHWON_PROPERTY_CHANGED);
         licenseButton.setVisible(value);
     }
-    
+    /**
+     * 
+     * @return 
+     */
     public boolean getLicenseButtonIsShown(){
         return getFlag(SHOW_LICENSE_BUTTON_FLAG);
     }
-    
+    /**
+     * This sets whether the control buttons will be shown by this panel. 
+     * This property is true by default. The control buttons are the close, 
+     * update, and license buttons.
+     * @param value Whether the control buttons should be shown or not.
+     * @see #getControlButtonsAreShown() 
+     * @see #CONTROL_BUTTONS_ARE_SHOWN_PROPERTY_CHANGED
+     */
     public void setControlButtonsAreShown(boolean value){
         setFlag(SHOW_CONTROL_BUTTONS_FLAG,value,
                 CONTROL_BUTTONS_ARE_SHOWN_PROPERTY_CHANGED);
         buttonPanel.setVisible(value);
     }
-    
+    /**
+     * This returns whether the control buttons (the close, update, and license 
+     * buttons) are shown by this panel.
+     * @return Whether the control buttons are shown.
+     * @see #setControlButtonsAreShown(boolean) 
+     */
     public boolean getControlButtonsAreShown(){
         return getFlag(SHOW_CONTROL_BUTTONS_FLAG);
     }
@@ -1449,8 +1464,9 @@ public class JAboutPanel extends JPanel{
         fireActionPerformed(command,System.currentTimeMillis(),0);
     }
     /**
-     * 
-     * @param evt 
+     * This updates whether the filler component next to a component is visible.
+     * @param evt The {@code ComponentEvent} to be process.
+     * @see #getFillerComponentFor(java.awt.Component) 
      */
     protected void updateFillerVisibility(ComponentEvent evt){
             // Get the filler next to the component
