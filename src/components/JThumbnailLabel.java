@@ -3638,10 +3638,9 @@ public class JThumbnailLabel extends JLabel{
             // If the icon is not null and its width and height are greater than zero
         if (icon != null && icon.getIconWidth() > 0 && icon.getIconHeight() > 0){  
             g = (Graphics2D) g.create();//x, y, width, height);
-            g.translate(x, y);
             g.scale(getScale(width,icon.getIconWidth()), 
                     getScale(height,icon.getIconHeight()));
-            icon.paintIcon(this, g, 0, 0);
+            icon.paintIcon(this, g, x, y);
             g.dispose();
         }
     }
